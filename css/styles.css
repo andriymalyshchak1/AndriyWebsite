@@ -525,11 +525,11 @@ img.headshot {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.82);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.3;
+  opacity: 0.75;
   transition: opacity 150ms ease, transform 150ms ease;
   pointer-events: none;
 }
@@ -548,7 +548,7 @@ img.headshot {
 
 /* Play triangle SVG — visible at rest, hidden when active */
 .album-cell__play-icon {
-  color: var(--color-text-muted); /* <!-- REPLACE: swap to #1a1a1a when real art is added --> */
+  color: #1a1a1a;
   display: block;
   margin-left: 1px; /* optical center */
   flex-shrink: 0;
@@ -574,7 +574,7 @@ img.headshot {
   width: 2px;
   height: 5px;
   border-radius: 1px;
-  background: var(--color-text-muted); /* <!-- REPLACE: swap to #1a1a1a when real art is added --> */
+  background: #1a1a1a;
 }
 
 .album-cell--active .album-cell__bar:nth-child(1) {
