@@ -259,7 +259,6 @@ p {
 /* ── Headshot ── */
 .headshot {
   width: 100%;
-  aspect-ratio: 4 / 3;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-3);
@@ -282,8 +281,7 @@ p {
 img.headshot {
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  object-fit: contain;
   background-color: transparent;
 }
 
@@ -615,13 +613,6 @@ img.headshot {
     padding-bottom: var(--space-10);
   }
 
-  .headshot {
-    aspect-ratio: 1 / 1;
-  }
-
-  img.headshot {
-    aspect-ratio: 1 / 1;
-  }
 }
 
 /* ── Large screen — center content, remove side padding ── */
