@@ -100,6 +100,14 @@
     });
   }
 
+  /* Restore opacity if browser restores this page from bfcache (back button from secret.html) */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      document.body.style.transition = 'opacity 300ms ease';
+      document.body.style.opacity = '1';
+    }
+  });
+
   /* ── 4. Headshot easter egg — fade page out before navigating ────────── */
   var headshotLink = document.querySelector('.headshot-link');
   if (headshotLink) {
