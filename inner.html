@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>—</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <main class="page">
+    <div class="article-content">
+
+      <section class="section">
+        <span class="section__label">people I value most</span>
+
+        <ul class="inner-list">
+
+          <li class="inner-entry">
+            <!-- REPLACE: name -->
+            <p class="inner-entry__name">Name</p>
+            <!-- REPLACE: one sentence about why they matter -->
+            <p class="inner-entry__note">A sentence about why this person matters to you.</p>
+          </li>
+
+          <hr class="divider" aria-hidden="true" />
+
+          <li class="inner-entry">
+            <!-- REPLACE: name -->
+            <p class="inner-entry__name">Name</p>
+            <!-- REPLACE: one sentence about why they matter -->
+            <p class="inner-entry__note">A sentence about why this person matters to you.</p>
+          </li>
+
+          <hr class="divider" aria-hidden="true" />
+
+          <li class="inner-entry">
+            <!-- REPLACE: name -->
+            <p class="inner-entry__name">Name</p>
+            <!-- REPLACE: one sentence about why they matter -->
+            <p class="inner-entry__note">A sentence about why this person matters to you.</p>
+          </li>
+
+          <hr class="divider" aria-hidden="true" />
+
+          <li class="inner-entry">
+            <!-- REPLACE: name -->
+            <p class="inner-entry__name">Name</p>
+            <!-- REPLACE: one sentence about why they matter -->
+            <p class="inner-entry__note">A sentence about why this person matters to you.</p>
+          </li>
+
+          <hr class="divider" aria-hidden="true" />
+
+          <li class="inner-entry">
+            <!-- REPLACE: name -->
+            <p class="inner-entry__name">Name</p>
+            <!-- REPLACE: one sentence about why they matter -->
+            <p class="inner-entry__note">A sentence about why this person matters to you.</p>
+          </li>
+
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var el = document.querySelector('.article-content');
+      if (!el) return;
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              el.classList.add('is-visible');
+              observer.unobserve(el);
+            }
+          });
+        }, { threshold: 0.01 });
+        observer.observe(el);
+      } else {
+        el.classList.add('is-visible');
+      }
+    }());
+  </script>
+</body>
+</html>

@@ -80,6 +80,7 @@ textarea {
   --color-text-very-muted:  #A8A29E;   /* labels, timestamps, captions         */
   --color-divider:          rgba(0, 0, 0, 0.07);
   --color-border:           rgba(28, 25, 23, 0.12); /* generic border / pull quote */
+  --color-border-focus:     rgba(28, 25, 23, 0.28); /* input focused state         */
   --color-accent-border:    rgba(28, 25, 23, 0.14); /* writing section left bar */
   --color-focus-ring:       rgba(28, 25, 23, 0.35);
   --color-link-active:      #0C0A09;
@@ -728,4 +729,175 @@ img.headshot {
   padding-left: 20px;
   margin: 2rem 0;
   max-width: 52ch;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   EASTER EGG — headshot silent link  (index.html)
+───────────────────────────────────────────────────────────────────────────── */
+.headshot-link {
+  display: block;
+  cursor: default;  /* no pointer — link should feel invisible */
+}
+
+.headshot-link:focus,
+.headshot-link:focus-visible {
+  outline: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECRET PAGE  (secret.html)
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Full-viewport vertical centering */
+.secret-body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-x);
+}
+
+/* Fade-in wrapper */
+.secret-content {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.js .secret-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.js .secret-content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Question prompt */
+.secret-prompt {
+  font-size: 15px;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 16px;
+  max-width: none;
+}
+
+/* Input group — acts as the single visible field */
+.secret-input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 0.5px solid var(--color-border);
+  background: var(--color-bg);
+  padding: 14px 20px;
+  transition: border-color var(--transition-base);
+}
+
+.secret-input-group:focus-within {
+  border-color: var(--color-border-focus);
+}
+
+.secret-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: var(--font-weight-light);
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  text-align: center;
+  padding: 0;
+  /* Suppress browser default input styling */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.secret-input--month,
+.secret-input--day {
+  width: 44px;
+}
+
+.secret-input--year {
+  width: 72px;
+}
+
+.secret-input::placeholder {
+  color: var(--color-text-very-muted);
+}
+
+/* Slash separator between date segments */
+.secret-sep {
+  font-size: 20px;
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-very-muted);
+  user-select: none;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* Error message — hidden by default, fades in on wrong answer */
+.secret-error {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 16px;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  max-width: none;
+}
+
+.secret-error--visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .secret-content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .secret-error {
+    transition: none;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   INNER PAGE  (inner.html)
+───────────────────────────────────────────────────────────────────────────── */
+.inner-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-entry {
+  padding: var(--space-3) 0;
+}
+
+.inner-entry__name {
+  font-size: 17px;
+  font-weight: var(--font-weight-light);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+  max-width: none;
+}
+
+.inner-entry__note {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
+  max-width: 46ch;
 }
