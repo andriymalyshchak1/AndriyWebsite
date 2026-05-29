@@ -335,7 +335,7 @@ img.headshot {
   display: flex;
   gap: 24px;
   align-items: center;
-  padding: var(--space-5) 0 var(--space-3);
+  padding: var(--space-2) 0 var(--space-1);
 }
 
 .social-links__item {
@@ -468,6 +468,7 @@ img.headshot {
 .photos {
   /* Let the strip bleed edge-to-edge, then re-pad for the section label */
   padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
 }
 
 .photo-strip {
@@ -513,8 +514,8 @@ img.headshot {
    FOOTER
 ════════════════════════════════════════ */
 .footer {
-  padding-top: var(--space-3);
-  padding-bottom: var(--space-3);
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-2);
   display: flex;
   align-items: center;
   justify-content: space-between;
