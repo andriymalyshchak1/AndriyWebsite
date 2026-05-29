@@ -227,11 +227,11 @@
     }
   });
 
-  /* ── 4. Photo strip — seamless infinite scroll + native-feel swipe ────
-     Auto-scrolls at 1.2px/frame. Touch/mouse drag is 1:1 with finger.
-     Momentum on release (0.94 decay). Direction lock prevents hijacking
-     vertical page scroll on mobile. To add/remove photos, only edit the
-     <img> tags inside .photo-strip__inner in HTML.
+  /* ── 4. Photo strip — seamless infinite scroll + smooth swipe ──────────
+     Single source of truth: offset is written by handlers, transform is
+     applied ONLY inside the rAF loop once per frame. Velocity averaged
+     over 3 samples to eliminate iOS touch-sampling spikes.
+     To add/remove photos, only edit .photo-strip__inner in HTML.
   ─────────────────────────────────────────────────────────────────────── */
   (function () {
     var strip = document.querySelector('.photo-strip');
@@ -240,10 +240,10 @@
 
     /* Reduced-motion: restore manual scroll */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      strip.style.overflowX    = 'scroll';
-      strip.style.scrollSnapType = 'x mandatory';
+      strip.style.overflowX          = 'scroll';
+      strip.style.scrollSnapType     = 'x mandatory';
       strip.style.webkitOverflowScrolling = 'touch';
-      strip.style.cursor = 'default';
+      strip.style.cursor             = 'default';
       return;
     }
 
@@ -251,23 +251,21 @@
     var originals = Array.from(inner.children);
     originals.forEach(function (el) { inner.appendChild(el.cloneNode(true)); });
 
-    /* Constants */
-    var DEFAULT_SPEED = 1.2;
+    var DEFAULT_SPEED = 0.6;
     var LERP          = 0.08;
 
-    /* Auto-scroll state */
     var offset         = 0;
     var curSpeed       = DEFAULT_SPEED;
     var totalWidth     = 0;
     var rafId          = null;
     var isVisible      = false;
 
-    /* Drag state */
     var isDragging       = false;
     var dragStartX       = 0;
     var dragStartOffset  = 0;
     var lastDragX        = 0;
     var dragVelocity     = 0;
+    var velocitySamples  = [];   /* last 3 move deltas — averaged on release */
     var momentumActive   = false;
     var autoScrollPaused = false;
     var isHorizontalDrag = null;
@@ -299,18 +297,22 @@
       while (offset >= totalWidth) offset -= totalWidth;
     }
 
+    /* Rounded to 2dp to eliminate subpixel jitter */
     function applyTransform() {
-      inner.style.transform = 'translateX(' + (-offset) + 'px)';
+      var r = Math.round(offset * 100) / 100;
+      inner.style.transform = 'translateX(' + (-r) + 'px)';
     }
 
-    /* --- rAF loop --- */
+    /* --- rAF loop — single source of truth for all DOM writes --- */
     function tick() {
       if (isDragging) {
-        /* Transform applied directly in move handler — just keep loop alive */
+        /* offset already updated by handler; just wrap and render */
+        applyLoopWrap();
+        applyTransform();
       } else if (momentumActive) {
-        dragVelocity *= 0.94;
+        dragVelocity *= 0.96;
         offset += dragVelocity;
-        if (Math.abs(dragVelocity) < 0.15) {
+        if (Math.abs(dragVelocity) < 0.05) {
           momentumActive   = false;
           autoScrollPaused = false;
         }
@@ -326,7 +328,7 @@
       rafId = isVisible ? requestAnimationFrame(tick) : null;
     }
 
-    /* IntersectionObserver — pause off-screen */
+    /* IntersectionObserver — pause rAF off-screen */
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         isVisible = e.isIntersecting;
@@ -337,7 +339,7 @@
 
     /* --- Touch handlers --- */
     function onTouchStart(e) {
-      var t        = e.touches[0];
+      var t            = e.touches[0];
       isDragging       = true;
       autoScrollPaused = true;
       momentumActive   = false;
@@ -346,6 +348,7 @@
       dragStartOffset  = offset;
       lastDragX        = t.clientX;
       dragVelocity     = 0;
+      velocitySamples  = [];
       isHorizontalDrag = null;
     }
 
@@ -355,28 +358,34 @@
       var currentX = t.clientX;
       var currentY = t.clientY;
 
-      /* Determine direction on first movement */
       if (isHorizontalDrag === null) {
         var dx = Math.abs(currentX - dragStartX);
         var dy = Math.abs(currentY - touchStartY);
         isHorizontalDrag = dx > dy;
       }
 
-      if (!isHorizontalDrag) return; /* let page scroll vertically */
+      if (!isHorizontalDrag) return;
 
-      e.preventDefault(); /* block rubber-band / overscroll */
+      e.preventDefault();
 
-      dragVelocity = lastDragX - currentX;
-      lastDragX    = currentX;
-      offset       = dragStartOffset + (dragStartX - currentX);
-      applyLoopWrap();
-      applyTransform();
+      /* Sample velocity — keep last 3, average on release */
+      velocitySamples.push(lastDragX - currentX);
+      if (velocitySamples.length > 3) velocitySamples.shift();
+
+      lastDragX = currentX;
+      offset    = dragStartOffset + (dragStartX - currentX); /* 1:1 tracking */
     }
 
     function onTouchEnd() {
       if (!isDragging) return;
       isDragging       = false;
       isHorizontalDrag = null;
+      /* Average last 3 samples for smooth launch velocity */
+      if (velocitySamples.length > 0) {
+        dragVelocity = velocitySamples.reduce(function (a, b) { return a + b; }, 0)
+                       / velocitySamples.length;
+      }
+      velocitySamples = [];
       if (Math.abs(dragVelocity) > 0.5) {
         momentumActive = true;
       } else {
@@ -398,6 +407,7 @@
       dragStartOffset  = offset;
       lastDragX        = e.clientX;
       dragVelocity     = 0;
+      velocitySamples  = [];
       isHorizontalDrag = true;
       strip.style.cursor = 'grabbing';
       e.preventDefault();
@@ -405,11 +415,10 @@
 
     function onMouseMove(e) {
       if (!isDragging) return;
-      dragVelocity = lastDragX - e.clientX;
-      lastDragX    = e.clientX;
-      offset       = dragStartOffset + (dragStartX - e.clientX);
-      applyLoopWrap();
-      applyTransform();
+      velocitySamples.push(lastDragX - e.clientX);
+      if (velocitySamples.length > 3) velocitySamples.shift();
+      lastDragX = e.clientX;
+      offset    = dragStartOffset + (dragStartX - e.clientX);
     }
 
     function onMouseUp() {
@@ -417,6 +426,11 @@
       isDragging         = false;
       isHorizontalDrag   = null;
       strip.style.cursor = 'grab';
+      if (velocitySamples.length > 0) {
+        dragVelocity = velocitySamples.reduce(function (a, b) { return a + b; }, 0)
+                       / velocitySamples.length;
+      }
+      velocitySamples = [];
       if (Math.abs(dragVelocity) > 0.5) {
         momentumActive = true;
       } else {

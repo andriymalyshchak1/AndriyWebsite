@@ -668,6 +668,10 @@ img.headshot {
   display: flex;
   gap: var(--space-1-5);
   will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .photo-strip__item {
