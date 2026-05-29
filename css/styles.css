@@ -480,26 +480,27 @@ img.headshot {
 }
 
 .photo-strip {
-  overflow: hidden;
+  display: flex;
+  gap: var(--space-1-5);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--padding-x);
+  /* Hide scrollbar across browsers */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* Break out of the page container to go edge-to-edge */
   margin-left: calc(-1 * var(--padding-x));
   margin-right: calc(-1 * var(--padding-x));
+  /* Re-apply padding so first card aligns with content above */
+  padding-left: var(--padding-x);
+  padding-right: var(--padding-x);
   padding-bottom: var(--space-1); /* breathing room for iOS bounce */
-  /* Scrollbar suppression — only visible in prefers-reduced-motion fallback */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 .photo-strip::-webkit-scrollbar {
   display: none;
-}
-
-/* Inner flex row — the JS translateX target.
-   Holds original photos + JS-cloned duplicates for seamless looping. */
-.photo-strip__inner {
-  display: flex;
-  gap: var(--space-1-5);
-  will-change: transform; /* GPU compositing */
 }
 
 .photo-strip__item {
@@ -508,7 +509,8 @@ img.headshot {
   aspect-ratio: 3 / 4;
   border-radius: var(--radius-md);
   overflow: hidden;
-  object-fit: cover;
+  scroll-snap-align: start;
+  object-fit: cover; /* works when item is an <img> directly */
 }
 
 .photo-strip__item--placeholder {
