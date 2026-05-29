@@ -80,7 +80,9 @@ textarea {
   --color-text-very-muted:  #A8A29E;   /* labels, timestamps, captions         */
   --color-divider:          rgba(0, 0, 0, 0.07);
   --color-border:           rgba(28, 25, 23, 0.12); /* generic border / pull quote */
-  --color-border-focus:     rgba(28, 25, 23, 0.28); /* input focused state         */
+  --color-border-secondary: rgba(28, 25, 23, 0.14); /* music player default border  */
+  --color-border-primary:   rgba(28, 25, 23, 0.30); /* music player hover border    */
+  --color-border-focus:     rgba(28, 25, 23, 0.28); /* input focused state          */
   --color-accent-border:    rgba(28, 25, 23, 0.14); /* writing section left bar */
   --color-focus-ring:       rgba(28, 25, 23, 0.35);
   --color-link-active:      #0C0A09;
@@ -917,4 +919,132 @@ img.headshot {
   color: var(--color-text-muted);
   line-height: var(--line-height-base);
   max-width: 46ch;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MUSIC PLAYER WIDGET  (index.html)
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Section wrapper — spacing between social links and contact divider */
+.music-player-wrap {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+/* The pill button */
+.music-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 20px;
+  min-width: 200px;
+  width: fit-content;
+  border-radius: 999px;
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-bg);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  /* Reset browser button defaults */
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.music-player:hover {
+  border-color: var(--color-border-primary);
+  background: var(--color-surface);
+}
+
+.music-player:active {
+  transform: scale(0.98);
+  transition: transform 100ms ease;
+}
+
+/* Left slot — equalizer + icon share a fixed-size flex container */
+.music-player__left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Icon — the SVG play/pause */
+.music-player__icon {
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+/* Song info */
+.music-player__info {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.music-player__title {
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.music-player__artist {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* Equalizer bars — hidden when paused, animated when playing */
+.music-player__equalizer {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width var(--transition-base), opacity var(--transition-base);
+}
+
+.music-player--playing .music-player__equalizer {
+  max-width: 14px;
+  opacity: 1;
+}
+
+.music-player__bar {
+  flex-shrink: 0;
+  width: 2px;
+  height: 8px;
+  border-radius: 1px;
+  background: var(--color-text-muted);
+}
+
+/* Staggered bounce animation — only runs while playing */
+.music-player--playing .music-player__bar:nth-child(1) {
+  animation: eq-bounce 0.6s ease-in-out infinite alternate;
+}
+.music-player--playing .music-player__bar:nth-child(2) {
+  animation: eq-bounce 0.4s ease-in-out 0.15s infinite alternate;
+}
+.music-player--playing .music-player__bar:nth-child(3) {
+  animation: eq-bounce 0.8s ease-in-out 0.05s infinite alternate;
+}
+
+@keyframes eq-bounce {
+  from { height: 4px;  }
+  to   { height: 12px; }
+}
+
+/* Mobile — full width for easy tap */
+@media (max-width: 520px) {
+  .music-player {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-player__bar {
+    animation: none !important;
+  }
 }

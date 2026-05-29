@@ -49,7 +49,43 @@
     yearEl.textContent = new Date().getFullYear();
   }
 
-  /* ── 3. Headshot easter egg — fade page out before navigating ────────── */
+  /* ── 3. Music player ────────────────────────────────────────────────── */
+  var playerBtn  = document.getElementById('music-player');
+  var iconPlay   = document.getElementById('icon-play');
+  var iconPause  = document.getElementById('icon-pause');
+
+  if (playerBtn) {
+    var audio = null;
+    try { audio = new Audio('audio/fuckin-problems.mp3'); } catch (e) {}
+
+    playerBtn.addEventListener('click', function () {
+      if (!audio) return;
+      if (audio.paused) {
+        audio.play().catch(function () {});
+        playerBtn.classList.add('music-player--playing');
+        if (iconPlay)  iconPlay.style.display  = 'none';
+        if (iconPause) iconPause.style.display = '';
+        playerBtn.setAttribute('aria-label', "Pause Fuckin' Problems by ASAP Rocky");
+      } else {
+        audio.pause();
+        playerBtn.classList.remove('music-player--playing');
+        if (iconPlay)  iconPlay.style.display  = '';
+        if (iconPause) iconPause.style.display = 'none';
+        playerBtn.setAttribute('aria-label', "Play Fuckin' Problems by ASAP Rocky");
+      }
+    });
+
+    if (audio) {
+      audio.addEventListener('ended', function () {
+        playerBtn.classList.remove('music-player--playing');
+        if (iconPlay)  iconPlay.style.display  = '';
+        if (iconPause) iconPause.style.display = 'none';
+        playerBtn.setAttribute('aria-label', "Play Fuckin' Problems by ASAP Rocky");
+      });
+    }
+  }
+
+  /* ── 4. Headshot easter egg — fade page out before navigating ────────── */
   var headshotLink = document.querySelector('.headshot-link');
   if (headshotLink) {
     headshotLink.addEventListener('click', function (e) {

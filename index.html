@@ -157,6 +157,44 @@
     </nav>
 
     <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         MUSIC PLAYER
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <div class="music-player-wrap">
+      <!-- REPLACE: drop your MP3 into the /audio folder -->
+      <button
+        class="music-player"
+        id="music-player"
+        aria-label="Play Fuckin' Problems by ASAP Rocky"
+      >
+        <span class="music-player__left">
+          <span class="music-player__equalizer" aria-hidden="true">
+            <span class="music-player__bar"></span>
+            <span class="music-player__bar"></span>
+            <span class="music-player__bar"></span>
+          </span>
+          <span class="music-player__icon" aria-hidden="true">
+            <!-- play icon -->
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" id="icon-play">
+              <path d="M0 0L10 6L0 12V0Z"/>
+            </svg>
+            <!-- pause icon — hidden by default -->
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" id="icon-pause" style="display:none">
+              <rect x="0" y="0" width="3" height="12" rx="1.5"/>
+              <rect x="7" y="0" width="3" height="12" rx="1.5"/>
+            </svg>
+          </span>
+        </span>
+        <span class="music-player__info">
+          <span class="music-player__title">Fuckin' Problems</span>
+          <span class="sep" aria-hidden="true">·</span>
+          <span class="music-player__artist">ASAP Rocky</span>
+        </span>
+      </button>
+    </div>
+
+    <hr class="divider" aria-hidden="true" />
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
          FOOTER
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
     <footer class="footer">
