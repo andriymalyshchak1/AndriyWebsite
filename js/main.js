@@ -193,14 +193,21 @@
       if (activeCell) { reset(activeCell); activeCell = null; }
     }
 
+    /* Start offset (seconds) per cell index — 0 = beginning of track */
+    var START_AT = [0, 75, 0, 0]; /* index 1 (Fred, top-right) starts at 1:15 */
+
     function play(cell) {
       var idx = parseInt(cell.getAttribute('data-index'), 10);
       audio.src = CLIPS[idx];
-      audio.currentTime = 0;
+      audio.currentTime = START_AT[idx] || 0;
       audio.play().catch(function () {});
 
       cell.classList.add('album-cell--active');
       activeCell = cell;
+
+      /* Stop after 35-second clip */
+      clearTimeout(stopTimer);
+      stopTimer = setTimeout(stopActive, 35000);
     }
 
     cells.forEach(function (cell) {
