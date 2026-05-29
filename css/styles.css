@@ -578,48 +578,51 @@ img.headshot {
 
 /* ─────────────────────────────────────────────────────────────────────────────
    7. ANIMATIONS
-   Uses an .is-visible class toggled by IntersectionObserver in main.js.
-   Graceful fallback: without JS, .js class is absent and all elements are
-   fully visible (no opacity: 0 risk).
+   Pure CSS staggered page-load reveal — no JS required.
+   animation-fill-mode: both keeps each element at opacity 0 until its
+   delay fires, then holds it at opacity 1 after the animation ends.
 ───────────────────────────────────────────────────────────────────────────── */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* Only apply entrance animation when JS is present */
-.js .hero,
-.js .section {
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity var(--transition-slow),
-    transform var(--transition-slow);
+/* Shared animation shorthand */
+.hero__name,
+.hero__tagline,
+.headshot-link,
+.hero__location,
+.hero__roles,
+.section.writing,
+.section.thinking,
+.section.photos,
+.social-links,
+.footer {
+  animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.js .hero.is-visible,
-.js .section.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Stagger delays — one block every 80ms */
+.hero__name       { animation-delay:   0ms; }
+.hero__tagline    { animation-delay:  80ms; }
+.headshot-link    { animation-delay: 160ms; }
+.hero__location   { animation-delay: 240ms; }
+.hero__roles      { animation-delay: 240ms; }
+.section.writing  { animation-delay: 320ms; }
+.section.thinking { animation-delay: 400ms; }
+.section.photos   { animation-delay: 480ms; }
+.social-links     { animation-delay: 560ms; }
+.footer           { animation-delay: 640ms; }
 
-/* Reduced-motion: skip all animation entirely */
+/* Reduced-motion: disable all entrance animations */
 @media (prefers-reduced-motion: reduce) {
-  .js .hero,
-  .js .section {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .hero__name, .hero__tagline, .headshot-link,
+  .hero__location, .hero__roles,
+  .section.writing, .section.thinking, .section.photos,
+  .social-links, .footer {
+    animation: none;
   }
 
   .arrow,
-  .social-links__item::after,
   .footer__email::after {
     transition: none;
   }
