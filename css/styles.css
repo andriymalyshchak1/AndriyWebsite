@@ -583,7 +583,7 @@ img.headshot {
    delay fires, then holds it at opacity 1 after the animation ends.
 ───────────────────────────────────────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(48px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
 
