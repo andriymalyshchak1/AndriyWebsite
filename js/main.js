@@ -207,7 +207,7 @@
 
       /* Stop after 35-second clip */
       clearTimeout(stopTimer);
-      stopTimer = setTimeout(stopActive, 45000);
+      stopTimer = setTimeout(stopActive, 60000);
     }
 
     cells.forEach(function (cell) {
