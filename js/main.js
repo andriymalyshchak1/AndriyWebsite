@@ -170,7 +170,7 @@
 
     /* <!-- REPLACE: swap each entry for a unique 20-second clip when ready --> */
     var CLIPS = [
-      'audio/fuckin-problems.mp3',
+      'audio/like-animal.mp3',
       'audio/Beto.mp3',
       'audio/MK.mp3',
       'audio/cinderella.mp3',
@@ -194,7 +194,7 @@
     }
 
     /* Start offset (seconds) per cell index — 0 = beginning of track */
-    var START_AT = [0, 50, 6, 0]; /* index 1 (Beto, top-right) starts at 50s | index 2 (MK) starts at 6s */
+    var START_AT = [45, 50, 6, 0]; /* index 0 (like-animal) starts at 45s | index 1 (Beto) starts at 50s | index 2 (MK) starts at 6s */
 
     function play(cell) {
       var idx = parseInt(cell.getAttribute('data-index'), 10);
