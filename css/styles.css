@@ -926,10 +926,10 @@ img.headshot {
    MUSIC PLAYER WIDGET  (index.html)
 ───────────────────────────────────────────────────────────────────────────── */
 
-/* Section wrapper — spacing between social links and contact divider */
+/* Section wrapper — spacing above social links */
 .music-player-wrap {
   margin-top: 32px;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 /* The pill button */
@@ -940,7 +940,7 @@ img.headshot {
   height: 36px;
   padding: 0 14px;
   width: fit-content;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   border: 0.5px solid var(--color-border-secondary);
   background: var(--color-surface);
   cursor: pointer;
