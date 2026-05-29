@@ -178,8 +178,6 @@
 
     function reset(cell) {
       cell.classList.remove('album-cell--active');
-      var btn = cell.querySelector('.album-cell__btn');
-      if (btn) btn.textContent = '▶';
     }
 
     function stopActive() {
@@ -195,8 +193,6 @@
       audio.play().catch(function () {});
 
       cell.classList.add('album-cell--active');
-      var btn = cell.querySelector('.album-cell__btn');
-      if (btn) btn.textContent = '⏸';
       activeCell = cell;
 
       /* Auto-stop after 20 seconds as a safety net for longer clips */

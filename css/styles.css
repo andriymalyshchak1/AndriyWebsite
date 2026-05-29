@@ -479,6 +479,8 @@ img.headshot {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
+  width: 85%;
+  margin: 0 auto;
 }
 
 .album-cell {
@@ -543,11 +545,45 @@ img.headshot {
   opacity: 1;
 }
 
-.album-cell__btn {
-  font-size: 11px;
+/* Play triangle SVG — visible at rest, hidden when active */
+.album-cell__play-icon {
   color: #1a1a1a;
-  line-height: 1;
-  margin-left: 1px; /* optical center for ▶ glyph */
+  display: block;
+  margin-left: 1px; /* optical center */
+  flex-shrink: 0;
+}
+
+.album-cell--active .album-cell__play-icon {
+  display: none;
+}
+
+/* Equalizer bars — hidden at rest, animate when active */
+.album-cell__eq {
+  display: none;
+  align-items: center;
+  gap: 2px;
+}
+
+.album-cell--active .album-cell__eq {
+  display: flex;
+}
+
+.album-cell__bar {
+  flex-shrink: 0;
+  width: 2px;
+  height: 5px;
+  border-radius: 1px;
+  background: #1a1a1a;
+}
+
+.album-cell--active .album-cell__bar:nth-child(1) {
+  animation: eq-bounce 0.6s ease-in-out infinite alternate;
+}
+.album-cell--active .album-cell__bar:nth-child(2) {
+  animation: eq-bounce 0.4s ease-in-out 0.15s infinite alternate;
+}
+.album-cell--active .album-cell__bar:nth-child(3) {
+  animation: eq-bounce 0.8s ease-in-out 0.05s infinite alternate;
 }
 
 /* Song title — bottom of cell, visible only when active */
