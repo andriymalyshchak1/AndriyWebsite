@@ -29,8 +29,15 @@
 
       <h1 class="hero__name">Andriy Malyshchak</h1>
 
-      <!-- EDIT: your one-liner tagline -->
-      <p class="hero__tagline">la vida ;)</p>
+      <!-- tagline doubles as music player — bars always animate -->
+      <button class="tagline-player" id="music-player" aria-label="Play Fuckin' Problems">
+        <span class="tagline-player__bars" aria-hidden="true">
+          <span class="tagline-player__bar"></span>
+          <span class="tagline-player__bar"></span>
+          <span class="tagline-player__bar"></span>
+        </span>
+        <span class="hero__tagline">la vida ;)</span>
+      </button>
 
       <!-- silent easter egg — no visible affordance intentional -->
       <a href="secret.html" class="headshot-link" tabindex="-1" aria-hidden="true">
@@ -113,27 +120,11 @@
 
         <!-- music player item -->
         <li class="thinking__item">
-          <button class="thinking-player" id="music-player" aria-label="Play Fuckin' Problems by ASAP">
+          <div class="thinking-player">
             <span class="thinking-player__title">
               Fuckin' Problems<span class="music-player__sep">·</span>ASAP
             </span>
-            <span class="thinking-player__controls">
-              <span class="music-player__equalizer" aria-hidden="true">
-                <span class="music-player__bar"></span>
-                <span class="music-player__bar"></span>
-                <span class="music-player__bar"></span>
-              </span>
-              <span class="music-player__icon" aria-hidden="true">
-                <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-play">
-                  <path d="M0 0L10 6L0 12V0Z"/>
-                </svg>
-                <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-pause" style="display:none">
-                  <rect x="0" y="0" width="3" height="12" rx="1.5"/>
-                  <rect x="7" y="0" width="3" height="12" rx="1.5"/>
-                </svg>
-              </span>
-            </span>
-          </button>
+          </div>
           <span class="thinking-player__source">my life</span>
         </li>
       </ul>
