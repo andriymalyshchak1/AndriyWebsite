@@ -153,6 +153,69 @@
     });
   }
 
+  /* ── 5. Album grid — tap-to-play covers ────────────────────────────────
+     One global Audio instance shared across all four cells.
+     Audio files: audio/clip-1.mp3 … audio/clip-4.mp3
+     <!-- REPLACE: drop 20-second MP3 clips into /audio and add song titles -->
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var cells = Array.from(document.querySelectorAll('.album-cell'));
+    if (!cells.length) return;
+
+    var CLIPS = [
+      'audio/clip-1.mp3',
+      'audio/clip-2.mp3',
+      'audio/clip-3.mp3',
+      'audio/clip-4.mp3',
+    ];
+
+    var audio      = new Audio();   /* single global instance — never create multiples */
+    var activeCell = null;
+    var stopTimer  = null;
+
+    audio.addEventListener('ended', stopActive);
+    window.addEventListener('pagehide', function () { audio.pause(); });
+
+    function reset(cell) {
+      cell.classList.remove('album-cell--active');
+      var btn = cell.querySelector('.album-cell__btn');
+      if (btn) btn.textContent = '▶';
+    }
+
+    function stopActive() {
+      clearTimeout(stopTimer);
+      audio.pause();
+      if (activeCell) { reset(activeCell); activeCell = null; }
+    }
+
+    function play(cell) {
+      var idx = parseInt(cell.getAttribute('data-index'), 10);
+      audio.src = CLIPS[idx];
+      audio.currentTime = 0;
+      audio.play().catch(function () {});
+
+      cell.classList.add('album-cell--active');
+      var btn = cell.querySelector('.album-cell__btn');
+      if (btn) btn.textContent = '⏸';
+      activeCell = cell;
+
+      /* Auto-stop after 20 seconds as a safety net for longer clips */
+      clearTimeout(stopTimer);
+      stopTimer = setTimeout(stopActive, 20000);
+    }
+
+    cells.forEach(function (cell) {
+      cell.addEventListener('click', function () {
+        if (cell === activeCell) {
+          stopActive();
+        } else {
+          if (activeCell) { clearTimeout(stopTimer); audio.pause(); reset(activeCell); }
+          play(cell);
+        }
+      });
+    });
+  }());
+
   /* Restore opacity if browser restores this page from bfcache (back button from secret.html) */
   window.addEventListener('pageshow', function (e) {
     if (e.persisted) {

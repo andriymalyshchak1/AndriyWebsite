@@ -473,6 +473,138 @@ img.headshot {
 
 
 /* ════════════════════════════════════════
+   ALBUM GRID — "on rotation"
+════════════════════════════════════════ */
+.album-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.album-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Cover — fills cell; swap the placeholder div for <img> when art is ready */
+.album-cell__cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dark overlay — fades in when cell is active */
+.album-cell__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+.album-cell--active .album-cell__overlay {
+  opacity: 1;
+}
+
+/* Centered play/pause circle — always visible at 0.3 opacity */
+.album-cell__hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+}
+
+/* Desktop hover only — touch devices stay at 0.3 */
+@media (hover: hover) {
+  .album-cell:hover .album-cell__hint {
+    opacity: 0.9;
+  }
+}
+
+.album-cell--active .album-cell__hint {
+  transform: translate(-50%, -50%) scale(1.25); /* 32px → 40px */
+  opacity: 1;
+}
+
+.album-cell__btn {
+  font-size: 11px;
+  color: #1a1a1a;
+  line-height: 1;
+  margin-left: 1px; /* optical center for ▶ glyph */
+}
+
+/* Song title — bottom of cell, visible only when active */
+.album-cell__title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  max-width: none;
+  pointer-events: none;
+}
+
+.album-cell--active .album-cell__title {
+  opacity: 1;
+}
+
+
+/* ════════════════════════════════════════
+   COOKING — "this week"
+════════════════════════════════════════ */
+.cooking__list {
+  /* list-style already reset globally */
+}
+
+.cooking__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+}
+
+/* 0.5px divider between rows — not above first, not below last */
+.cooking__item + .cooking__item {
+  border-top: 0.5px solid var(--color-divider);
+}
+
+.cooking__dish {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.cooking__prep {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+
+/* ════════════════════════════════════════
    PHOTOS — horizontal scroll strip
 ════════════════════════════════════════ */
 .photos {
@@ -605,27 +737,32 @@ img.headshot {
 .hero__roles,
 .section.writing,
 .section.thinking,
+.section.rotation,
+.section.cooking,
 .section.photos,
 .social-links,
 .footer {
   animation: fadeUp 1600ms cubic-bezier(0.45, 0, 0.55, 1) both;
 }
 
-.hero__tagline    { animation-delay:  45ms; }
-.headshot-link    { animation-delay:  90ms; }
-.hero__location   { animation-delay: 135ms; }
-.hero__roles      { animation-delay: 135ms; }
-.section.writing  { animation-delay: 180ms; }
-.section.thinking { animation-delay: 225ms; }
-.section.photos   { animation-delay: 270ms; }
-.social-links     { animation-delay: 315ms; }
-.footer           { animation-delay: 360ms; }
+.hero__tagline     { animation-delay:  45ms; }
+.headshot-link     { animation-delay:  90ms; }
+.hero__location    { animation-delay: 135ms; }
+.hero__roles       { animation-delay: 135ms; }
+.section.writing   { animation-delay: 180ms; }
+.section.thinking  { animation-delay: 225ms; }
+.section.rotation  { animation-delay: 270ms; }
+.section.cooking   { animation-delay: 315ms; }
+.section.photos    { animation-delay: 360ms; }
+.social-links      { animation-delay: 405ms; }
+.footer            { animation-delay: 450ms; }
 
 /* Reduced-motion: disable all entrance animations */
 @media (prefers-reduced-motion: reduce) {
   .hero__tagline, .headshot-link,
   .hero__location, .hero__roles,
-  .section.writing, .section.thinking, .section.photos,
+  .section.writing, .section.thinking,
+  .section.rotation, .section.cooking, .section.photos,
   .social-links, .footer {
     animation: none;
   }
