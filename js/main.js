@@ -162,11 +162,18 @@
     var cells = Array.from(document.querySelectorAll('.album-cell'));
     if (!cells.length) return;
 
+    /* Hide broken-image icons — cell background colour shows instead */
+    cells.forEach(function (cell) {
+      var img = cell.querySelector('img.album-cell__cover');
+      if (img) img.addEventListener('error', function () { this.style.display = 'none'; });
+    });
+
+    /* <!-- REPLACE: swap each entry for a unique 20-second clip when ready --> */
     var CLIPS = [
-      'audio/clip-1.mp3',
-      'audio/clip-2.mp3',
-      'audio/clip-3.mp3',
-      'audio/clip-4.mp3',
+      'audio/fuckin-problems.mp3',
+      'audio/fuckin-problems.mp3',
+      'audio/fuckin-problems.mp3',
+      'audio/fuckin-problems.mp3',
     ];
 
     var audio      = new Audio();   /* single global instance — never create multiples */

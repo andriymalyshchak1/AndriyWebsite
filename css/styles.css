@@ -478,17 +478,16 @@ img.headshot {
 .album-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  width: 85%;
-  margin: 0 auto;
+  gap: 6px;
 }
 
 .album-cell {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
+  background: var(--color-surface); /* shows when image is loading or absent */
 }
 
 /* Cover — fills cell; swap the placeholder div for <img> when art is ready */
@@ -515,7 +514,9 @@ img.headshot {
   opacity: 1;
 }
 
-/* Centered play/pause circle — always visible at 0.3 opacity */
+/* Centered play/pause circle — always visible at 0.3 opacity.
+   Grey circle + muted icon while placeholder is shown.
+   <!-- REPLACE: swap to background rgba(255,255,255,0.82) + icon color #1a1a1a when real art is added --> */
 .album-cell__hint {
   position: absolute;
   top: 50%;
@@ -524,7 +525,7 @@ img.headshot {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -547,7 +548,7 @@ img.headshot {
 
 /* Play triangle SVG — visible at rest, hidden when active */
 .album-cell__play-icon {
-  color: #1a1a1a;
+  color: var(--color-text-muted); /* <!-- REPLACE: swap to #1a1a1a when real art is added --> */
   display: block;
   margin-left: 1px; /* optical center */
   flex-shrink: 0;
@@ -573,7 +574,7 @@ img.headshot {
   width: 2px;
   height: 5px;
   border-radius: 1px;
-  background: #1a1a1a;
+  background: var(--color-text-muted); /* <!-- REPLACE: swap to #1a1a1a when real art is added --> */
 }
 
 .album-cell--active .album-cell__bar:nth-child(1) {
