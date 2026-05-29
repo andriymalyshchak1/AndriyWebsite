@@ -312,13 +312,23 @@ img.headshot {
   max-width: none;
 }
 
-/* ── Role / company ── */
-.hero__role {
+/* ── Roles grid — dots align because all rows share the same column widths ── */
+.hero__roles {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  row-gap: 6px;
+  margin-top: 6px;
   font-size: 13px;
   color: var(--color-text-muted);
-  margin-top: 6px;
-  margin-bottom: 0;
-  max-width: none;
+}
+
+.hero__role-prefix {
+  /* width is set by the grid to match the widest prefix across all rows */
+}
+
+.hero__role-title {
+  font-style: italic;
 }
 
 /* ── Social links — bottom of page ── */
