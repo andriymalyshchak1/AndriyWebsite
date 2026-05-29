@@ -302,29 +302,22 @@ img.headshot {
   opacity: 0.4;
 }
 
-/* ── Location ── */
-.hero__location {
-  font-size: 15px;
-  font-weight: var(--font-weight-regular);
-  color: var(--color-text);
-  margin-top: 16px;
-  margin-bottom: 0;
-  max-width: none;
-}
 
-/* ── Roles grid — dots align because all rows share the same column widths ── */
-.hero__roles {
+/* ── Meta grid — location + roles share columns so dots align perfectly ── */
+.hero__meta {
   display: grid;
   grid-template-columns: auto auto 1fr;
   align-items: baseline;
   row-gap: 6px;
-  margin-top: 6px;
+  margin-top: 16px;
   font-size: 13px;
   color: var(--color-text-muted);
 }
 
-.hero__role-prefix {
-  /* width is set by the grid to match the widest prefix across all rows */
+/* First 3 grid items = location row — slightly larger and full-color */
+.hero__meta > :nth-child(-n+3) {
+  font-size: 15px;
+  color: var(--color-text);
 }
 
 .hero__role-title {
