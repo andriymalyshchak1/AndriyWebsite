@@ -118,46 +118,10 @@
     <hr class="divider" aria-hidden="true" />
 
     <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         RECENT — label + music player + photo strip
+         PHOTOS — horizontal scroll strip
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-    <div class="recent-intro">
-      <span class="section__label">recent</span>
-
-      <!-- REPLACE: drop your MP3 into the /audio folder -->
-      <button
-        class="music-player"
-        id="music-player"
-        aria-label="Play Fuckin' Problems by ASAP Rocky"
-      >
-        <span class="music-player__left">
-          <span class="music-player__equalizer" aria-hidden="true">
-            <span class="music-player__bar"></span>
-            <span class="music-player__bar"></span>
-            <span class="music-player__bar"></span>
-          </span>
-          <span class="music-player__icon" aria-hidden="true">
-            <!-- play icon -->
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" id="icon-play">
-              <path d="M0 0L10 6L0 12V0Z"/>
-            </svg>
-            <!-- pause icon — hidden by default -->
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" id="icon-pause" style="display:none">
-              <rect x="0" y="0" width="3" height="12" rx="1.5"/>
-              <rect x="7" y="0" width="3" height="12" rx="1.5"/>
-            </svg>
-          </span>
-        </span>
-        <span class="music-player__info">
-          <span class="music-player__title">Fuckin' Problems</span>
-          <span class="sep" aria-hidden="true">·</span>
-          <span class="music-player__artist">ASAP</span>
-        </span>
-      </button>
-    </div>
-
-    <!-- photo strip -->
     <section class="section photos">
-      <span class="section__label" style="display:none"></span>
+      <span class="section__label">recent</span>
 
       <div class="photo-strip" role="region" aria-label="Recent photos">
         <img src="images/cover1.JPG" alt="" class="photo-strip__item" />
@@ -189,6 +153,30 @@
         rel="noopener noreferrer"
       >Instagram</a>
     </nav>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         MUSIC PLAYER — plain inline text
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <!-- REPLACE: drop the MP3 into /audio/fuckin-problems.mp3 -->
+    <button class="music-player" id="music-player" aria-label="Play Fuckin' Problems by ASAP">
+      <span class="music-player__left">
+        <span class="music-player__equalizer" aria-hidden="true">
+          <span class="music-player__bar"></span>
+          <span class="music-player__bar"></span>
+          <span class="music-player__bar"></span>
+        </span>
+        <span class="music-player__icon" aria-hidden="true">
+          <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-play">
+            <path d="M0 0L10 6L0 12V0Z"/>
+          </svg>
+          <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-pause" style="display:none">
+            <rect x="0" y="0" width="3" height="12" rx="1.5"/>
+            <rect x="7" y="0" width="3" height="12" rx="1.5"/>
+          </svg>
+        </span>
+      </span>
+      <span class="music-player__text">Fuckin' Problems<span class="music-player__sep">·</span>ASAP</span>
+    </button>
 
     <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
          FOOTER

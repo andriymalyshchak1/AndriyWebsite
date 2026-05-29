@@ -466,7 +466,6 @@ img.headshot {
    PHOTOS — horizontal scroll strip
 ════════════════════════════════════════ */
 .photos {
-  padding-top: 0;
   padding-bottom: var(--space-2);
 }
 
@@ -931,80 +930,65 @@ img.headshot {
    MUSIC PLAYER WIDGET  (index.html)
 ───────────────────────────────────────────────────────────────────────────── */
 
-/* "recent" label + music player — sits just below the divider */
-.recent-intro {
-  padding-top: var(--space-3);
-  padding-bottom: var(--space-1);
-}
-
-.recent-intro .section__label {
-  margin-bottom: var(--space-1-5);
-}
-
-/* The pill button */
+/* ── Music player — plain inline text line ── */
 .music-player {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 14px;
-  width: clamp(160px, 52vw, 220px);
-  border-radius: var(--radius-md);
-  border: 0.5px solid var(--color-border-secondary);
-  background: var(--color-surface);
-  cursor: pointer;
-  font-family: var(--font-sans);
-  /* Reset browser button defaults */
   -webkit-appearance: none;
   appearance: none;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
-}
-
-.music-player:hover {
-  border-color: var(--color-border-primary);
-  background: var(--color-surface-active);
-}
-
-.music-player:active {
-  transform: scale(0.98);
-  transition: transform 100ms ease;
-}
-
-/* Left slot — equalizer + icon share a fixed-size flex container */
-.music-player__left {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 24px;
+  font-family: var(--font-sans);
   display: flex;
   align-items: center;
   gap: 6px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.music-player:hover {
+  color: var(--color-text);
+}
+
+.music-player:active {
+  opacity: 0.7;
+  transition: opacity 100ms ease;
+}
+
+/* Left slot — equalizer + icon */
+.music-player__left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   flex-shrink: 0;
 }
 
-/* Icon — the SVG play/pause */
+/* SVG icon */
 .music-player__icon {
   display: flex;
   align-items: center;
-  color: var(--color-text);
+  color: inherit;
   line-height: 1;
 }
 
-/* Song info */
-.music-player__info {
-  display: flex;
-  align-items: center;
+/* "Fuckin' Problems · ASAP" */
+.music-player__text {
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  color: inherit;
   white-space: nowrap;
 }
 
-.music-player__title {
-  font-size: 13px;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
+/* Separator between title and artist */
+.music-player__sep {
+  display: inline-block;
+  margin: 0 6px;
+  opacity: 0.5;
 }
 
-.music-player__artist {
-  font-size: 13px;
-  color: var(--color-text-muted);
-}
-
-/* Equalizer bars — hidden when paused, animated when playing */
+/* Equalizer bars — hidden when paused, slide in when playing */
 .music-player__equalizer {
   display: flex;
   align-items: center;
@@ -1025,10 +1009,9 @@ img.headshot {
   width: 2px;
   height: 8px;
   border-radius: 1px;
-  background: var(--color-text-muted);
+  background: currentColor;
 }
 
-/* Staggered bounce animation — only runs while playing */
 .music-player--playing .music-player__bar:nth-child(1) {
   animation: eq-bounce 0.6s ease-in-out infinite alternate;
 }
@@ -1040,10 +1023,9 @@ img.headshot {
 }
 
 @keyframes eq-bounce {
-  from { height: 4px;  }
-  to   { height: 12px; }
+  from { height: 3px;  }
+  to   { height: 10px; }
 }
-
 
 @media (prefers-reduced-motion: reduce) {
   .music-player__bar {
