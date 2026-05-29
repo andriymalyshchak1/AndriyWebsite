@@ -186,7 +186,7 @@ p {
 .page {
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: var(--space-5) var(--padding-x) 0;
+  padding: var(--space-2) var(--padding-x) 0;
 }
 
 
@@ -636,7 +636,7 @@ img.headshot {
 /* ── Tablet / small desktop (640px+) ── */
 @media (min-width: 640px) {
   .page {
-    padding-top: var(--space-10);
+    padding-top: var(--space-5);
     padding-bottom: 0;
   }
 
