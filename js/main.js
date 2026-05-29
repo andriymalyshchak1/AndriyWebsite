@@ -1,12 +1,65 @@
 /**
  * main.js — minimal, purposeful JS for andriymalyshchak.com
  *
+ * 0. Typewriter effect on name
  * 1. Staggered entrance animations via IntersectionObserver
  * 2. Current year in footer
  */
 
 (function () {
   'use strict';
+
+  /* ── 0. Typewriter effect on name ───────────────────────────────────────
+     Types "Andriy Malyshchak" one character at a time with randomised
+     per-character delay. Cursor blinks 3 cycles after typing, then fades.
+     Skipped entirely under prefers-reduced-motion.
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var nameEl = document.querySelector('.hero__name');
+    if (!nameEl) return;
+
+    var NAME = 'Andriy Malyshchak';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    var textNode = document.createTextNode('');
+    var cursor   = document.createElement('span');
+    cursor.id = 'cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    cursor.textContent = '|';
+
+    nameEl.innerHTML = '';
+    nameEl.appendChild(textNode);
+    nameEl.appendChild(cursor);
+
+    var i = 0;
+
+    function typeNext() {
+      if (i >= NAME.length) {
+        setTimeout(function () {
+          cursor.style.transition = 'opacity 400ms ease';
+          cursor.style.opacity    = '0';
+          setTimeout(function () {
+            if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+          }, 400);
+        }, 1600);
+        return;
+      }
+
+      var ch = NAME[i];
+      textNode.textContent += ch;
+      i++;
+
+      var delay = Math.random() * 40 + 45;
+      if (ch === ' ') delay += 180;
+
+      setTimeout(typeNext, delay);
+    }
+
+    setTimeout(typeNext, 200);
+  }());
 
   /* ── 1. Staggered entrance animations ───────────────────────────────────
      CSS sets opacity:0 + translateY on .js .hero and .js .section.
