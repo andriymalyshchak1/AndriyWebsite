@@ -49,4 +49,18 @@
     yearEl.textContent = new Date().getFullYear();
   }
 
+  /* ── 3. Headshot easter egg — fade page out before navigating ────────── */
+  var headshotLink = document.querySelector('.headshot-link');
+  if (headshotLink) {
+    headshotLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      var href = this.getAttribute('href');
+      document.body.style.transition = 'opacity 350ms ease';
+      document.body.style.opacity = '0';
+      setTimeout(function () {
+        window.location.href = href;
+      }, 350);
+    });
+  }
+
 })();

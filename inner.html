@@ -14,6 +14,7 @@
 
   <link rel="stylesheet" href="css/styles.css" />
 
+  <style>body { opacity: 0; }</style>
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -75,6 +76,11 @@
   </main>
 
   <script src="js/main.js"></script>
+  <script>
+    // Fade body in on arrival
+    document.body.style.transition = 'opacity 400ms ease';
+    document.body.style.opacity = '1';
+  </script>
   <script>
     (function () {
       var el = document.querySelector('.article-content');
