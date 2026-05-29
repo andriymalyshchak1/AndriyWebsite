@@ -79,6 +79,7 @@ textarea {
   --color-text-muted:       #78716C;   /* secondary text, metadata             */
   --color-text-very-muted:  #A8A29E;   /* labels, timestamps, captions         */
   --color-divider:          rgba(0, 0, 0, 0.07);
+  --color-border:           rgba(28, 25, 23, 0.12); /* generic border / pull quote */
   --color-accent-border:    rgba(28, 25, 23, 0.14); /* writing section left bar */
   --color-focus-ring:       rgba(28, 25, 23, 0.35);
   --color-link-active:      #0C0A09;
@@ -622,4 +623,109 @@ img.headshot {
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
   }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ARTICLE PAGE  (article.html)
+   Extends the base stylesheet — no new tokens defined here.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Wider reading column than the homepage */
+.article-page {
+  max-width: 580px;
+}
+
+/* ── Entrance animation — whole page fades in as one unit ── */
+.js .article-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.js .article-content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .article-content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  min-height: 44px;
+  margin-bottom: 2.5rem;
+  transition: color var(--transition-fast);
+}
+
+.back-link:hover {
+  color: var(--color-text);
+}
+
+.back-link:active {
+  opacity: 0.65;
+  transition-duration: 50ms;
+}
+
+/* ── Article header ── */
+.article-header {
+  margin-bottom: 2.5rem;
+}
+
+.article-header__title {
+  font-size: clamp(26px, 5vw, 36px);
+  font-weight: var(--font-weight-light);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  max-width: none;
+}
+
+.article-header__byline {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+/* ── Article body ── */
+.article-body p {
+  font-size: var(--font-size-base);
+  line-height: 1.85;
+  color: var(--color-text);
+  max-width: 65ch;
+  margin-bottom: var(--space-3);
+}
+
+.article-body h2 {
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  color: var(--color-text);
+  margin-top: 2.5rem;
+  margin-bottom: var(--space-2);
+  max-width: none;
+}
+
+/* ── Pull quote ── */
+.pull-quote {
+  font-style: italic;
+  font-size: 20px;
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-loose);
+  color: var(--color-text);
+  border-left: 2px solid var(--color-border);
+  padding-left: 20px;
+  margin: 2rem 0;
+  max-width: 52ch;
 }

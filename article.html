@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- REPLACE: update description to match article title -->
+  <meta name="description" content="Andriy Malyshchak — How I think about product intuition." />
+  <!-- REPLACE: update title to match article -->
+  <title>How I think about product intuition — Andriy Malyshchak</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <main class="page article-page">
+    <div class="article-content">
+
+      <!-- ── BACK LINK ── -->
+      <a href="index.html" class="back-link">← andriymal.com</a>
+
+      <!-- ── HEADER ── -->
+      <header class="article-header">
+        <!-- REPLACE: article title -->
+        <h1 class="article-header__title">How I think about product intuition</h1>
+        <p class="article-header__byline">Andriy Malyshchak</p>
+      </header>
+
+      <hr class="divider" aria-hidden="true" />
+
+      <!-- ── BODY ── -->
+      <article class="article-body">
+
+        <!-- Opening -->
+        <p>
+          There's a version of product work that looks like spreadsheets, frameworks, and
+          prioritization matrices. That version is real — but it's not where the most
+          important decisions actually happen. The ones that matter tend to arrive quietly,
+          in the form of a feeling that something is off.
+        </p>
+        <p>
+          Most people who build products long enough develop a kind of internal signal — a
+          pull toward or away from a direction that's hard to articulate in a planning doc.
+          Call it taste, call it intuition, call it pattern recognition. Whatever it is,
+          it's the thing that separates the people who make things that resonate from the
+          people who make things that are merely correct.
+        </p>
+
+        <!-- REPLACE: pull quote -->
+        <blockquote class="pull-quote">
+          The best product decisions I've made didn't come from frameworks. They came from
+          noticing — and having the courage to act on what I noticed.
+        </blockquote>
+
+        <!-- REPLACE: section heading -->
+        <h2>Why this matters</h2>
+        <p>
+          We're in a moment where AI can generate options endlessly. Any product direction
+          you're considering, a model can now produce fifty variants of in minutes. That
+          abundance makes the framework layer cheaper, not more valuable. What it can't
+          replicate is the judgment about which of those fifty actually matters — and why.
+        </p>
+        <p>
+          Product intuition is the last thing to be abstracted. It lives in the details
+          you notice, the customers you've watched struggle, the moments where something
+          shipped and felt wrong even though it tested well. None of that lives in a model.
+          It lives in you.
+        </p>
+
+        <!-- REPLACE: section heading -->
+        <h2>What I've learned</h2>
+        <p>
+          The most useful thing I've done to build better intuition is stay close to
+          things that aren't working. Not to fix them immediately, but to sit with the
+          wrongness long enough to understand it. There's a habit most product people
+          develop of immediately pattern-matching a problem to a solution. Breaking that
+          habit — even briefly — is where the real insight tends to live.
+        </p>
+        <p>
+          The other thing: write down what you expected to happen before you ship
+          something. Not a PRD, not a spec — just a sentence. "I think users will do X."
+          Then go look at what they actually did. The gap between those two things is the
+          most useful signal I've found. Do it enough times and you stop predicting wrong
+          in the same ways. That's intuition.
+        </p>
+
+      </article>
+    </div><!-- /.article-content -->
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Trigger fade-in for the article content wrapper
+    (function () {
+      var el = document.querySelector('.article-content');
+      if (!el) return;
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              el.classList.add('is-visible');
+              observer.unobserve(el);
+            }
+          });
+        }, { threshold: 0.01 });
+        observer.observe(el);
+      } else {
+        el.classList.add('is-visible');
+      }
+    }());
+  </script>
+</body>
+</html>
