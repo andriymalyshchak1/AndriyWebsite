@@ -183,7 +183,7 @@ p {
 .page {
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: var(--space-5) var(--padding-x) var(--space-10);
+  padding: var(--space-5) var(--padding-x) var(--space-4);
 }
 
 
@@ -498,7 +498,7 @@ img.headshot {
    FOOTER
 ════════════════════════════════════════ */
 .footer {
-  padding-top: var(--space-5);
+  padding-top: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -611,7 +611,7 @@ img.headshot {
 @media (min-width: 640px) {
   .page {
     padding-top: var(--space-10);
-    padding-bottom: var(--space-10);
+    padding-bottom: var(--space-4);
   }
 
 }
