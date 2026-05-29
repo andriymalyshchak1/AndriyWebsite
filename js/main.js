@@ -194,7 +194,7 @@
     }
 
     /* Start offset (seconds) per cell index — 0 = beginning of track */
-    var START_AT = [0, 75, 6, 0]; /* index 1 (Fred, top-right) starts at 1:15 | index 2 (MK) starts at 6s */
+    var START_AT = [0, 50, 6, 0]; /* index 1 (Beto, top-right) starts at 50s | index 2 (MK) starts at 6s */
 
     function play(cell) {
       var idx = parseInt(cell.getAttribute('data-index'), 10);
