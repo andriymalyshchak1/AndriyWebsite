@@ -1,0 +1,634 @@
+/* =============================================================================
+   ANDRIY MALYSHCHAK — personal site styles
+   css/styles.css
+
+   Layers (in order):
+     1. Reset
+     2. Tokens          — CSS custom properties for every design decision
+     3. Typography      — base type scale and body defaults
+     4. Layout          — page container
+     5. Components      — shared, reusable pieces
+     6. Sections        — Hero · Writing · Thinking · Photos · Footer
+     7. Animations      — keyframes and entrance transitions
+     8. Responsive      — mobile-first breakpoint overrides
+============================================================================= */
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. RESET
+───────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Prevent iOS font inflation in landscape */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+hr {
+  border: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. TOKENS
+   Every color, size, duration, and radius is a variable here.
+   Changing a token propagates everywhere — never hardcode values below this.
+───────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* ── Colors ─────────────────────────────── */
+  --color-bg:               #F5F2EE;   /* warm off-white page background      */
+  --color-surface:          #EDE9E3;   /* card / placeholder background        */
+  --color-surface-active:   #E4DDD5;   /* surface on press                     */
+  --color-text:             #1C1917;   /* primary text                         */
+  --color-text-muted:       #78716C;   /* secondary text, metadata             */
+  --color-text-very-muted:  #A8A29E;   /* labels, timestamps, captions         */
+  --color-divider:          rgba(0, 0, 0, 0.07);
+  --color-accent-border:    rgba(28, 25, 23, 0.14); /* writing section left bar */
+  --color-focus-ring:       rgba(28, 25, 23, 0.35);
+  --color-link-active:      #0C0A09;
+
+  /* ── Typography ──────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+               system-ui, sans-serif;
+
+  /* Scale — use clamp() for the heading, px for everything else */
+  --font-size-2xs: 11px;
+  --font-size-xs:  12px;
+  --font-size-sm:  13px;
+  --font-size-md:  15px;
+  --font-size-base: 16px;
+  --font-size-lg:  17px;
+  --font-size-xl:  clamp(28px, 6vw, 38px);
+
+  --font-weight-light:   300;
+  --font-weight-regular: 400;
+  --font-weight-medium:  500;
+
+  --line-height-tight: 1.2;
+  --line-height-snug:  1.4;
+  --line-height-base:  1.55;
+  --line-height-loose: 1.7;
+
+  --letter-spacing-tight:   -0.5px;
+  --letter-spacing-normal:   0em;
+  --letter-spacing-wide:     0.02em;
+  --letter-spacing-wider:    0.06em;
+  --letter-spacing-label:    0.1em;
+
+  /* ── Spacing — 8px grid ──────────────────── */
+  --space-0-5:  4px;
+  --space-1:    8px;
+  --space-1-5: 12px;
+  --space-2:   16px;
+  --space-3:   24px;
+  --space-4:   32px;
+  --space-5:   40px;
+  --space-6:   48px;
+  --space-7:   56px;
+  --space-8:   64px;
+  --space-9:   72px;
+  --space-10:  80px;
+
+  /* ── Layout ──────────────────────────────── */
+  --max-width:    520px;
+  --padding-x:    24px;   /* horizontal page padding on mobile */
+
+  /* ── Radii ───────────────────────────────── */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-full: 9999px;
+
+  /* ── Transitions ─────────────────────────── */
+  --ease-default:      cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-fast:   150ms var(--ease-default);
+  --transition-base:   200ms var(--ease-default);
+  --transition-slow:   300ms var(--ease-default);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. TYPOGRAPHY
+───────────────────────────────────────────────────────────────────────────── */
+html {
+  font-size: var(--font-size-base);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Constrain body text line length for readability (~65 chars) */
+p {
+  max-width: 52ch;
+}
+
+/* Global focus ring — accessible and design-coherent */
+:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove focus ring for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. LAYOUT
+───────────────────────────────────────────────────────────────────────────── */
+.page {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-5) var(--padding-x) var(--space-10);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. COMPONENTS
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── .section — content section wrapper ── */
+.section {
+  padding: var(--space-5) 0;
+}
+
+/* ── .section__label — "writing", "what i'm thinking about", etc. ── */
+.section__label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-text-very-muted);
+  margin-bottom: var(--space-3);
+  /* Sentence case enforced in markup; no text-transform needed */
+}
+
+/* ── .divider — 0.5px section separator ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  /* Low opacity achieves the subtle 0.5px visual feel reliably across screens */
+  background-color: var(--color-divider);
+}
+
+/* ── .arrow — animated → glyph inside links ── */
+.arrow {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+  margin-left: 2px;
+  /* Prevent arrow from wrapping away from title text */
+  white-space: nowrap;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. SECTIONS
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+.hero {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-5);
+}
+
+/* Name */
+.hero__name {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+/* Tagline */
+.hero__tagline {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-snug);
+  margin-bottom: var(--space-4);
+  max-width: 38ch;
+}
+
+/* ── Headshot ── */
+.headshot {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+  /* Placeholder styles — overridden when content is an <img> */
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Direct <img> inside the div */
+.headshot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* When the headshot itself is an <img> (after swap) */
+img.headshot {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: transparent;
+}
+
+.headshot__initials {
+  font-size: 28px;
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-very-muted);
+  letter-spacing: var(--letter-spacing-wide);
+  user-select: none;
+}
+
+/* ── · separator — muted dot with breathing room ── */
+.sep {
+  display: inline-block;
+  margin: 0 8px;
+  opacity: 0.4;
+}
+
+/* ── Location ── */
+.hero__location {
+  font-size: 15px;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text);
+  margin-top: 16px;
+  margin-bottom: 0;
+  max-width: none;
+}
+
+/* ── Role / company ── */
+.hero__role {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 6px;
+  margin-bottom: 0;
+  max-width: none;
+}
+
+/* ── Social links — bottom of page ── */
+.social-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: var(--space-5) 0 var(--space-3);
+}
+
+.social-links__item {
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text);
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 0.5px solid transparent;
+  transition: border-color var(--transition-fast);
+}
+
+.social-links__item:hover {
+  border-bottom-color: currentColor;
+}
+
+.social-links__item:active {
+  opacity: 0.65;
+  transition-duration: 50ms;
+}
+
+
+/* ════════════════════════════════════════
+   WRITING
+════════════════════════════════════════ */
+.writing {
+}
+
+.writing__post {
+  /* Semantic wrapper — layout handled by .writing and child selectors */
+}
+
+.writing__title {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  color: var(--color-text);
+  cursor: pointer;
+  /* 44px tap target — use min-height with flex alignment */
+  min-height: 44px;
+  align-items: center;
+  margin-bottom: var(--space-1-5);
+  transition: color var(--transition-fast);
+  max-width: 44ch;
+}
+
+.writing__title:hover {
+  color: var(--color-link-active);
+}
+
+.writing__title:hover .arrow {
+  transform: translateX(3px);
+}
+
+.writing__title:active {
+  opacity: 0.65;
+  transition-duration: 50ms;
+}
+
+.writing__blurb {
+  font-size: 14px;
+  line-height: var(--line-height-loose);
+  color: var(--color-text-muted);
+  max-width: 50ch;
+}
+
+
+/* ════════════════════════════════════════
+   THINKING
+════════════════════════════════════════ */
+.thinking__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.thinking__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+}
+
+.thinking__title {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  cursor: pointer;
+  min-height: 44px;
+  line-height: var(--line-height-snug);
+  transition: color var(--transition-fast);
+  max-width: 46ch;
+}
+
+.thinking__title:hover {
+  color: var(--color-link-active);
+}
+
+.thinking__title:hover .arrow {
+  transform: translateX(3px);
+}
+
+.thinking__title:active {
+  opacity: 0.65;
+  transition-duration: 50ms;
+}
+
+.thinking__source {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-very-muted);
+  font-style: italic;
+  line-height: var(--line-height-base);
+  padding-left: 2px;
+}
+
+
+/* ════════════════════════════════════════
+   PHOTOS — horizontal scroll strip
+════════════════════════════════════════ */
+.photos {
+  /* Let the strip bleed edge-to-edge, then re-pad for the section label */
+}
+
+.photo-strip {
+  display: flex;
+  gap: var(--space-1-5);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--padding-x);
+  /* Hide scrollbar across browsers */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Break out of the page container to go edge-to-edge */
+  margin-left: calc(-1 * var(--padding-x));
+  margin-right: calc(-1 * var(--padding-x));
+  /* Re-apply padding so first card aligns with content above */
+  padding-left: var(--padding-x);
+  padding-right: var(--padding-x);
+  padding-bottom: var(--space-1); /* breathing room for iOS bounce */
+}
+
+.photo-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.photo-strip__item {
+  flex: 0 0 auto;
+  width: clamp(160px, 52vw, 220px);
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  scroll-snap-align: start;
+  object-fit: cover; /* works when item is an <img> directly */
+}
+
+.photo-strip__item--placeholder {
+  background-color: var(--color-surface);
+}
+
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+.footer {
+  padding-top: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.footer__email {
+  position: relative;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+}
+
+.footer__email::after {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--transition-base);
+}
+
+.footer__email:hover {
+  color: var(--color-text);
+}
+
+.footer__email:hover::after {
+  transform: scaleX(1);
+}
+
+.footer__email:active {
+  opacity: 0.65;
+  transition-duration: 50ms;
+}
+
+.footer__copy {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-very-muted);
+  white-space: nowrap;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   7. ANIMATIONS
+   Uses an .is-visible class toggled by IntersectionObserver in main.js.
+   Graceful fallback: without JS, .js class is absent and all elements are
+   fully visible (no opacity: 0 risk).
+───────────────────────────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Only apply entrance animation when JS is present */
+.js .hero,
+.js .section {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity var(--transition-slow),
+    transform var(--transition-slow);
+}
+
+.js .hero.is-visible,
+.js .section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced-motion: skip all animation entirely */
+@media (prefers-reduced-motion: reduce) {
+  .js .hero,
+  .js .section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .arrow,
+  .social-links__item::after,
+  .footer__email::after {
+    transition: none;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   8. RESPONSIVE
+   Mobile-first — base styles above target 390px.
+   These breakpoints add space and adjust proportions on larger screens.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Tablet / small desktop (640px+) ── */
+@media (min-width: 640px) {
+  .page {
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-10);
+  }
+
+  .headshot {
+    aspect-ratio: 1 / 1;
+  }
+
+  img.headshot {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* ── Large screen — center content, remove side padding ── */
+@media (min-width: 600px) {
+  .page {
+    /* Side padding becomes implicit via max-width centering */
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+}
