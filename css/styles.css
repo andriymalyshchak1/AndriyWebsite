@@ -427,13 +427,13 @@ img.headshot {
 .thinking__list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 10px; /* blurb → next title; min-height on title adds ~10px visual, total ~20px */
 }
 
 .thinking__item {
   display: flex;
   flex-direction: column;
-  gap: var(--space-0-5);
+  gap: 4px; /* title → its own blurb — stays tight */
 }
 
 .thinking__title {
