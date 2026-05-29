@@ -583,11 +583,11 @@ img.headshot {
    delay fires, then holds it at opacity 1 after the animation ends.
 ───────────────────────────────────────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* Shared animation shorthand */
+/* Shared animation — long duration + tight stagger = smooth wave overlap */
 .hero__name,
 .hero__tagline,
 .headshot-link,
@@ -598,20 +598,21 @@ img.headshot {
 .section.photos,
 .social-links,
 .footer {
-  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fadeUp 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Stagger delays — one block every 150ms */
-.hero__name       { animation-delay:    0ms; }
-.hero__tagline    { animation-delay:  150ms; }
-.headshot-link    { animation-delay:  300ms; }
-.hero__location   { animation-delay:  450ms; }
-.hero__roles      { animation-delay:  450ms; }
-.section.writing  { animation-delay:  600ms; }
-.section.thinking { animation-delay:  750ms; }
-.section.photos   { animation-delay:  900ms; }
-.social-links     { animation-delay: 1050ms; }
-.footer           { animation-delay: 1200ms; }
+/* 65ms stagger — tight enough that blocks heavily overlap, giving a
+   continuous unfurl rather than a step-by-step reveal */
+.hero__name       { animation-delay:   0ms; }
+.hero__tagline    { animation-delay:  65ms; }
+.headshot-link    { animation-delay: 130ms; }
+.hero__location   { animation-delay: 195ms; }
+.hero__roles      { animation-delay: 195ms; }
+.section.writing  { animation-delay: 260ms; }
+.section.thinking { animation-delay: 325ms; }
+.section.photos   { animation-delay: 390ms; }
+.social-links     { animation-delay: 455ms; }
+.footer           { animation-delay: 520ms; }
 
 /* Reduced-motion: disable all entrance animations */
 @media (prefers-reduced-motion: reduce) {
