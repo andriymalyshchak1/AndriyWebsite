@@ -227,40 +227,78 @@
     }
   });
 
-  /* ── 4. Photo strip — infinite scroll loop ─────────────────────────────
-     Clones all photos so the strip appears endless. After the user snaps
-     to a position inside the clone set, scrollLeft is instantly reset to
-     the matching position in the originals — no visible jump.
-     To add/remove photos, only edit the HTML — clones are auto-derived.
+  /* ── 4. Photo strip — seamless infinite scroll ──────────────────────────
+     Inner flex row: [originals…, clones…]. offset is incremented each rAF
+     frame. Reset (offset -= totalWidth) fires BEFORE the transform is
+     applied that frame — guarantees zero flash. Speed lerps smoothly.
+     To add/remove photos, only edit .photo-strip__inner in HTML.
   ─────────────────────────────────────────────────────────────────────── */
   (function () {
     var strip = document.querySelector('.photo-strip');
-    if (!strip) return;
+    var inner = strip && strip.querySelector('.photo-strip__inner');
+    if (!strip || !inner) return;
 
-    var items = Array.from(strip.querySelectorAll('.photo-strip__item'));
-    if (!items.length) return;
-
-    items.forEach(function (item) {
-      strip.appendChild(item.cloneNode(true));
-    });
-
-    var originalWidth = 0;
-
-    function calcOriginalWidth() {
-      var itemW = items[0].offsetWidth;
-      var gap   = parseFloat(getComputedStyle(strip).columnGap) || 12;
-      originalWidth = items.length * (itemW + gap);
+    /* Reduced-motion: restore manual overflow scroll */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      strip.style.overflowX = 'auto';
+      return;
     }
 
-    calcOriginalWidth();
-    window.addEventListener('load',   calcOriginalWidth);
-    window.addEventListener('resize', calcOriginalWidth);
+    /* Clone all originals — inner becomes [1…9, 1…9] */
+    var originals = Array.from(inner.children);
+    originals.forEach(function (el) { inner.appendChild(el.cloneNode(true)); });
 
-    strip.addEventListener('scrollend', function () {
-      if (originalWidth > 0 && strip.scrollLeft >= originalWidth) {
-        strip.scrollLeft -= originalWidth;
-      }
-    });
+    var DEFAULT_SPEED = 0.5;
+    var FAST_SPEED    = 3;
+    var LERP          = 0.08; /* controls smoothness of speed transitions */
+
+    var offset       = 0;
+    var curSpeed     = DEFAULT_SPEED;
+    var targetSpeed  = DEFAULT_SPEED;
+    var totalWidth   = 0;
+    var rafId        = null;
+    var isVisible    = false;
+
+    function calcTotalWidth() {
+      if (!originals[0]) return;
+      var gap = parseFloat(getComputedStyle(inner).columnGap) || 12;
+      totalWidth = originals.reduce(function (sum, el) {
+        return sum + el.offsetWidth + gap;
+      }, 0);
+    }
+
+    calcTotalWidth();
+    window.addEventListener('load',   calcTotalWidth);
+    window.addEventListener('resize', calcTotalWidth);
+
+    function tick() {
+      /* Lerp speed — smooth ease in/out with no abrupt jumps */
+      curSpeed += (targetSpeed - curSpeed) * LERP;
+
+      offset += curSpeed;
+
+      /* Reset BEFORE applying transform — no single-frame flash */
+      if (totalWidth > 0 && offset >= totalWidth) offset -= totalWidth;
+
+      inner.style.transform = 'translateX(' + (-offset) + 'px)';
+
+      rafId = isVisible ? requestAnimationFrame(tick) : null;
+    }
+
+    /* Pause rAF when strip is off-screen */
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        isVisible = e.isIntersecting;
+        if (isVisible && !rafId) rafId = requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.1 });
+    io.observe(strip);
+
+    /* Speed up on press, ease back on release */
+    strip.addEventListener('mousedown',  function () { targetSpeed = FAST_SPEED; });
+    strip.addEventListener('touchstart', function () { targetSpeed = FAST_SPEED; }, { passive: true });
+    document.addEventListener('mouseup', function () { targetSpeed = DEFAULT_SPEED; });
+    strip.addEventListener('touchend',   function () { targetSpeed = DEFAULT_SPEED; });
   }());
 
   /* ── 6. Headshot easter egg — fade page out before navigating ────────── */
