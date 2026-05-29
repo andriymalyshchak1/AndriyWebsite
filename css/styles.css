@@ -936,14 +936,13 @@ img.headshot {
 .music-player {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  height: 44px;
-  padding: 0 20px;
-  min-width: 200px;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
   width: fit-content;
   border-radius: 999px;
   border: 0.5px solid var(--color-border-secondary);
-  background: var(--color-bg);
+  background: var(--color-surface);
   cursor: pointer;
   font-family: var(--font-sans);
   /* Reset browser button defaults */
@@ -954,7 +953,7 @@ img.headshot {
 
 .music-player:hover {
   border-color: var(--color-border-primary);
-  background: var(--color-surface);
+  background: var(--color-surface-active);
 }
 
 .music-player:active {
@@ -1036,12 +1035,6 @@ img.headshot {
   to   { height: 12px; }
 }
 
-/* Mobile — full width for easy tap */
-@media (max-width: 520px) {
-  .music-player {
-    width: 100%;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .music-player__bar {
