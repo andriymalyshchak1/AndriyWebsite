@@ -56,7 +56,10 @@
 
   if (playerBtn) {
     var audio = null;
-    try { audio = new Audio('audio/fuckin-problems.mp3'); } catch (e) {}
+    try {
+      audio = new Audio('audio/fuckin-problems.mp3');
+      audio.currentTime = 20;
+    } catch (e) {}
 
     playerBtn.addEventListener('click', function () {
       if (!audio) return;
