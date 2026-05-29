@@ -201,10 +201,6 @@
 
       cell.classList.add('album-cell--active');
       activeCell = cell;
-
-      /* Auto-stop after 20 seconds as a safety net for longer clips */
-      clearTimeout(stopTimer);
-      stopTimer = setTimeout(stopActive, 20000);
     }
 
     cells.forEach(function (cell) {
