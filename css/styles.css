@@ -410,6 +410,10 @@ img.headshot {
 /* ════════════════════════════════════════
    THINKING
 ════════════════════════════════════════ */
+.thinking {
+  padding-bottom: var(--space-2);
+}
+
 .thinking__list {
   display: flex;
   flex-direction: column;
@@ -463,6 +467,7 @@ img.headshot {
 ════════════════════════════════════════ */
 .photos {
   /* Let the strip bleed edge-to-edge, then re-pad for the section label */
+  padding-top: var(--space-2);
 }
 
 .photo-strip {
@@ -928,8 +933,8 @@ img.headshot {
 
 /* Section wrapper — spacing around music player */
 .music-player-wrap {
-  margin-top: 16px;
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* The pill button */
