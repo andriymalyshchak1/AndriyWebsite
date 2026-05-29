@@ -478,7 +478,10 @@ img.headshot {
 .album-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 10px;
+  width: 75%;
+  max-width: 260px;
+  margin: 16px auto 0;
 }
 
 .album-cell {
@@ -514,14 +517,11 @@ img.headshot {
   opacity: 1;
 }
 
-/* Centered play/pause circle — always visible at 0.3 opacity.
-   Grey circle + muted icon while placeholder is shown.
-   <!-- REPLACE: swap to background rgba(255,255,255,0.82) + icon color #1a1a1a when real art is added --> */
+/* Bottom-left play circle — 0.35 opacity at rest, touch devices stay there */
 .album-cell__hint {
   position: absolute;
-  bottom: 10px;
+  bottom: 8px;
   left: 10px;
-  transform: scale(1);
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -529,20 +529,19 @@ img.headshot {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.75;
-  transition: opacity 150ms ease, transform 150ms ease;
+  opacity: 0.35;
+  transition: opacity 150ms ease;
   pointer-events: none;
 }
 
-/* Desktop hover only — touch devices stay at 0.3 */
+/* Desktop hover only — touch stays at 0.35 */
 @media (hover: hover) {
   .album-cell:hover .album-cell__hint {
-    opacity: 0.9;
+    opacity: 1;
   }
 }
 
 .album-cell--active .album-cell__hint {
-  transform: scale(1.25); /* 32px → 40px */
   opacity: 1;
 }
 
@@ -587,20 +586,19 @@ img.headshot {
   animation: eq-bounce 0.8s ease-in-out 0.05s infinite alternate;
 }
 
-/* Song title — bottom of cell, visible only when active */
+/* Song title — sits right of play circle on same baseline, visible when active */
 .album-cell__title {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px;
-  font-size: 12px;
+  bottom: 10px;
+  left: 44px; /* clears the 26px circle + 10px left offset + 8px gap */
+  font-size: 11px;
   font-weight: 400;
   color: #fff;
   opacity: 0;
   transition: opacity 200ms ease;
   max-width: none;
   pointer-events: none;
+  white-space: nowrap;
 }
 
 .album-cell--active .album-cell__title {
