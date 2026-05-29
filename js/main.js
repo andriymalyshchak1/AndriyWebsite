@@ -220,7 +220,43 @@
     }
   });
 
-  /* ── 4. Headshot easter egg — fade page out before navigating ────────── */
+  /* ── 4. Photo strip — infinite scroll loop ─────────────────────────────
+     Clones all photos so the strip appears endless. After the user snaps
+     to a position inside the clone set, scrollLeft is instantly reset to
+     the matching position in the originals — no visible jump.
+     To add/remove photos, only edit the HTML — clones are auto-derived.
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var strip = document.querySelector('.photo-strip');
+    if (!strip) return;
+
+    var items = Array.from(strip.querySelectorAll('.photo-strip__item'));
+    if (!items.length) return;
+
+    items.forEach(function (item) {
+      strip.appendChild(item.cloneNode(true));
+    });
+
+    var originalWidth = 0;
+
+    function calcOriginalWidth() {
+      var itemW = items[0].offsetWidth;
+      var gap   = parseFloat(getComputedStyle(strip).columnGap) || 12;
+      originalWidth = items.length * (itemW + gap);
+    }
+
+    calcOriginalWidth();
+    window.addEventListener('load',   calcOriginalWidth);
+    window.addEventListener('resize', calcOriginalWidth);
+
+    strip.addEventListener('scrollend', function () {
+      if (originalWidth > 0 && strip.scrollLeft >= originalWidth) {
+        strip.scrollLeft -= originalWidth;
+      }
+    });
+  }());
+
+  /* ── 6. Headshot easter egg — fade page out before navigating ────────── */
   var headshotLink = document.querySelector('.headshot-link');
   if (headshotLink) {
     headshotLink.addEventListener('click', function (e) {
