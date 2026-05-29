@@ -582,13 +582,13 @@ img.headshot {
    animation-fill-mode: both keeps each element at opacity 0 until its
    delay fires, then holds it at opacity 1 after the animation ends.
 ───────────────────────────────────────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0);   }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Slow ease-in-out so each element drifts in gradually rather than popping.
-   Tight stagger keeps heavy overlap — the whole page flows as one wave. */
+/* Pure opacity reveal — no movement, just light appearing top to bottom.
+   100ms stagger makes the sequence read clearly without feeling mechanical. */
 .hero__name,
 .hero__tagline,
 .headshot-link,
@@ -599,19 +599,19 @@ img.headshot {
 .section.photos,
 .social-links,
 .footer {
-  animation: fadeUp 1600ms cubic-bezier(0.45, 0, 0.55, 1) both;
+  animation: fadeIn 800ms ease both;
 }
 
 .hero__name       { animation-delay:   0ms; }
-.hero__tagline    { animation-delay:  45ms; }
-.headshot-link    { animation-delay:  90ms; }
-.hero__location   { animation-delay: 135ms; }
-.hero__roles      { animation-delay: 135ms; }
-.section.writing  { animation-delay: 180ms; }
-.section.thinking { animation-delay: 225ms; }
-.section.photos   { animation-delay: 270ms; }
-.social-links     { animation-delay: 315ms; }
-.footer           { animation-delay: 360ms; }
+.hero__tagline    { animation-delay: 100ms; }
+.headshot-link    { animation-delay: 200ms; }
+.hero__location   { animation-delay: 300ms; }
+.hero__roles      { animation-delay: 300ms; }
+.section.writing  { animation-delay: 400ms; }
+.section.thinking { animation-delay: 500ms; }
+.section.photos   { animation-delay: 600ms; }
+.social-links     { animation-delay: 700ms; }
+.footer           { animation-delay: 800ms; }
 
 /* Reduced-motion: disable all entrance animations */
 @media (prefers-reduced-motion: reduce) {
@@ -620,6 +620,7 @@ img.headshot {
   .section.writing, .section.thinking, .section.photos,
   .social-links, .footer {
     animation: none;
+    opacity: 1;
   }
 
   .arrow,
