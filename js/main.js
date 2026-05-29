@@ -173,7 +173,7 @@
       'audio/fuckin-problems.mp3',
       'audio/fuckin-problems.mp3',
       'audio/fuckin-problems.mp3',
-      'audio/fuckin-problems.mp3',
+      'audio/cinderella.mp3',
     ];
 
     var audio      = new Audio();   /* single global instance — never create multiples */
