@@ -171,7 +171,7 @@
     /* <!-- REPLACE: swap each entry for a unique 20-second clip when ready --> */
     var CLIPS = [
       'audio/fuckin-problems.mp3',
-      'audio/fuckin-problems.mp3',
+      'audio/Fred.mp3',
       'audio/MK.mp3',
       'audio/Bad-B.mp3',
     ];
