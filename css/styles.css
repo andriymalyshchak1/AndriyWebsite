@@ -529,12 +529,12 @@ img.headshot {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.35;
+  opacity: 0.72;
   transition: opacity 150ms ease;
   pointer-events: none;
 }
 
-/* Desktop hover only — touch stays at 0.35 */
+/* Desktop hover only — touch stays at 0.72 */
 @media (hover: hover) {
   .album-cell:hover .album-cell__hint {
     opacity: 1;
