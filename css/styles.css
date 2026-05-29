@@ -652,6 +652,14 @@ img.headshot {
   margin-left: calc(-1 * var(--padding-x));
   margin-right: calc(-1 * var(--padding-x));
   padding-bottom: var(--space-1);
+  cursor: grab;
+  touch-action: pan-y; /* horizontal is JS-driven; vertical stays native */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.photo-strip:active {
+  cursor: grabbing;
 }
 
 /* Inner flex row — the JS translateX target.

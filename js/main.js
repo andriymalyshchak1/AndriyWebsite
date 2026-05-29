@@ -227,65 +227,106 @@
     }
   });
 
-  /* ── 4. Photo strip — seamless infinite scroll ──────────────────────────
-     Inner flex row: [originals…, clones…]. offset is incremented each rAF
-     frame. Reset (offset -= totalWidth) fires BEFORE the transform is
-     applied that frame — guarantees zero flash. Speed lerps smoothly.
-     To add/remove photos, only edit .photo-strip__inner in HTML.
+  /* ── 4. Photo strip — seamless infinite scroll + native-feel swipe ────
+     Auto-scrolls at 1.2px/frame. Touch/mouse drag is 1:1 with finger.
+     Momentum on release (0.94 decay). Direction lock prevents hijacking
+     vertical page scroll on mobile. To add/remove photos, only edit the
+     <img> tags inside .photo-strip__inner in HTML.
   ─────────────────────────────────────────────────────────────────────── */
   (function () {
     var strip = document.querySelector('.photo-strip');
     var inner = strip && strip.querySelector('.photo-strip__inner');
     if (!strip || !inner) return;
 
-    /* Reduced-motion: restore manual overflow scroll */
+    /* Reduced-motion: restore manual scroll */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      strip.style.overflowX = 'auto';
+      strip.style.overflowX    = 'scroll';
+      strip.style.scrollSnapType = 'x mandatory';
+      strip.style.webkitOverflowScrolling = 'touch';
+      strip.style.cursor = 'default';
       return;
     }
 
-    /* Clone all originals — inner becomes [1…9, 1…9] */
+    /* Clone originals — inner becomes [1…9, 1…9] */
     var originals = Array.from(inner.children);
     originals.forEach(function (el) { inner.appendChild(el.cloneNode(true)); });
 
-    var DEFAULT_SPEED = 0.5;
-    var FAST_SPEED    = 3;
-    var LERP          = 0.08; /* controls smoothness of speed transitions */
+    /* Constants */
+    var DEFAULT_SPEED = 1.2;
+    var LERP          = 0.08;
 
-    var offset       = 0;
-    var curSpeed     = DEFAULT_SPEED;
-    var targetSpeed  = DEFAULT_SPEED;
-    var totalWidth   = 0;
-    var rafId        = null;
-    var isVisible    = false;
+    /* Auto-scroll state */
+    var offset         = 0;
+    var curSpeed       = DEFAULT_SPEED;
+    var totalWidth     = 0;
+    var rafId          = null;
+    var isVisible      = false;
 
+    /* Drag state */
+    var isDragging       = false;
+    var dragStartX       = 0;
+    var dragStartOffset  = 0;
+    var lastDragX        = 0;
+    var dragVelocity     = 0;
+    var momentumActive   = false;
+    var autoScrollPaused = false;
+    var isHorizontalDrag = null;
+    var touchStartY      = 0;
+
+    /* --- totalWidth --- */
     function calcTotalWidth() {
       if (!originals[0]) return;
       var gap = parseFloat(getComputedStyle(inner).columnGap) || 12;
       totalWidth = originals.reduce(function (sum, el) {
         return sum + el.offsetWidth + gap;
       }, 0);
+      if (totalWidth > 0) offset = offset % totalWidth;
     }
 
     calcTotalWidth();
-    window.addEventListener('load',   calcTotalWidth);
-    window.addEventListener('resize', calcTotalWidth);
+    window.addEventListener('load', calcTotalWidth);
 
-    function tick() {
-      /* Lerp speed — smooth ease in/out with no abrupt jumps */
-      curSpeed += (targetSpeed - curSpeed) * LERP;
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(calcTotalWidth, 150);
+    });
 
-      offset += curSpeed;
+    /* --- Helpers --- */
+    function applyLoopWrap() {
+      if (totalWidth <= 0) return;
+      while (offset < 0)           offset += totalWidth;
+      while (offset >= totalWidth) offset -= totalWidth;
+    }
 
-      /* Reset BEFORE applying transform — no single-frame flash */
-      if (totalWidth > 0 && offset >= totalWidth) offset -= totalWidth;
-
+    function applyTransform() {
       inner.style.transform = 'translateX(' + (-offset) + 'px)';
+    }
+
+    /* --- rAF loop --- */
+    function tick() {
+      if (isDragging) {
+        /* Transform applied directly in move handler — just keep loop alive */
+      } else if (momentumActive) {
+        dragVelocity *= 0.94;
+        offset += dragVelocity;
+        if (Math.abs(dragVelocity) < 0.15) {
+          momentumActive   = false;
+          autoScrollPaused = false;
+        }
+        applyLoopWrap();
+        applyTransform();
+      } else if (!autoScrollPaused) {
+        curSpeed += (DEFAULT_SPEED - curSpeed) * LERP;
+        offset   += curSpeed;
+        applyLoopWrap();
+        applyTransform();
+      }
 
       rafId = isVisible ? requestAnimationFrame(tick) : null;
     }
 
-    /* Pause rAF when strip is off-screen */
+    /* IntersectionObserver — pause off-screen */
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         isVisible = e.isIntersecting;
@@ -294,11 +335,99 @@
     }, { threshold: 0.1 });
     io.observe(strip);
 
-    /* Speed up on press, ease back on release */
-    strip.addEventListener('mousedown',  function () { targetSpeed = FAST_SPEED; });
-    strip.addEventListener('touchstart', function () { targetSpeed = FAST_SPEED; }, { passive: true });
-    document.addEventListener('mouseup', function () { targetSpeed = DEFAULT_SPEED; });
-    strip.addEventListener('touchend',   function () { targetSpeed = DEFAULT_SPEED; });
+    /* --- Touch handlers --- */
+    function onTouchStart(e) {
+      var t        = e.touches[0];
+      isDragging       = true;
+      autoScrollPaused = true;
+      momentumActive   = false;
+      dragStartX       = t.clientX;
+      touchStartY      = t.clientY;
+      dragStartOffset  = offset;
+      lastDragX        = t.clientX;
+      dragVelocity     = 0;
+      isHorizontalDrag = null;
+    }
+
+    function onTouchMove(e) {
+      if (!isDragging) return;
+      var t        = e.touches[0];
+      var currentX = t.clientX;
+      var currentY = t.clientY;
+
+      /* Determine direction on first movement */
+      if (isHorizontalDrag === null) {
+        var dx = Math.abs(currentX - dragStartX);
+        var dy = Math.abs(currentY - touchStartY);
+        isHorizontalDrag = dx > dy;
+      }
+
+      if (!isHorizontalDrag) return; /* let page scroll vertically */
+
+      e.preventDefault(); /* block rubber-band / overscroll */
+
+      dragVelocity = lastDragX - currentX;
+      lastDragX    = currentX;
+      offset       = dragStartOffset + (dragStartX - currentX);
+      applyLoopWrap();
+      applyTransform();
+    }
+
+    function onTouchEnd() {
+      if (!isDragging) return;
+      isDragging       = false;
+      isHorizontalDrag = null;
+      if (Math.abs(dragVelocity) > 0.5) {
+        momentumActive = true;
+      } else {
+        autoScrollPaused = false;
+      }
+    }
+
+    strip.addEventListener('touchstart',  onTouchStart, { passive: false });
+    strip.addEventListener('touchmove',   onTouchMove,  { passive: false });
+    strip.addEventListener('touchend',    onTouchEnd,   { passive: true  });
+    strip.addEventListener('touchcancel', onTouchEnd,   { passive: true  });
+
+    /* --- Mouse handlers --- */
+    function onMouseDown(e) {
+      isDragging       = true;
+      autoScrollPaused = true;
+      momentumActive   = false;
+      dragStartX       = e.clientX;
+      dragStartOffset  = offset;
+      lastDragX        = e.clientX;
+      dragVelocity     = 0;
+      isHorizontalDrag = true;
+      strip.style.cursor = 'grabbing';
+      e.preventDefault();
+    }
+
+    function onMouseMove(e) {
+      if (!isDragging) return;
+      dragVelocity = lastDragX - e.clientX;
+      lastDragX    = e.clientX;
+      offset       = dragStartOffset + (dragStartX - e.clientX);
+      applyLoopWrap();
+      applyTransform();
+    }
+
+    function onMouseUp() {
+      if (!isDragging) return;
+      isDragging         = false;
+      isHorizontalDrag   = null;
+      strip.style.cursor = 'grab';
+      if (Math.abs(dragVelocity) > 0.5) {
+        momentumActive = true;
+      } else {
+        autoScrollPaused = false;
+      }
+    }
+
+    strip.addEventListener('mousedown',  onMouseDown);
+    strip.addEventListener('mousemove',  onMouseMove);
+    strip.addEventListener('mouseup',    onMouseUp);
+    strip.addEventListener('mouseleave', onMouseUp);
   }());
 
   /* ── 6. Headshot easter egg — fade page out before navigating ────────── */
