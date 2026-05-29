@@ -86,6 +86,19 @@
         playerBtn.setAttribute('aria-label', "Play Fuckin' Problems by ASAP Rocky");
       });
     }
+
+    /* Kill audio whenever the user leaves the page (covers all links +
+       Chrome's back/forward cache restoring a playing page) */
+    window.addEventListener('pagehide', function () {
+      if (audio) audio.pause();
+    });
+
+    /* Also stop immediately on any outbound link click */
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (audio) audio.pause();
+      });
+    });
   }
 
   /* ── 4. Headshot easter egg — fade page out before navigating ────────── */
