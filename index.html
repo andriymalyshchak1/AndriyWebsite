@@ -118,9 +118,11 @@
     <hr class="divider" aria-hidden="true" />
 
     <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         MUSIC PLAYER
+         RECENT — label + music player + photo strip
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-    <div class="music-player-wrap">
+    <div class="recent-intro">
+      <span class="section__label">recent</span>
+
       <!-- REPLACE: drop your MP3 into the /audio folder -->
       <button
         class="music-player"
@@ -153,11 +155,9 @@
       </button>
     </div>
 
-    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         PHOTOS — horizontal scroll strip
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <!-- photo strip -->
     <section class="section photos">
-      <span class="section__label">recent</span>
+      <span class="section__label" style="display:none"></span>
 
       <div class="photo-strip" role="region" aria-label="Recent photos">
         <img src="images/cover1.JPG" alt="" class="photo-strip__item" />

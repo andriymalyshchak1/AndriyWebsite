@@ -466,8 +466,7 @@ img.headshot {
    PHOTOS — horizontal scroll strip
 ════════════════════════════════════════ */
 .photos {
-  /* Let the strip bleed edge-to-edge, then re-pad for the section label */
-  padding-top: var(--space-2);
+  padding-top: 0;
   padding-bottom: var(--space-2);
 }
 
@@ -932,10 +931,14 @@ img.headshot {
    MUSIC PLAYER WIDGET  (index.html)
 ───────────────────────────────────────────────────────────────────────────── */
 
-/* Section wrapper — spacing around music player */
-.music-player-wrap {
-  margin-top: 0;
-  margin-bottom: 0;
+/* "recent" label + music player — sits just below the divider */
+.recent-intro {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-1);
+}
+
+.recent-intro .section__label {
+  margin-bottom: var(--space-1-5);
 }
 
 /* The pill button */
