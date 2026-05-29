@@ -57,7 +57,7 @@
   if (playerBtn) {
     var audio = null;
     try {
-      audio = new Audio('audio/fuckin-problems.mp3');
+      audio = new Audio('audio/fuckin-problems.mov');
       audio.currentTime = 20;
     } catch (e) {}
 
