@@ -948,7 +948,7 @@ img.headshot {
   gap: 8px;
   height: 36px;
   padding: 0 14px;
-  width: 100%;
+  width: clamp(160px, 52vw, 220px);
   border-radius: var(--radius-md);
   border: 0.5px solid var(--color-border-secondary);
   background: var(--color-surface);
