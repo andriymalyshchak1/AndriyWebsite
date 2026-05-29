@@ -977,6 +977,7 @@ img.headshot {
   position: absolute;
   top: var(--padding-x);
   left: var(--padding-x);
+  z-index: 10; /* stays above .secret-content stacking context */
 }
 
 /* Fade-in wrapper — centered in the viewport */
