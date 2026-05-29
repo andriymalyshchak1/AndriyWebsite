@@ -1064,8 +1064,8 @@ img.headshot {
 
 .thinking-player__source {
   display: block;
-  font-size: 13px;
-  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-very-muted);
   font-style: italic;
   margin-top: 4px;
 }
