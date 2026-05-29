@@ -330,6 +330,18 @@ img.headshot {
   font-style: italic;
 }
 
+.hero__role-link {
+  text-decoration: underline;
+  text-decoration-color: rgba(120, 113, 108, 0.4);
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: text-decoration-color var(--transition-fast);
+}
+
+.hero__role-link:hover {
+  text-decoration-color: var(--color-text-muted);
+}
+
 /* ── Social links — bottom of page ── */
 .social-links {
   display: flex;
@@ -346,12 +358,14 @@ img.headshot {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  border-bottom: 0.5px solid transparent;
-  transition: border-color var(--transition-fast);
+  text-decoration: underline;
+  text-decoration-color: rgba(28, 25, 23, 0.3);
+  text-underline-offset: 2px;
+  transition: text-decoration-color var(--transition-fast);
 }
 
 .social-links__item:hover {
-  border-bottom-color: currentColor;
+  text-decoration-color: var(--color-text);
 }
 
 .social-links__item:active {
