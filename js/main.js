@@ -194,7 +194,7 @@
     }
 
     /* Start offset (seconds) per cell index — 0 = beginning of track */
-    var START_AT = [0, 75, 0, 0]; /* index 1 (Fred, top-right) starts at 1:15 */
+    var START_AT = [0, 75, 1, 0]; /* index 1 (Fred, top-right) starts at 1:15 | index 2 (MK) starts at 1s */
 
     function play(cell) {
       var idx = parseInt(cell.getAttribute('data-index'), 10);
