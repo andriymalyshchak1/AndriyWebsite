@@ -522,8 +522,8 @@ img.headshot {
   bottom: 10px;
   left: 10px;
   transform: scale(1);
-  width: 29px;
-  height: 29px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.82);
   display: flex;
