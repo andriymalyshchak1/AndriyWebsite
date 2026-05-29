@@ -29,10 +29,32 @@
 
       <h1 class="hero__name">Andriy Malyshchak</h1>
 
-      <!-- EDIT: your one-liner tagline — aim for 8–12 words -->
-      <p class="hero__tagline">
-        la vida ;)
-      </p>
+      <!-- tagline + music player on one row -->
+      <div class="hero__tagline-row">
+        <!-- EDIT: your one-liner tagline -->
+        <p class="hero__tagline">la vida ;)</p>
+
+        <!-- REPLACE: drop the MP3 into /audio/fuckin-problems.mp3 -->
+        <button class="music-player" id="music-player" aria-label="Play Fuckin' Problems by ASAP">
+          <span class="music-player__text">Fuckin' Problems<span class="music-player__sep">·</span>ASAP</span>
+          <span class="music-player__left">
+            <span class="music-player__equalizer" aria-hidden="true">
+              <span class="music-player__bar"></span>
+              <span class="music-player__bar"></span>
+              <span class="music-player__bar"></span>
+            </span>
+            <span class="music-player__icon" aria-hidden="true">
+              <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-play">
+                <path d="M0 0L10 6L0 12V0Z"/>
+              </svg>
+              <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-pause" style="display:none">
+                <rect x="0" y="0" width="3" height="12" rx="1.5"/>
+                <rect x="7" y="0" width="3" height="12" rx="1.5"/>
+              </svg>
+            </span>
+          </span>
+        </button>
+      </div>
 
       <!-- silent easter egg — no visible affordance intentional -->
       <a href="secret.html" class="headshot-link" tabindex="-1" aria-hidden="true">
@@ -121,29 +143,6 @@
          PHOTOS — horizontal scroll strip
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
     <section class="section photos">
-      <span class="section__label">recent</span>
-
-      <!-- REPLACE: drop the MP3 into /audio/fuckin-problems.mp3 -->
-      <button class="music-player" id="music-player" aria-label="Play Fuckin' Problems by ASAP">
-        <span class="music-player__text">Fuckin' Problems<span class="music-player__sep">·</span>ASAP</span>
-        <span class="music-player__left">
-          <span class="music-player__equalizer" aria-hidden="true">
-            <span class="music-player__bar"></span>
-            <span class="music-player__bar"></span>
-            <span class="music-player__bar"></span>
-          </span>
-          <span class="music-player__icon" aria-hidden="true">
-            <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-play">
-              <path d="M0 0L10 6L0 12V0Z"/>
-            </svg>
-            <svg width="9" height="11" viewBox="0 0 10 12" fill="currentColor" id="icon-pause" style="display:none">
-              <rect x="0" y="0" width="3" height="12" rx="1.5"/>
-              <rect x="7" y="0" width="3" height="12" rx="1.5"/>
-            </svg>
-          </span>
-        </span>
-      </button>
-
       <div class="photo-strip" role="region" aria-label="Recent photos">
         <img src="images/cover1.JPG" alt="" class="photo-strip__item" />
         <img src="images/cover2.jpg" alt="" class="photo-strip__item" />

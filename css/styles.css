@@ -250,14 +250,31 @@ p {
   margin-bottom: var(--space-1);
 }
 
+/* Tagline row — tagline left, music player right */
+.hero__tagline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
 /* Tagline */
 .hero__tagline {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
   line-height: var(--line-height-snug);
-  margin-bottom: var(--space-4);
+  margin-bottom: 0;
   max-width: 38ch;
+}
+
+/* Stack vertically on narrow screens */
+@media (max-width: 480px) {
+  .hero__tagline-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 }
 
 /* ── Headshot ── */
@@ -410,10 +427,6 @@ img.headshot {
 /* ════════════════════════════════════════
    THINKING
 ════════════════════════════════════════ */
-.thinking {
-  padding-bottom: var(--space-2);
-}
-
 .thinking__list {
   display: flex;
   flex-direction: column;
@@ -466,7 +479,7 @@ img.headshot {
    PHOTOS — horizontal scroll strip
 ════════════════════════════════════════ */
 .photos {
-  padding-bottom: var(--space-2);
+  /* photo strip only — no label, no player */
 }
 
 .photo-strip {
@@ -937,8 +950,6 @@ img.headshot {
   background: none;
   border: none;
   padding: 0;
-  margin-top: 10px;
-  margin-bottom: 14px;
   font-family: var(--font-sans);
   display: flex;
   align-items: center;
