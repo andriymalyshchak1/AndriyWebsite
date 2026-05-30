@@ -226,39 +226,38 @@
     });
   }());
 
-  /* ── 7. Touch scale — headshot, album covers, photo strip images ────────
-     CSS hover handles desktop. JS handles touch: scale up on touchstart,
-     spring back on touchend. Photo strip images cancel scale on touchmove
-     so drag and scale don't conflict.
+  /* ── 7. Bubble expand — headshot, album cells, photo strip items ────────
+     CSS hover handles desktop. JS adds/removes .is-hovered on touch.
+     Container scales + margin-bottom expands so content below shifts.
+     Photo strip cancels on touchmove so drag is never fought.
   ─────────────────────────────────────────────────────────────────────── */
   (function () {
-    var SPRING   = 'transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)';
-    var EASE_OUT = 'transform 400ms cubic-bezier(0.25, 1, 0.5, 1)';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    function scaleUp(el)   { el.style.transition = SPRING;   el.style.transform = 'scale(1.03)'; }
-    function scaleDown(el) { el.style.transition = EASE_OUT; el.style.transform = 'scale(1)'; }
+    function expand(el)   { el.classList.add('is-hovered'); }
+    function contract(el) { el.classList.remove('is-hovered'); }
 
-    function bindScale(el, cancelOnMove) {
-      el.addEventListener('touchstart',  function () { scaleUp(el);   }, { passive: true });
+    function bind(el, cancelOnMove) {
+      el.addEventListener('touchstart',  function () { expand(el);   }, { passive: true });
       if (cancelOnMove) {
-        el.addEventListener('touchmove', function () { scaleDown(el); }, { passive: true });
+        el.addEventListener('touchmove', function () { contract(el); }, { passive: true });
       }
-      el.addEventListener('touchend',    function () { scaleDown(el); }, { passive: true });
-      el.addEventListener('touchcancel', function () { scaleDown(el); }, { passive: true });
+      el.addEventListener('touchend',    function () { contract(el); }, { passive: true });
+      el.addEventListener('touchcancel', function () { contract(el); }, { passive: true });
     }
 
-    /* Headshot */
-    var headshot = document.getElementById('headshot');
-    if (headshot) bindScale(headshot, false);
+    /* Headshot wrapper */
+    var headshotLink = document.querySelector('.headshot-link');
+    if (headshotLink) bind(headshotLink, false);
 
-    /* Album covers */
-    document.querySelectorAll('.album-cell__cover').forEach(function (img) {
-      bindScale(img, false);
+    /* Album cells (the full cell frame, not the inner cover) */
+    document.querySelectorAll('.album-cell').forEach(function (cell) {
+      bind(cell, false);
     });
 
-    /* Photo strip — cancel on touchmove so drag isn't fought */
-    document.querySelectorAll('.photo-strip__item').forEach(function (img) {
-      bindScale(img, true);
+    /* Photo strip items — cancel on touchmove so drag isn't fought */
+    document.querySelectorAll('.photo-strip__item').forEach(function (item) {
+      bind(item, true);
     });
   }());
 
