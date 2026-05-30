@@ -199,15 +199,15 @@ p {
   padding: var(--space-5) 0;
 }
 
-/* ── .section__label — "writing", "what i'm thinking about", etc. ── */
+/* ── .section__label — "my thoughts", "what i'm thinking about", etc. ── */
 .section__label {
   display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--color-text-very-muted);
-  margin-bottom: var(--space-3);
-  /* Sentence case enforced in markup; no text-transform needed */
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 1.25rem;
 }
 
 /* ── .divider — 0.5px section separator ── */
