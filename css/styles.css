@@ -613,20 +613,25 @@ img.headshot {
   gap: 6px;
 }
 
-/* Artist name — sits below the cover (bottom row only), hidden until play */
+/* Artist name — hidden by default, direction determined by row */
 .album-card__name {
   font-size: 11px;
   font-weight: 400;
   color: var(--color-text);
   letter-spacing: 0.04em;
   opacity: 0;
-  transform: translateY(4px);
   transition: opacity 600ms ease-in, transform 600ms ease-in;
   pointer-events: none;
   white-space: nowrap;
 }
 
-/* Reveal: drifts up into view */
+/* Top row: hidden above, slides DOWN into view on play, hides back UP */
+.album-card__name--top    { transform: translateY(-6px); }
+
+/* Bottom row: hidden below, slides UP into view on play, hides back DOWN */
+.album-card__name--bottom { transform: translateY(6px); }
+
+/* Reveal — both rows animate to resting position */
 .album-card__name.artist-name-visible {
   opacity: 1;
   transform: translateY(0);
