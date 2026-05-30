@@ -331,6 +331,7 @@ img.headshot {
 }
 
 .hero__role-link {
+  font-weight: var(--font-weight-medium);
   text-decoration: underline;
   text-decoration-color: rgba(120, 113, 108, 0.4);
   text-underline-offset: 2px;
