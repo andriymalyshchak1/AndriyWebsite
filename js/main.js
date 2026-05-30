@@ -246,9 +246,17 @@
       el.addEventListener('touchcancel', function () { contract(el); }, { passive: true });
     }
 
-    /* Headshot wrapper */
+    /* Headshot wrapper — clear fadeUp animation fill once it ends so the
+       transform transition can take over (animations outrank transitions) */
     var headshotLink = document.querySelector('.headshot-link');
-    if (headshotLink) bind(headshotLink, false);
+    if (headshotLink) {
+      headshotLink.addEventListener('animationend', function () {
+        this.style.animation  = 'none';
+        this.style.opacity    = '1';
+        this.style.transform  = 'none';
+      }, { once: true });
+      bind(headshotLink, false);
+    }
 
     /* Album cells (the full cell frame, not the inner cover) */
     document.querySelectorAll('.album-cell').forEach(function (cell) {
