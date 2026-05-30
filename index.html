@@ -16,6 +16,29 @@
 
   <link rel="stylesheet" href="css/styles.css" />
 
+  <!-- Critical image preloads — fetched immediately at highest priority -->
+  <link rel="preload" as="image" href="images/trial-face.jpg" />
+  <link rel="preload" as="image" href="images/rufus.jpeg" />
+  <link rel="preload" as="image" href="images/Fred.jpg" />
+  <link rel="preload" as="image" href="images/MK.jpg" />
+  <link rel="preload" as="image" href="images/Metro1.jpg" />
+
+  <!-- Photo strip prefetch — below fold, lower priority -->
+  <link rel="prefetch" href="images/cover1.JPG" />
+  <link rel="prefetch" href="images/cover2.jpg" />
+  <link rel="prefetch" href="images/cover3.jpg" />
+  <link rel="prefetch" href="images/cover4.jpg" />
+  <link rel="prefetch" href="images/cover5.jpg" />
+  <link rel="prefetch" href="images/cover6.jpg" />
+  <link rel="prefetch" href="images/cover7.jpg" />
+  <link rel="prefetch" href="images/cover8.jpg" />
+  <link rel="prefetch" href="images/cover9.JPG" />
+
+  <!-- Page prefetch — likely navigations -->
+  <link rel="prefetch" href="secret.html" />
+  <link rel="prefetch" href="article.html" />
+  <link rel="prefetch" href="inner.html" />
+
   <!-- Enables JS-enhanced styles before first paint -->
   <script>document.documentElement.classList.add('js');</script>
 </head>

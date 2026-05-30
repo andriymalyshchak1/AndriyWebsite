@@ -226,6 +226,36 @@
     });
   }());
 
+  /* ── Pre-buffer all audio + photo strip images after page load ──────────
+     Audio objects with preload='auto' tell the browser to fully buffer
+     each file before it's needed — play becomes instant with no network lag.
+     Images are fetched via Image() to warm the cache for the photo strip.
+  ─────────────────────────────────────────────────────────────────────── */
+  window.addEventListener('load', function () {
+    /* Audio pre-buffer */
+    [
+      'audio/like-animal.mp3',
+      'audio/Beto.mp3',
+      'audio/MK.mp3',
+      'audio/cinderella.mp3',
+      'audio/fuckin-problems.mp3',
+    ].forEach(function (src) {
+      var a = new Audio();
+      a.preload = 'auto';
+      a.src = src;
+    });
+
+    /* Photo strip image pre-cache */
+    [
+      'images/cover1.JPG', 'images/cover2.jpg', 'images/cover3.jpg',
+      'images/cover4.jpg', 'images/cover5.jpg', 'images/cover6.jpg',
+      'images/cover7.jpg', 'images/cover8.jpg', 'images/cover9.JPG',
+    ].forEach(function (src) {
+      var img = new Image();
+      img.src = src;
+    });
+  });
+
   /* Restore opacity if browser restores this page from bfcache (back button from secret.html) */
   window.addEventListener('pageshow', function (e) {
     if (e.persisted) {
