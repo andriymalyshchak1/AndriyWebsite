@@ -386,8 +386,7 @@ img.headshot {
 
 .writing__title {
   position: relative;
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-snug);
@@ -395,10 +394,9 @@ img.headshot {
   cursor: pointer;
   text-decoration: none;
   touch-action: manipulation;
-  min-height: 44px;
-  margin-bottom: var(--space-1-5);
+  margin: 0 0 var(--space-1-5);
+  padding: 0;
   transition: color var(--transition-fast);
-  max-width: 44ch;
 }
 
 .writing__title::after {
@@ -428,8 +426,8 @@ img.headshot {
   transform: scaleX(1);
 }
 
-.writing__title:hover .arrow,
-.writing__title.underline-active .arrow {
+.writing__title:hover + .arrow,
+.writing__title.underline-active + .arrow {
   transform: translateX(3px);
 }
 
@@ -463,18 +461,17 @@ img.headshot {
 
 .thinking__title {
   position: relative;
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   font-size: 14px;
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   cursor: pointer;
   text-decoration: none;
   touch-action: manipulation;
-  min-height: 44px;
   line-height: var(--line-height-snug);
+  margin: 0;
+  padding: 0;
   transition: color var(--transition-fast);
-  max-width: 46ch;
 }
 
 .thinking__title::after {
@@ -504,8 +501,8 @@ img.headshot {
   transform: scaleX(1);
 }
 
-.thinking__title:hover .arrow,
-.thinking__title.underline-active .arrow {
+.thinking__title:hover + .arrow,
+.thinking__title.underline-active + .arrow {
   transform: translateX(3px);
 }
 
