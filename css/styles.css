@@ -606,7 +606,7 @@ img.headshot {
   color: var(--color-text);
   letter-spacing: 0.04em;
   opacity: 0;
-  transition: opacity 720ms ease-in, transform 720ms ease-in;
+  transition: opacity 540ms ease-in, transform 540ms ease-in;
   pointer-events: none;
   white-space: nowrap;
 }
@@ -621,8 +621,8 @@ img.headshot {
 .album-card__name.artist-name-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms,
-              transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms;
+  transition: opacity 720ms cubic-bezier(0.16, 1, 0.3, 1) 80ms,
+              transform 720ms cubic-bezier(0.16, 1, 0.3, 1) 80ms;
 }
 
 
