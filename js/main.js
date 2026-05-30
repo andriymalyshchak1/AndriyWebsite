@@ -52,13 +52,13 @@
       textNode.textContent += ch;
       i++;
 
-      var delay = Math.random() * 87 + 72; /* wider range = more stagger between chars */
-      if (ch === ' ') delay += 289;
+      var delay = Math.random() * 100 + 83; /* wider range = more stagger between chars */
+      if (ch === ' ') delay += 332;
 
       setTimeout(typeNext, delay);
     }
 
-    setTimeout(typeNext, 327);
+    setTimeout(typeNext, 376);
   }());
 
   /* ── 1. Staggered entrance animations ───────────────────────────────────
