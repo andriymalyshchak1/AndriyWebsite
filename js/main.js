@@ -251,9 +251,11 @@
     var headshotLink = document.querySelector('.headshot-link');
     if (headshotLink) {
       headshotLink.addEventListener('animationend', function () {
-        this.style.animation  = 'none';
-        this.style.opacity    = '1';
-        this.style.transform  = 'none';
+        /* Clear the fadeUp fill so transitions can take over, but DON'T pin
+           transform inline — an inline transform would outrank the
+           .is-hovered class rule and kill the touch-hold expand. */
+        this.style.animation = 'none';
+        this.style.opacity   = '1';
       }, { once: true });
       bind(headshotLink, false);
     }
