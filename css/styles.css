@@ -628,6 +628,17 @@ img.headshot {
   color: var(--color-text);
 }
 
+.cooking__name--link {
+  text-decoration: underline;
+  text-decoration-color: rgba(28, 25, 23, 0.35);
+  text-underline-offset: 2px;
+  transition: text-decoration-color var(--transition-fast);
+}
+
+.cooking__name--link:hover {
+  text-decoration-color: var(--color-text);
+}
+
 .cooking__sep {
   color: var(--color-text-very-muted);
   margin: 0 4px;
