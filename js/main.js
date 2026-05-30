@@ -185,8 +185,8 @@
 
     function reset(cell) {
       cell.classList.remove('album-cell--active');
-      var title = cell.querySelector('.album-cell__title');
-      if (title) title.classList.remove('artist-name-visible');
+      var name = cell.closest('.album-card') && cell.closest('.album-card').querySelector('.album-card__name');
+      if (name) name.classList.remove('artist-name-visible');
     }
 
     function stopActive() {
@@ -205,8 +205,8 @@
       audio.play().catch(function () {});
 
       cell.classList.add('album-cell--active');
-      var title = cell.querySelector('.album-cell__title');
-      if (title) title.classList.add('artist-name-visible');
+      var name = cell.closest('.album-card') && cell.closest('.album-card').querySelector('.album-card__name');
+      if (name) name.classList.add('artist-name-visible');
       activeCell = cell;
 
       /* Stop after 35-second clip */
