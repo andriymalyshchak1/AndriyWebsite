@@ -189,6 +189,21 @@ p {
   padding: var(--space-2) var(--padding-x) 0;
 }
 
+/* ── Film grain overlay ──────────────────────────────────────────────────
+   Inline SVG feTurbulence noise, no external image or JS. Fixed so it
+   covers the viewport and never scrolls. Neutral grey noise reads on both
+   light and dark backgrounds; pointer-events:none keeps it click-through. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
 
 /* ─────────────────────────────────────────────────────────────────────────────
    5. COMPONENTS
