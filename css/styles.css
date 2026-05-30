@@ -481,6 +481,7 @@ img.headshot {
   gap: 16px;
   width: 100%;
   margin: 16px 0 0;
+  align-items: start; /* top row pure covers; bottom row covers + name below */
 }
 
 .album-cell {
@@ -593,11 +594,11 @@ img.headshot {
   gap: 6px;
 }
 
-/* Artist name — sits above the cover, hidden until play */
+/* Artist name — sits below the cover (bottom row only), hidden until play */
 .album-card__name {
   font-size: 11px;
   font-weight: 400;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   letter-spacing: 0.04em;
   opacity: 0;
   transform: translateY(4px);
