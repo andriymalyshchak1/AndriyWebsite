@@ -726,8 +726,7 @@ img.headshot {
    or another cover is played; it contracts via the base .album-cell
    transition (smooth ease-out) when the class is removed.          */
 .headshot-link.is-hovered,
-.album-cell.is-hovered,
-.album-cell--active {
+.album-cell.is-hovered {
   transform: scale(1.044);
   margin-bottom: 12px;
   transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -742,6 +741,15 @@ img.headshot {
     transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
                 margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+}
+
+/* Playing cover expands 30% more than the hover/touch highlight.
+   Double-class selector + source order keeps it winning even while hovered. */
+.album-cell.album-cell--active {
+  transform: scale(1.057);
+  margin-bottom: 16px;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
