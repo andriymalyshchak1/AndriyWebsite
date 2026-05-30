@@ -350,7 +350,7 @@ img.headshot {
   display: flex;
   gap: 24px;
   align-items: center;
-  padding: var(--space-1) 0 var(--space-1);
+  padding: var(--space-0-5) 0 0;
 }
 
 .social-links__item {
@@ -762,8 +762,8 @@ img.headshot {
    FOOTER
 ════════════════════════════════════════ */
 .footer {
-  padding-top: var(--space-1);
-  padding-bottom: var(--space-2);
+  padding-top: 0;
+  padding-bottom: var(--space-1);
   display: flex;
   align-items: center;
   justify-content: space-between;
