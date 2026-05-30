@@ -713,9 +713,6 @@ img.headshot {
   border-radius: var(--radius-md);
   overflow: hidden;
   object-fit: cover;
-  touch-action: manipulation;
-  transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1),
-              margin-bottom 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .photo-strip__item--placeholder {
@@ -726,20 +723,18 @@ img.headshot {
    Spring curve on expand, smooth ease-out on release.
    Applies to: headshot, album cells, photo strip items.          */
 .headshot-link.is-hovered,
-.album-cell.is-hovered,
-.photo-strip__item.is-hovered {
-  transform: scale(1.03);
-  margin-bottom: 8px;
+.album-cell.is-hovered {
+  transform: scale(1.033);
+  margin-bottom: 9px;
   transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
               margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @media (hover: hover) {
   .headshot-link:hover,
-  .album-cell:hover,
-  .photo-strip__item:hover {
-    transform: scale(1.03);
-    margin-bottom: 8px;
+  .album-cell:hover {
+    transform: scale(1.033);
+    margin-bottom: 9px;
     transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
                 margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -747,8 +742,7 @@ img.headshot {
 
 @media (prefers-reduced-motion: reduce) {
   .headshot-link,
-  .album-cell,
-  .photo-strip__item {
+  .album-cell {
     transition: none !important;
     transform: none !important;
     margin-bottom: 0 !important;

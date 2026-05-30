@@ -254,11 +254,6 @@
     document.querySelectorAll('.album-cell').forEach(function (cell) {
       bind(cell, false);
     });
-
-    /* Photo strip items — cancel on touchmove so drag isn't fought */
-    document.querySelectorAll('.photo-strip__item').forEach(function (item) {
-      bind(item, true);
-    });
   }());
 
   /* ── Pre-buffer all audio + photo strip images after page load ──────────
