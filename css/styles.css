@@ -318,7 +318,7 @@ img.headshot {
 /* ── Roles grid — dots align because both rows share the same column widths ── */
 .hero__roles {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr;
   align-items: baseline;
   row-gap: 6px;
   margin-top: 6px;
