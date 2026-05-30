@@ -226,41 +226,41 @@
     });
   }());
 
-  /* ── 8. Animated underline — writing + thinking title links ─────────────
-     Desktop: CSS :hover draws the line left→right. JS toggles .is-leaving
-     on mouseleave so the retract uses right→left transform-origin.
-     Touch: touchstart instantly shows the line; touchend retracts it.
+  /* ── 8. Pulsing arrow — writing + thinking title links ──────────────────
+     CSS animates the → at rest (arrowPulse, 2s loop).
+     On hover/touch: pause the pulse, snap arrow to nudged position.
+     On leave/release: transition back to rest, then resume pulse after 400ms.
   ─────────────────────────────────────────────────────────────────────── */
   (function () {
     var links = Array.from(document.querySelectorAll('.writing__title, .thinking__title'));
     if (!links.length) return;
 
     links.forEach(function (link) {
-      /* Desktop — flip retract direction on leave */
-      link.addEventListener('mouseenter', function () {
-        this.classList.remove('is-leaving');
-      });
-      link.addEventListener('mouseleave', function () {
-        this.classList.add('is-leaving');
-        /* Clean up after retract finishes so next enter starts fresh */
-        var self = this;
-        setTimeout(function () { self.classList.remove('is-leaving'); }, 260);
-      });
+      var arrow = link.querySelector('.arrow');
+      if (!arrow) return;
 
-      /* Touch — instant reveal, retract on release */
-      link.addEventListener('touchstart', function () {
-        this.classList.remove('is-leaving');
-        this.classList.add('underline-active');
-      }, { passive: true });
+      var restoreTimer = null;
 
-      function touchRelease() {
-        this.classList.remove('underline-active');
-        this.classList.add('is-leaving');
-        var self = this;
-        setTimeout(function () { self.classList.remove('is-leaving'); }, 260);
+      function activate() {
+        clearTimeout(restoreTimer);
+        arrow.classList.remove('arrow--returning');
+        arrow.classList.add('arrow--active');
       }
-      link.addEventListener('touchend',    touchRelease);
-      link.addEventListener('touchcancel', touchRelease);
+
+      function deactivate() {
+        arrow.classList.remove('arrow--active');
+        arrow.classList.add('arrow--returning');
+        restoreTimer = setTimeout(function () {
+          arrow.classList.remove('arrow--returning');
+          /* Pulse resumes automatically when arrow--returning is removed */
+        }, 400);
+      }
+
+      link.addEventListener('mouseenter',  activate);
+      link.addEventListener('mouseleave',  deactivate);
+      link.addEventListener('touchstart',  activate,  { passive: true });
+      link.addEventListener('touchend',    deactivate);
+      link.addEventListener('touchcancel', deactivate);
     });
   }());
 
