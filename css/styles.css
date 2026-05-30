@@ -607,35 +607,36 @@ img.headshot {
 
 
 /* ════════════════════════════════════════
-   COOKING — "this week"
+   COOKING — "what i've cooked this week"
 ════════════════════════════════════════ */
 .cooking__list {
   /* list-style already reset globally */
 }
 
 .cooking__item {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 14px 0;
-}
-
-/* 0.5px divider between rows — not above first, not below last */
-.cooking__item + .cooking__item {
-  border-top: 0.5px solid var(--color-divider);
-}
-
-.cooking__dish {
   font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.cooking__item:last-child {
+  margin-bottom: 0;
+}
+
+.cooking__name {
   font-weight: 400;
   color: var(--color-text);
 }
 
-.cooking__prep {
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--color-text-muted);
+.cooking__sep {
+  color: var(--color-text-very-muted);
+  margin: 0 4px;
+}
+
+.cooking__ingredients {
   font-style: italic;
+  font-size: 14px;
+  color: var(--color-text-very-muted);
 }
 
 
