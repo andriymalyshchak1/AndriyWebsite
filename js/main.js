@@ -194,7 +194,7 @@
     }
 
     /* Start offset (seconds) per cell index — 0 = beginning of track */
-    var START_AT = [45, 50, 6, 0]; /* index 0 (like-animal) starts at 45s | index 1 (Beto) starts at 50s | index 2 (MK) starts at 6s */
+    var START_AT = [46, 50, 6, 6]; /* index 0 (like-animal) starts at 46s | index 1 (Beto) starts at 50s | index 2 (MK) starts at 6s | index 3 (cinderella) starts at 6s */
 
     function play(cell) {
       var idx = parseInt(cell.getAttribute('data-index'), 10);
