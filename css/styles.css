@@ -482,7 +482,6 @@ img.headshot {
   width: 100%;
   margin: 16px 0 0;
   align-items: start; /* top row pure covers; bottom row covers + name below */
-  padding-bottom: 24px; /* buffer so artist name expansion doesn't shift the divider */
 }
 
 .album-cell {
