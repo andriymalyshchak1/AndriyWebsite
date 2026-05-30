@@ -721,11 +721,15 @@ img.headshot {
 
 /* ── Bubble expand effect — container scales, layout reflows via margin ──
    Spring curve on expand, smooth ease-out on release.
-   Applies to: headshot, album cells, photo strip items.          */
+   Applies to: headshot, album cells, photo strip items.
+   .album-cell--active keeps a playing cover expanded until the song ends
+   or another cover is played; it contracts via the base .album-cell
+   transition (smooth ease-out) when the class is removed.          */
 .headshot-link.is-hovered,
-.album-cell.is-hovered {
-  transform: scale(1.033);
-  margin-bottom: 9px;
+.album-cell.is-hovered,
+.album-cell--active {
+  transform: scale(1.037);
+  margin-bottom: 10px;
   transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
               margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -733,8 +737,8 @@ img.headshot {
 @media (hover: hover) {
   .headshot-link:hover,
   .album-cell:hover {
-    transform: scale(1.033);
-    margin-bottom: 9px;
+    transform: scale(1.037);
+    margin-bottom: 10px;
     transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
                 margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
