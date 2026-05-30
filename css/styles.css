@@ -605,7 +605,7 @@ img.headshot {
   color: var(--color-text);
   letter-spacing: 0.04em;
   opacity: 0;
-  transition: opacity 600ms ease-in, transform 600ms ease-in;
+  transition: opacity 720ms ease-in, transform 720ms ease-in;
   pointer-events: none;
   white-space: nowrap;
 }
