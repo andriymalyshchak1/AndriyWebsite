@@ -226,6 +226,44 @@
     });
   }());
 
+  /* ── 8. Animated underline — writing + thinking title links ─────────────
+     Desktop: CSS :hover draws the line left→right. JS toggles .is-leaving
+     on mouseleave so the retract uses right→left transform-origin.
+     Touch: touchstart instantly shows the line; touchend retracts it.
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var links = Array.from(document.querySelectorAll('.writing__title, .thinking__title'));
+    if (!links.length) return;
+
+    links.forEach(function (link) {
+      /* Desktop — flip retract direction on leave */
+      link.addEventListener('mouseenter', function () {
+        this.classList.remove('is-leaving');
+      });
+      link.addEventListener('mouseleave', function () {
+        this.classList.add('is-leaving');
+        /* Clean up after retract finishes so next enter starts fresh */
+        var self = this;
+        setTimeout(function () { self.classList.remove('is-leaving'); }, 260);
+      });
+
+      /* Touch — instant reveal, retract on release */
+      link.addEventListener('touchstart', function () {
+        this.classList.remove('is-leaving');
+        this.classList.add('underline-active');
+      }, { passive: true });
+
+      function touchRelease() {
+        this.classList.remove('underline-active');
+        this.classList.add('is-leaving');
+        var self = this;
+        setTimeout(function () { self.classList.remove('is-leaving'); }, 260);
+      }
+      link.addEventListener('touchend',    touchRelease);
+      link.addEventListener('touchcancel', touchRelease);
+    });
+  }());
+
   /* ── 7. Bubble expand — headshot, album cells, photo strip items ────────
      CSS hover handles desktop. JS adds/removes .is-hovered on touch.
      Container scales + margin-bottom expands so content below shifts.

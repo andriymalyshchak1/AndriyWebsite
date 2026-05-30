@@ -385,26 +385,51 @@ img.headshot {
 }
 
 .writing__title {
+  position: relative;
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-snug);
   color: var(--color-text);
   cursor: pointer;
-  /* 44px tap target — use min-height with flex alignment */
+  text-decoration: none;
+  touch-action: manipulation;
   min-height: 44px;
-  align-items: center;
   margin-bottom: var(--space-1-5);
   transition: color var(--transition-fast);
   max-width: 44ch;
+}
+
+.writing__title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-text);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.writing__title.is-leaving::after {
+  transform-origin: right center;
+  transition: transform 250ms ease-in;
 }
 
 .writing__title:hover {
   color: var(--color-link-active);
 }
 
-.writing__title:hover .arrow {
+.writing__title:hover::after,
+.writing__title.underline-active::after {
+  transform: scaleX(1);
+}
+
+.writing__title:hover .arrow,
+.writing__title.underline-active .arrow {
   transform: translateX(3px);
 }
 
@@ -437,23 +462,50 @@ img.headshot {
 }
 
 .thinking__title {
+  position: relative;
   display: inline-flex;
   align-items: center;
   font-size: 14px;
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   cursor: pointer;
+  text-decoration: none;
+  touch-action: manipulation;
   min-height: 44px;
   line-height: var(--line-height-snug);
   transition: color var(--transition-fast);
   max-width: 46ch;
 }
 
+.thinking__title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-text);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thinking__title.is-leaving::after {
+  transform-origin: right center;
+  transition: transform 250ms ease-in;
+}
+
 .thinking__title:hover {
   color: var(--color-link-active);
 }
 
-.thinking__title:hover .arrow {
+.thinking__title:hover::after,
+.thinking__title.underline-active::after {
+  transform: scaleX(1);
+}
+
+.thinking__title:hover .arrow,
+.thinking__title.underline-active .arrow {
   transform: translateX(3px);
 }
 
@@ -869,6 +921,14 @@ img.headshot {
 .section.photos    { animation-delay: 360ms; }
 .social-links      { animation-delay: 405ms; }
 .footer            { animation-delay: 450ms; }
+
+/* Reduced-motion: snap underline, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .writing__title::after,
+  .thinking__title::after {
+    transition: none;
+  }
+}
 
 /* Reduced-motion: disable all entrance animations */
 @media (prefers-reduced-motion: reduce) {
