@@ -1119,7 +1119,35 @@ img.headshot {
 
 /* ─────────────────────────────────────────────────────────────────────────────
    INNER PAGE  (inner.html)
+   .inner-content fade-in pattern is the standard for all new pages:
+     opacity 0 + translateY(10px) → is-visible → opacity 1 + translateY(0)
 ───────────────────────────────────────────────────────────────────────────── */
+.js .inner-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.js .inner-content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .inner-content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.inner-message {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-muted);
+  padding-bottom: 50vh; /* enough vertical room to feel scrollable */
+  max-width: none;
+}
 .inner-list {
   display: flex;
   flex-direction: column;

@@ -14,23 +14,45 @@
 
   <link rel="stylesheet" href="css/styles.css" />
 
+  <!-- Start invisible — fades in on load, consistent with all pages -->
   <style>body { opacity: 0; }</style>
   <script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="secret-body">
+<body>
+  <main class="page article-page">
+    <div class="inner-content">
 
-  <a href="index.html" class="back-link">← andriymal.com</a>
+      <a href="index.html" class="back-link">← andriymal.com</a>
 
-  <div class="secret-content">
-    <p class="secret-prompt">gimme a min</p>
-  </div>
+      <p class="inner-message">gimme a min</p>
 
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
   <script>
+    /* Fade body in */
     document.body.style.transition = 'opacity 400ms ease';
     document.body.style.opacity = '1';
 
-    var content = document.querySelector('.secret-content');
-    content.classList.add('is-visible');
+    /* Fade content in — same IntersectionObserver pattern as article.html */
+    (function () {
+      var el = document.querySelector('.inner-content');
+      if (!el) return;
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              el.classList.add('is-visible');
+              observer.unobserve(el);
+            }
+          });
+        }, { threshold: 0.01 });
+        observer.observe(el);
+      } else {
+        el.classList.add('is-visible');
+      }
+    }());
   </script>
 </body>
 </html>
