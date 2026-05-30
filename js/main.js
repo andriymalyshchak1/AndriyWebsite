@@ -226,6 +226,42 @@
     });
   }());
 
+  /* ── 7. Touch scale — headshot, album covers, photo strip images ────────
+     CSS hover handles desktop. JS handles touch: scale up on touchstart,
+     spring back on touchend. Photo strip images cancel scale on touchmove
+     so drag and scale don't conflict.
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var SPRING   = 'transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+    var EASE_OUT = 'transform 400ms cubic-bezier(0.25, 1, 0.5, 1)';
+
+    function scaleUp(el)   { el.style.transition = SPRING;   el.style.transform = 'scale(1.03)'; }
+    function scaleDown(el) { el.style.transition = EASE_OUT; el.style.transform = 'scale(1)'; }
+
+    function bindScale(el, cancelOnMove) {
+      el.addEventListener('touchstart',  function () { scaleUp(el);   }, { passive: true });
+      if (cancelOnMove) {
+        el.addEventListener('touchmove', function () { scaleDown(el); }, { passive: true });
+      }
+      el.addEventListener('touchend',    function () { scaleDown(el); }, { passive: true });
+      el.addEventListener('touchcancel', function () { scaleDown(el); }, { passive: true });
+    }
+
+    /* Headshot */
+    var headshot = document.getElementById('headshot');
+    if (headshot) bindScale(headshot, false);
+
+    /* Album covers */
+    document.querySelectorAll('.album-cell__cover').forEach(function (img) {
+      bindScale(img, false);
+    });
+
+    /* Photo strip — cancel on touchmove so drag isn't fought */
+    document.querySelectorAll('.photo-strip__item').forEach(function (img) {
+      bindScale(img, true);
+    });
+  }());
+
   /* ── Pre-buffer all audio + photo strip images after page load ──────────
      Audio objects with preload='auto' tell the browser to fully buffer
      each file before it's needed — play becomes instant with no network lag.
