@@ -275,23 +275,16 @@
         });
       }
 
-      // Clear session on any page navigation away
-      window.addEventListener('beforeunload', function () {
-        sessionStorage.removeItem(SESSION_TOKEN);
+      // Prevent back and forward navigation - user must use the back link
+      window.history.pushState(null, '', window.location.href);
+      window.addEventListener('popstate', function () {
+        // Any back/forward attempt - push state again to prevent navigation
+        window.history.pushState(null, '', window.location.href);
       });
 
-      // Prevent forward navigation by tracking history
-      var historyLength = window.history.length;
-      window.addEventListener('popstate', function () {
-        // Check if user tried to go forward (history length increased) or back
-        var currentLength = window.history.length;
-        if (currentLength > historyLength) {
-          // Forward attempted - stay on this page by pushing state
-          window.history.pushState(null, '', window.location.href);
-        } else {
-          // Back button - clear session and allow navigation
-          sessionStorage.removeItem(SESSION_TOKEN);
-        }
+      // Clear session if user somehow navigates away
+      window.addEventListener('beforeunload', function () {
+        sessionStorage.removeItem(SESSION_TOKEN);
       });
     }());
 
