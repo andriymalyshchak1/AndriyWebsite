@@ -1288,7 +1288,7 @@ img.headshot {
 ───────────────────────────────────────────────────────────────────────────── */
 .people {
   max-width: var(--max-width);
-  margin: -1rem auto 0 auto;
+  margin: -1.13rem auto 0 auto;
   padding: 0 6px;
 }
 
