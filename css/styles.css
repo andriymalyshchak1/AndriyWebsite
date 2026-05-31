@@ -1412,14 +1412,14 @@ img.headshot {
 }
 
 .people__name {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   margin: 0;
 }
 
 .people__role {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--color-text-muted);
   margin: 0;
 }
