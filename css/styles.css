@@ -1073,12 +1073,26 @@ img.headshot {
 .back-link {
   display: inline-flex;
   align-items: center;
-  font-size: var(--font-size-sm);
+  gap: 4px;
+  font-size: calc(var(--font-size-sm) * 1.1);
   color: var(--color-text-muted);
   cursor: pointer;
   min-height: 44px;
   margin-bottom: 2.5rem;
   transition: color var(--transition-fast);
+}
+
+.back-link .arrow {
+  display: inline-flex;
+  opacity: 0.35;
+  animation: arrowPulse 2s ease-in-out infinite;
+}
+
+.back-link:hover .arrow {
+  animation: none;
+  transform: translateX(4px);
+  opacity: 1;
+  transition: transform 150ms ease, opacity 150ms ease;
 }
 
 .back-link:hover {
