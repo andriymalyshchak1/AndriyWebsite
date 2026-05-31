@@ -277,10 +277,16 @@
         });
       }
 
+      // Push a state so back button triggers redirect instead of blank page
+      window.history.pushState({inner: true}, '', window.location.href);
+
       // Intercept browser back button and redirect to index.html
-      window.addEventListener('popstate', function () {
-        sessionStorage.removeItem(SESSION_TOKEN);
-        window.location.href = 'index.html';
+      window.addEventListener('popstate', function (e) {
+        if (e.state && e.state.inner) {
+          // User hit back from inner.html, redirect to index
+          sessionStorage.removeItem(SESSION_TOKEN);
+          window.location.replace('index.html');
+        }
       });
 
       // Clear session if user navigates away (browser back, close, etc)
