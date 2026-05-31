@@ -1282,7 +1282,7 @@ img.headshot {
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text);
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.25rem 0;
 }
 
 .people__subheading {
@@ -1291,7 +1291,7 @@ img.headshot {
   font-size: 14px;
   font-weight: var(--font-weight-light);
   color: var(--color-text-muted);
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
 .people__list {
@@ -1304,7 +1304,7 @@ img.headshot {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 0;
+  padding: 12px 0;
   border-top: 0.5px solid var(--color-border);
 }
 
