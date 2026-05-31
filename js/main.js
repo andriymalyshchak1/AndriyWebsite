@@ -573,35 +573,4 @@
     });
   }
 
-  /* ── Ambient video autoplay ── */
-  (function () {
-    var video = document.getElementById('ambient-video');
-    if (!video) return;
-
-    video.load();
-    video.play().catch(function () {});
-
-    video.addEventListener('canplaythrough', function () {
-      video.style.opacity = '1';
-    }, { once: true });
-
-    setTimeout(function () {
-      video.style.opacity = '1';
-    }, 800);
-
-    /* Play/pause on visibility */
-    if ('IntersectionObserver' in window) {
-      var videoObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            video.play().catch(function () {});
-          } else {
-            video.pause();
-          }
-        });
-      }, { threshold: 0.1 });
-      videoObserver.observe(video);
-    }
-  }());
-
 })();
