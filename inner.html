@@ -267,13 +267,13 @@
         window.location.href = 'secret.html';
       }
 
-      // Clear session and fade out when clicking back
+      // Clear session and navigate immediately when clicking back
       var backLink = document.querySelector('.back-link');
       if (backLink) {
         backLink.addEventListener('click', function (e) {
+          e.preventDefault();
           sessionStorage.removeItem(SESSION_TOKEN);
-          document.body.style.transition = 'opacity 200ms ease-out';
-          document.body.style.opacity = '0';
+          window.location.replace('index.html');
         });
       }
 

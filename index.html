@@ -303,5 +303,15 @@
   </main>
 
   <script src="js/main.js"></script>
+  <script>
+    /* Prevent forward navigation */
+    (function () {
+      var currentUrl = window.location.href;
+      window.addEventListener('popstate', function () {
+        window.location.replace(currentUrl);
+      });
+      window.history.pushState(null, '', currentUrl);
+    }());
+  </script>
 </body>
 </html>
