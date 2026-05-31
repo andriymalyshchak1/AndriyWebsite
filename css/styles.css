@@ -1342,9 +1342,13 @@ img.headshot {
 }
 
 .people__item {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  grid-template-areas:
+    "photo name  links"
+    "photo role  role";
+  column-gap: 20px;
+  row-gap: 4px;
   padding: 12px 0;
   border-top: 0.5px solid var(--color-border);
   opacity: 0;
@@ -1376,12 +1380,13 @@ img.headshot {
 }
 
 .people__photo {
-  width: 88px;
-  height: 88px;
+  width: 72px;
+  height: 72px;
   border-radius: 10px;
   object-fit: cover;
   display: block;
-  flex-shrink: 0;
+  grid-area: photo;
+  align-self: center;
   transform: scale(1);
   transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
   cursor: pointer;
@@ -1403,12 +1408,7 @@ img.headshot {
 }
 
 .people__info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 88px;
+  display: contents;
 }
 
 .people__name {
@@ -1416,20 +1416,23 @@ img.headshot {
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   margin: 0;
+  grid-area: name;
+  align-self: end;
 }
 
 .people__role {
   font-size: 12px;
   color: var(--color-text-muted);
   margin: 0;
+  grid-area: role;
 }
 
 .people__links {
   display: flex;
   gap: 14px;
   white-space: nowrap;
-  flex-shrink: 0;
-  padding-top: 2px;
+  grid-area: links;
+  align-self: end;
 }
 
 .people__link {
