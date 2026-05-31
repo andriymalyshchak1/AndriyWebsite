@@ -275,11 +275,10 @@
         });
       }
 
-      // Prevent back and forward navigation - user must use the back link
-      window.history.pushState(null, '', window.location.href);
+      // On browser back, clear session and go to index.html
       window.addEventListener('popstate', function () {
-        // Any back/forward attempt - push state again to prevent navigation
-        window.history.pushState(null, '', window.location.href);
+        sessionStorage.removeItem(SESSION_TOKEN);
+        window.location.replace('index.html');
       });
 
       // Clear session if user somehow navigates away
