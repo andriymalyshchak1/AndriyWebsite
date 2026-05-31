@@ -1063,6 +1063,145 @@ img.headshot {
 
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   PEOPLEBET — people i'd bet a million on  (inner.html)
+───────────────────────────────────────────────────────────────────────────── */
+.peoplebet {
+  margin-top: var(--space-9);
+}
+
+.peoplebet__heading {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
+}
+
+.peoplebet__subheading {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  max-width: none;
+}
+
+.peoplebet__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+/* ── Card ── */
+.peoplebet__card {
+  position: relative;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.peoplebet__card-inner {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 1;
+  transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 350ms ease;
+}
+
+.peoplebet__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.peoplebet__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  padding: var(--space-2);
+  z-index: 2;
+}
+
+.peoplebet__name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: white;
+  margin-bottom: 2px;
+}
+
+.peoplebet__role {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: var(--font-weight-regular);
+}
+
+/* ── Drawer (slides up over photo) ── */
+.peoplebet__drawer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4));
+  padding: var(--space-3) var(--space-2);
+  transform: translateY(100%);
+  transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  gap: var(--space-3);
+  z-index: 3;
+}
+
+.peoplebet__link {
+  font-size: var(--font-size-sm);
+  color: white;
+  text-decoration: underline;
+  opacity: 0;
+  transition: opacity 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity;
+}
+
+.peoplebet__link:nth-child(1) { transition-delay: 50ms; }
+.peoplebet__link:nth-child(2) { transition-delay: 100ms; }
+.peoplebet__link:nth-child(3) { transition-delay: 150ms; }
+
+/* ── Hover state ── */
+.peoplebet__card:hover .peoplebet__card-inner {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.peoplebet__card:hover .peoplebet__drawer {
+  transform: translateY(0);
+}
+
+.peoplebet__card:hover .peoplebet__link {
+  opacity: 1;
+}
+
+/* ── Active (locked) state ── */
+.peoplebet__card.is-active .peoplebet__card-inner {
+  transform: translateY(-16px) scale(1.06);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+}
+
+.peoplebet__card.is-active .peoplebet__drawer {
+  transform: translateY(0);
+}
+
+.peoplebet__card.is-active .peoplebet__link {
+  opacity: 1;
+}
+
+/* Prevent drawer closing when clicking links */
+.peoplebet__link {
+  pointer-events: auto;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
    EASTER EGG — headshot silent link  (index.html)
 ───────────────────────────────────────────────────────────────────────────── */
 .headshot-link {

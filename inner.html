@@ -26,6 +26,78 @@
 
       <p class="inner-message">gimme a min</p>
 
+      <!-- PeopleBet Section — hidden by default (easter egg) -->
+      <section class="peoplebet" style="display: none;">
+        <h2 class="peoplebet__heading">people i'd bet a million on</h2>
+        <p class="peoplebet__subheading">no caveats. my own money.</p>
+
+        <div class="peoplebet__grid">
+          <!-- Sofia Marchetti -->
+          <div class="peoplebet__card" data-person="sofia">
+            <div class="peoplebet__card-inner">
+              <img src="images/sofia.jpg" alt="Sofia Marchetti" class="peoplebet__photo" />
+              <div class="peoplebet__footer">
+                <div class="peoplebet__name">Sofia Marchetti</div>
+                <div class="peoplebet__role">infra eng · Stripe</div>
+              </div>
+              <div class="peoplebet__drawer">
+                <a href="#" class="peoplebet__link">linkedin</a>
+                <a href="#" class="peoplebet__link">instagram</a>
+                <a href="#" class="peoplebet__link">email</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Devon Park -->
+          <div class="peoplebet__card" data-person="devon">
+            <div class="peoplebet__card-inner">
+              <img src="images/devon.jpg" alt="Devon Park" class="peoplebet__photo" />
+              <div class="peoplebet__footer">
+                <div class="peoplebet__name">Devon Park</div>
+                <div class="peoplebet__role">founder · Stealth</div>
+              </div>
+              <div class="peoplebet__drawer">
+                <a href="#" class="peoplebet__link">linkedin</a>
+                <a href="#" class="peoplebet__link">instagram</a>
+                <a href="#" class="peoplebet__link">email</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amara Okonkwo -->
+          <div class="peoplebet__card" data-person="amara">
+            <div class="peoplebet__card-inner">
+              <img src="images/amara.jpg" alt="Amara Okonkwo" class="peoplebet__photo" />
+              <div class="peoplebet__footer">
+                <div class="peoplebet__name">Amara Okonkwo</div>
+                <div class="peoplebet__role">researcher · DeepMind</div>
+              </div>
+              <div class="peoplebet__drawer">
+                <a href="#" class="peoplebet__link">linkedin</a>
+                <a href="#" class="peoplebet__link">instagram</a>
+                <a href="#" class="peoplebet__link">email</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Luca Bianchi -->
+          <div class="peoplebet__card" data-person="luca">
+            <div class="peoplebet__card-inner">
+              <img src="images/luca.jpg" alt="Luca Bianchi" class="peoplebet__photo" />
+              <div class="peoplebet__footer">
+                <div class="peoplebet__name">Luca Bianchi</div>
+                <div class="peoplebet__role">product · Notion</div>
+              </div>
+              <div class="peoplebet__drawer">
+                <a href="#" class="peoplebet__link">linkedin</a>
+                <a href="#" class="peoplebet__link">instagram</a>
+                <a href="#" class="peoplebet__link">email</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -52,6 +124,43 @@
       } else {
         el.classList.add('is-visible');
       }
+    }());
+
+    /* PeopleBet card click/tap behavior */
+    (function () {
+      var cards = document.querySelectorAll('.peoplebet__card');
+      var activeCard = null;
+
+      cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          // Don't toggle if clicking a link
+          if (e.target.closest('.peoplebet__link')) {
+            return;
+          }
+
+          // If this card is already active, deactivate it
+          if (activeCard === card) {
+            card.classList.remove('is-active');
+            activeCard = null;
+          } else {
+            // Deactivate previous card
+            if (activeCard) {
+              activeCard.classList.remove('is-active');
+            }
+            // Activate this card
+            card.classList.add('is-active');
+            activeCard = card;
+          }
+        });
+      });
+
+      // Close active card when clicking outside
+      document.addEventListener('click', function (e) {
+        if (activeCard && !e.target.closest('.peoplebet__card')) {
+          activeCard.classList.remove('is-active');
+          activeCard = null;
+        }
+      });
     }());
   </script>
 </body>
