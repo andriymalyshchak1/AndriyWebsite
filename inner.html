@@ -279,13 +279,21 @@
 
       // Push a state so back button triggers redirect instead of blank page
       window.history.pushState({inner: true}, '', window.location.href);
+      // Push another state to prevent forward navigation
+      window.history.pushState({lock: true}, '', window.location.href);
 
-      // Intercept browser back button and redirect to index.html
+      // Intercept browser back/forward buttons
       window.addEventListener('popstate', function (e) {
         if (e.state && e.state.inner) {
           // User hit back from inner.html, redirect to index
           sessionStorage.removeItem(SESSION_TOKEN);
           window.location.replace('index.html');
+        } else if (e.state && e.state.lock) {
+          // User tried to go forward, push lock state again to prevent it
+          window.history.pushState({lock: true}, '', window.location.href);
+        } else {
+          // Prevent forward by pushing lock state
+          window.history.pushState({lock: true}, '', window.location.href);
         }
       });
 
