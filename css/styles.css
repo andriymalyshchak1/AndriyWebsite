@@ -1269,6 +1269,114 @@ img.headshot {
 
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   PEOPLE LIST — inner.html easter egg section
+───────────────────────────────────────────────────────────────────────────── */
+.people {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+
+.people__heading {
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.people__subheading {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-muted);
+  margin: 0 0 2rem 0;
+}
+
+.people__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.people__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 0.5px solid var(--color-border);
+}
+
+.people__item:last-child {
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.people__photo {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.people__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.people__name {
+  font-size: 15px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.people__role {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+}
+
+.people__links {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.people__link {
+  font-size: 12px;
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-border);
+  transition: text-decoration-color 150ms ease;
+}
+
+.people__link:hover {
+  text-decoration-color: var(--color-text);
+}
+
+/* ── Mobile responsive (≤480px) ── */
+@media (max-width: 480px) {
+  .people__photo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .people__name {
+    font-size: 14px;
+  }
+
+  .people__links {
+    gap: 10px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
    EASTER EGG — headshot silent link  (index.html)
 ───────────────────────────────────────────────────────────────────────────── */
 .headshot-link {
