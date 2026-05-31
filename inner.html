@@ -252,6 +252,31 @@
 
   <script src="js/main.js"></script>
   <script>
+    /* Session authentication check */
+    (function () {
+      var SESSION_TOKEN = 'authToken';
+
+      // Prevent direct access without authentication
+      if (!sessionStorage.getItem(SESSION_TOKEN)) {
+        window.location.href = 'secret.html';
+      }
+
+      // Clear session and fade out when clicking back
+      var backLink = document.querySelector('.back-link');
+      if (backLink) {
+        backLink.addEventListener('click', function (e) {
+          sessionStorage.removeItem(SESSION_TOKEN);
+          document.body.style.transition = 'opacity 200ms ease-out';
+          document.body.style.opacity = '0';
+        });
+      }
+
+      // Clear session if user navigates away (browser back, close, etc)
+      window.addEventListener('beforeunload', function () {
+        sessionStorage.removeItem(SESSION_TOKEN);
+      });
+    }());
+
     /* Fade body in */
     document.body.style.transition = 'opacity 400ms ease';
     document.body.style.opacity = '1';
