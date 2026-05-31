@@ -200,7 +200,7 @@ p {
 }
 
 .section.rotation {
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
 }
 
 /* ── .section__label — "my thoughts", "what i'm thinking about", etc. ── */
