@@ -1311,7 +1311,7 @@ img.headshot {
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text);
-  margin: -2.4rem 0 0.25rem 0;
+  margin: -2.25rem 0 0.25rem 0;
 }
 
 .people__subheading {
