@@ -833,15 +833,15 @@ img.headshot {
 
 /* Gentle left-right nudge on writing + thinking arrows */
 @keyframes arrowPulse {
-  0%   { transform: translateX(0);   opacity: 0.3; }
-  50%  { transform: translateX(4px); opacity: 0.9; }
-  100% { transform: translateX(0);   opacity: 0.3; }
+  0%   { transform: translateX(0);   opacity: 0.9; }
+  50%  { transform: translateX(4px); opacity: 0.3; }
+  100% { transform: translateX(0);   opacity: 0.9; }
 }
 
 /* Scoped only to writing and thinking section arrows */
 .writing__title .arrow,
 .thinking__title .arrow {
-  opacity: 0.3;
+  opacity: 0.9;
   animation: arrowPulse 2s ease-in-out infinite;
 }
 
@@ -859,7 +859,7 @@ img.headshot {
 .thinking__title .arrow.arrow--returning {
   animation: none;
   transform: translateX(0);
-  opacity: 0.3;
+  opacity: 0.9;
   transition: transform 150ms ease, opacity 150ms ease;
 }
 
@@ -1084,7 +1084,7 @@ img.headshot {
 
 .back-link .arrow {
   display: inline-flex;
-  opacity: 0.3;
+  opacity: 0.9;
   animation: arrowPulse 2s ease-in-out infinite;
 }
 
@@ -1311,7 +1311,7 @@ img.headshot {
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text);
-  margin: 0 0 0.25rem 0;
+  margin: -1.5rem 0 0.25rem 0;
 }
 
 .people__subheading {
