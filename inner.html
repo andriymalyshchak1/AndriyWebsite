@@ -244,23 +244,13 @@
     document.body.style.transition = 'opacity 400ms ease';
     document.body.style.opacity = '1';
 
-    /* Fade content in — same IntersectionObserver pattern as article.html */
+    /* Fade content in — immediate on page load */
     (function () {
       var el = document.querySelector('.inner-content');
       if (!el) return;
-      if ('IntersectionObserver' in window) {
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              el.classList.add('is-visible');
-              observer.unobserve(el);
-            }
-          });
-        }, { threshold: 0.01 });
-        observer.observe(el);
-      } else {
+      requestAnimationFrame(function () {
         el.classList.add('is-visible');
-      }
+      });
     }());
 
   </script>
