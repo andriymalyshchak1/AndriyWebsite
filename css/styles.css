@@ -950,9 +950,6 @@ img.headshot {
   overflow: hidden;
   position: relative;
   background: #1a1a1a;
-  transform-origin: center center;
-  transform: scale(1);
-  transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 #ambient-video {
@@ -968,53 +965,14 @@ img.headshot {
 
 .video-location {
   display: block;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
-  color: var(--color-text);
+  color: var(--color-text-very-muted);
   text-align: left;
   padding-left: 2px;
   letter-spacing: 0.02em;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 350ms ease-in, transform 350ms ease-in;
 }
 
-/* ── Hover state ── */
-.video-block:hover .video-wrap {
-  transform: scale(1.02);
-  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.video-block:hover .video-location {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms,
-              transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms;
-}
-
-.video-location.location-visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms,
-              transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms;
-}
-
-.video-location:not(.location-visible) {
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 600ms ease-in, transform 600ms ease-in;
-}
-
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .video-wrap {
-    transition: none !important;
-  }
-
-  .video-location {
-    transition: none !important;
-  }
-}
 
 
 /* ─────────────────────────────────────────────────────────────────────────────
