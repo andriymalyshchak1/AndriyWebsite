@@ -573,4 +573,71 @@
     });
   }
 
+  /* ── Video block interactions ── */
+  (function () {
+    var block = document.querySelector('.video-block');
+    var wrap = block ? block.querySelector('.video-wrap') : null;
+    var locationText = block ? block.querySelector('.video-location') : null;
+    var video = document.getElementById('ambient-video');
+    var touchEndTimer = null;
+
+    if (!block || !video) return;
+
+    /* Hover states */
+    block.addEventListener('mouseenter', function () {
+      wrap.classList.add('is-hovered');
+      locationText.classList.add('location-visible');
+    });
+
+    block.addEventListener('mouseleave', function () {
+      wrap.classList.remove('is-hovered');
+      locationText.classList.remove('location-visible');
+    });
+
+    /* Touch states */
+    block.addEventListener('touchstart', function () {
+      clearTimeout(touchEndTimer);
+      wrap.classList.add('is-hovered');
+      locationText.classList.add('location-visible');
+    }, { passive: true });
+
+    block.addEventListener('touchend', function () {
+      touchEndTimer = setTimeout(function () {
+        wrap.classList.remove('is-hovered');
+        locationText.classList.remove('location-visible');
+      }, 1200);
+    }, { passive: true });
+
+    block.addEventListener('touchcancel', function () {
+      wrap.classList.remove('is-hovered');
+      locationText.classList.remove('location-visible');
+    }, { passive: true });
+
+    /* Preload and autoplay */
+    video.load();
+    video.play().catch(function () {});
+
+    video.addEventListener('canplaythrough', function () {
+      video.style.opacity = '1';
+    }, { once: true });
+
+    setTimeout(function () {
+      video.style.opacity = '1';
+    }, 800);
+
+    /* Play/pause on visibility */
+    if ('IntersectionObserver' in window) {
+      var videoObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.1 });
+      videoObserver.observe(video);
+    }
+  }());
+
 })();
