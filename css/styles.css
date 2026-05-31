@@ -1301,11 +1301,15 @@ img.headshot {
 }
 
 .people__item {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  grid-template-areas:
+    "photo name links"
+    "photo role role";
   gap: 16px;
   padding: 12px 0;
   border-top: 0.5px solid var(--color-border);
+  align-items: start;
 }
 
 .people__item:last-child {
@@ -1318,12 +1322,12 @@ img.headshot {
   border-radius: 8px;
   object-fit: cover;
   display: block;
-  flex-shrink: 0;
+  grid-area: photo;
+  grid-row: 1 / 3;
 }
 
 .people__info {
-  flex: 1;
-  min-width: 0;
+  display: contents;
 }
 
 .people__name {
@@ -1331,19 +1335,23 @@ img.headshot {
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   margin: 0;
+  grid-area: name;
+  align-self: center;
 }
 
 .people__role {
   font-size: 11px;
   color: var(--color-text-muted);
-  margin: 4px 0 0 0;
+  margin: 0;
+  grid-area: role;
 }
 
 .people__links {
   display: flex;
   gap: 14px;
-  flex-shrink: 0;
   white-space: nowrap;
+  grid-area: links;
+  align-self: center;
 }
 
 .people__link {
