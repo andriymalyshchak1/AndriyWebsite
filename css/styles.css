@@ -1342,8 +1342,8 @@ img.headshot {
 }
 
 .people__list.is-animating .people__item {
-  animation: peopleReveal 675ms ease-out forwards;
-  animation-delay: calc(var(--item-index, 0) * 165ms);
+  animation: peopleReveal 911ms ease-out forwards;
+  animation-delay: calc(var(--item-index, 0) * 223ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
