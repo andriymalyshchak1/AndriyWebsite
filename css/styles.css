@@ -1334,11 +1334,18 @@ img.headshot {
     "photo name links"
     "photo role role";
   gap: 16px;
-  padding: 12px 0;
+  padding: 12px 12px;
   border-top: 0.5px solid var(--color-border);
   align-items: start;
   opacity: 0;
   transform: translateY(12px);
+  border-radius: 8px;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.people__item:hover {
+  background-color: var(--color-surface);
+  transform: translateY(-2px);
 }
 
 .people__list.is-animating .people__item {
