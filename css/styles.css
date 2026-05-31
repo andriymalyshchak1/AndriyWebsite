@@ -946,9 +946,11 @@ img.headshot {
 .image-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
+  transform: scale(1);
+  transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .ambient-image {
@@ -967,6 +969,32 @@ img.headshot {
   text-align: left;
   padding-left: 2px;
   letter-spacing: 0.02em;
+  opacity: 1;
+  transition: opacity 400ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── Hover state ── */
+@media (hover: hover) {
+  .image-block:hover .image-wrap {
+    transform: scale(1.057);
+    transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .image-block:hover .image-location {
+    opacity: 0;
+    transition: opacity 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+/* ── Touch hover state ── */
+.image-block.is-hovered .image-wrap {
+  transform: scale(1.057);
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.image-block.is-hovered .image-location {
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 

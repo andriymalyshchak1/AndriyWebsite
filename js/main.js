@@ -573,4 +573,22 @@
     });
   }
 
+  /* ── Image block touch hover ── */
+  (function () {
+    var imageBlock = document.querySelector('.image-block');
+    if (!imageBlock) return;
+
+    imageBlock.addEventListener('touchstart', function () {
+      this.classList.add('is-hovered');
+    }, { passive: true });
+
+    imageBlock.addEventListener('touchend', function () {
+      this.classList.remove('is-hovered');
+    }, { passive: true });
+
+    imageBlock.addEventListener('touchcancel', function () {
+      this.classList.remove('is-hovered');
+    }, { passive: true });
+  }());
+
 })();
