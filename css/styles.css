@@ -1352,9 +1352,6 @@ img.headshot {
   transition: transform 0.15s;
 }
 
-.people__item:first-child {
-  border-top: none;
-}
 
 .people__item:hover {
   transform: translateY(-2px);
