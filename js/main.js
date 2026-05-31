@@ -623,4 +623,24 @@
     updateScroll();
   }());
 
+  /* ── People list entrance animation ─────────────────────────────────────
+     Cascade reveal of people cards with staggered entrance animations.
+     Each card fades in + slides up on page load.
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var peopleList = document.querySelector('.people__list');
+    if (!peopleList) return;
+
+    var items = peopleList.querySelectorAll('.people__item');
+    if (items.length === 0) return;
+
+    items.forEach(function (item, index) {
+      item.style.setProperty('--item-index', index);
+    });
+
+    requestAnimationFrame(function () {
+      peopleList.classList.add('is-animating');
+    });
+  }());
+
 })();
