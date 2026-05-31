@@ -196,7 +196,7 @@ p {
 
 /* ── .section — content section wrapper ── */
 .section {
-  padding: var(--space-5) 0;
+  padding: var(--space-3) 0 var(--space-5) 0;
 }
 
 /* ── .section__label — "my thoughts", "what i'm thinking about", etc. ── */
