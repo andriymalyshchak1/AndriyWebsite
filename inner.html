@@ -45,7 +45,7 @@
         <ul class="people__list">
           <!-- Agrim -->
           <li class="people__item">
-            <img src="images/agrim.jpg" srcset="images/agrim-mobile.jpg 600w, images/agrim.jpg 1000w" alt="Agrim" class="people__photo" loading="lazy" />
+            <img src="images/agrim.jpg" srcset="images/agrim-mobile.jpg 600w, images/agrim.jpg 1000w" alt="Agrim" class="people__photo" />
             <div class="people__info">
               <h3 class="people__name">agrim</h3>
               <p class="people__role">banking mizuho, sf</p>
@@ -59,7 +59,7 @@
 
           <!-- Matheu -->
           <li class="people__item">
-            <img src="images/matheu.jpg" srcset="images/matheu-mobile.jpg 600w, images/matheu.jpg 1000w" alt="Matheu" class="people__photo" loading="lazy" />
+            <img src="images/matheu.jpg" srcset="images/matheu-mobile.jpg 600w, images/matheu.jpg 1000w" alt="Matheu" class="people__photo" />
             <div class="people__info">
               <h3 class="people__name">matheu</h3>
               <p class="people__role">ds bcg x, nyc</p>
@@ -73,7 +73,7 @@
 
           <!-- Alex -->
           <li class="people__item">
-            <img src="images/alex.png" srcset="images/alex-mobile.png 600w, images/alex.png 1000w" alt="Alex" class="people__photo" loading="lazy" />
+            <img src="images/alex.png" srcset="images/alex-mobile.png 600w, images/alex.png 1000w" alt="Alex" class="people__photo" />
             <div class="people__info">
               <h3 class="people__name">alex</h3>
               <p class="people__role">swe applied intuition, sf</p>
@@ -171,7 +171,7 @@
 
           <!-- Dana -->
           <li class="people__item">
-            <img src="images/dana.jpg" srcset="images/dana-mobile.jpg 600w, images/dana.jpg 1000w" alt="Dana" class="people__photo" loading="lazy" />
+            <img src="images/dana.jpg" srcset="images/dana-mobile.jpg 600w, images/dana.jpg 1000w" alt="Dana" class="people__photo" />
             <div class="people__info">
               <h3 class="people__name">dana</h3>
               <p class="people__role">growth strategy google, sf</p>
@@ -295,17 +295,14 @@
       });
     }());
 
-    /* Fade body in */
-    document.body.style.transition = 'opacity 400ms ease';
+    /* Show body immediately — no fade delay */
     document.body.style.opacity = '1';
 
-    /* Fade content in — immediate on page load */
+    /* Show content immediately */
     (function () {
       var el = document.querySelector('.inner-content');
       if (!el) return;
-      requestAnimationFrame(function () {
-        el.classList.add('is-visible');
-      });
+      el.classList.add('is-visible');
     }());
 
   </script>
