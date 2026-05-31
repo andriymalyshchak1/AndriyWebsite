@@ -267,39 +267,31 @@
         window.location.href = 'secret.html';
       }
 
-      // Clear session and navigate immediately when clicking back
+      // Clear session when clicking back link
       var backLink = document.querySelector('.back-link');
       if (backLink) {
-        backLink.addEventListener('click', function (e) {
-          e.preventDefault();
+        backLink.addEventListener('click', function () {
           sessionStorage.removeItem(SESSION_TOKEN);
-          window.location.replace('index.html');
         });
       }
 
-      // Push a state so back button triggers redirect instead of blank page
-      window.history.pushState({inner: true}, '', window.location.href);
-      // Push another state to prevent forward navigation
-      window.history.pushState({lock: true}, '', window.location.href);
-
-      // Intercept browser back/forward buttons
-      window.addEventListener('popstate', function (e) {
-        if (e.state && e.state.inner) {
-          // User hit back from inner.html, redirect to index
-          sessionStorage.removeItem(SESSION_TOKEN);
-          window.location.replace('index.html');
-        } else if (e.state && e.state.lock) {
-          // User tried to go forward, push lock state again to prevent it
-          window.history.pushState({lock: true}, '', window.location.href);
-        } else {
-          // Prevent forward by pushing lock state
-          window.history.pushState({lock: true}, '', window.location.href);
-        }
-      });
-
-      // Clear session if user navigates away (browser back, close, etc)
+      // Clear session on any page navigation away
       window.addEventListener('beforeunload', function () {
         sessionStorage.removeItem(SESSION_TOKEN);
+      });
+
+      // Prevent forward navigation by tracking history
+      var historyLength = window.history.length;
+      window.addEventListener('popstate', function () {
+        // Check if user tried to go forward (history length increased) or back
+        var currentLength = window.history.length;
+        if (currentLength > historyLength) {
+          // Forward attempted - stay on this page by pushing state
+          window.history.pushState(null, '', window.location.href);
+        } else {
+          // Back button - clear session and allow navigation
+          sessionStorage.removeItem(SESSION_TOKEN);
+        }
       });
     }());
 
