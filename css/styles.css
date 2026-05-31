@@ -1274,7 +1274,7 @@ img.headshot {
 .people {
   max-width: var(--max-width);
   margin: -1rem auto 0 auto;
-  padding: 0 var(--space-1);
+  padding: 0 6px;
 }
 
 .people__heading {
@@ -1327,14 +1327,14 @@ img.headshot {
 }
 
 .people__name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
   margin: 0;
 }
 
 .people__role {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-text-muted);
   margin: 4px 0 0 0;
 }
@@ -1367,12 +1367,12 @@ img.headshot {
   }
 
   .people__name {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.2;
   }
 
   .people__role {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.3;
   }
 
