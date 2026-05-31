@@ -1058,6 +1058,17 @@ img.headshot {
   }
 }
 
+/* ── Scroll unfurl animation ── */
+.js .article-content {
+  --scroll-unfurl: 0;
+}
+
+.js .article-page section {
+  transform: scaleY(calc(0.95 + 0.05 * var(--scroll-unfurl)));
+  opacity: calc(0.8 + 0.2 * var(--scroll-unfurl));
+  transition: transform 50ms linear, opacity 50ms linear;
+}
+
 /* ── Back link ── */
 .back-link {
   display: inline-flex;

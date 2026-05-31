@@ -591,4 +591,36 @@
     }, { passive: true });
   }());
 
+  /* ── Scroll unfurl animation on article pages ────────────────────────────
+     Applies a subtle scale and opacity effect as you scroll down.
+  ─────────────────────────────────────────────────────────────────────── */
+  (function () {
+    var articleContent = document.querySelector('.article-content');
+    if (!articleContent) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    var ticking = false;
+
+    function updateScroll() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var scrollPercent = Math.min(scrollTop / docHeight, 1);
+
+      articleContent.style.setProperty('--scroll-unfurl', scrollPercent);
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateScroll();
+  }());
+
 })();
