@@ -131,7 +131,7 @@ textarea {
 
   /* ── Layout ──────────────────────────────── */
   --max-width:    520px;
-  --padding-x:    24px;   /* horizontal page padding on mobile */
+  --padding-x:    19px;   /* horizontal page padding on mobile */
 
   /* ── Radii ───────────────────────────────── */
   --radius-sm:   4px;
