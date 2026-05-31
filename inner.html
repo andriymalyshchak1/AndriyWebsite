@@ -275,23 +275,12 @@
         });
       }
 
-      // Block browser back button - user must use the back link
-      (function () {
-        var currentUrl = window.location.href;
-        // Push multiple states to prevent back navigation
-        window.history.pushState({prevent: 'back'}, '', currentUrl);
-        window.history.pushState({prevent: 'back'}, '', currentUrl);
-
-        window.addEventListener('popstate', function (e) {
-          // If user tries to go back, push state again to keep them here
-          if (e.state && e.state.prevent === 'back') {
-            window.history.pushState({prevent: 'back'}, '', currentUrl);
-          } else {
-            // First pop - they hit back button, prevent it
-            window.history.pushState({prevent: 'back'}, '', currentUrl);
-          }
-        });
-      }());
+      // Prevent back and forward navigation - user must use the back link
+      window.history.pushState(null, '', window.location.href);
+      window.addEventListener('popstate', function () {
+        // Any back/forward attempt - push state again to prevent navigation
+        window.history.pushState(null, '', window.location.href);
+      });
 
       // Clear session if user somehow navigates away
       window.addEventListener('beforeunload', function () {
