@@ -199,6 +199,10 @@ p {
   padding: var(--space-3) 0 var(--space-5) 0;
 }
 
+.section.rotation {
+  padding-bottom: var(--space-4);
+}
+
 /* ── .section__label — "my thoughts", "what i'm thinking about", etc. ── */
 .section__label {
   display: block;
