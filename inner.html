@@ -262,9 +262,15 @@
     (function () {
       var SESSION_TOKEN = 'authToken';
 
+      // Clear session on page refresh so user must re-authenticate
+      var navEntry = performance.getEntriesByType('navigation')[0];
+      if (navEntry && navEntry.type === 'reload') {
+        sessionStorage.removeItem(SESSION_TOKEN);
+      }
+
       // Prevent direct access without authentication
       if (!sessionStorage.getItem(SESSION_TOKEN)) {
-        window.location.href = 'secret.html';
+        window.location.replace('secret.html');
       }
 
       // Clear session when clicking back link
