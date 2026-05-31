@@ -1325,6 +1325,13 @@ img.headshot {
   }
 }
 
+@media (hover: none) {
+  .people__item:active {
+    transform: scale(1.057);
+    transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
 .people__item:last-child {
   border-bottom: 0.5px solid var(--color-border);
 }
