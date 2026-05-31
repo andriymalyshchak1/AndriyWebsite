@@ -1376,8 +1376,8 @@ img.headshot {
 }
 
 .people__photo {
-  width: 56px;
-  height: 56px;
+  width: 88px;
+  height: 88px;
   border-radius: 10px;
   object-fit: cover;
   display: block;
@@ -1408,7 +1408,7 @@ img.headshot {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 56px;
+  min-height: 88px;
 }
 
 .people__name {
