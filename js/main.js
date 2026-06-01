@@ -154,34 +154,47 @@
   }
 
   /* ── 5. Album grid — tap-to-play covers ────────────────────────────────
-     One global Audio instance shared across all four cells.
-     Audio files: audio/clip-1.mp3 … audio/clip-4.mp3
-     <!-- REPLACE: drop 20-second MP3 clips into /audio and add song titles -->
+     One Audio instance per clip, pre-loaded and pre-seeked on first touch
+     so playback is instant. touchstart fires 300ms before click on mobile.
   ─────────────────────────────────────────────────────────────────────── */
   (function () {
     var cells = Array.from(document.querySelectorAll('.album-cell'));
     if (!cells.length) return;
 
-    /* Hide broken-image icons — cell background colour shows instead */
     cells.forEach(function (cell) {
       var img = cell.querySelector('img.album-cell__cover');
       if (img) img.addEventListener('error', function () { this.style.display = 'none'; });
     });
 
-    /* <!-- REPLACE: swap each entry for a unique 20-second clip when ready --> */
-    var CLIPS = [
-      'audio/like-animal.mp3',
-      'audio/Beto.mp3',
-      'audio/MK.mp3',
-      'audio/cinderella.mp3',
-    ];
+    var CLIPS    = ['audio/like-animal.mp3', 'audio/Beto.mp3', 'audio/MK.mp3', 'audio/cinderella.mp3'];
+    var START_AT = [46, 50, 7, 29];
 
-    var audio      = new Audio();   /* single global instance — never create multiples */
-    var activeCell = null;
-    var stopTimer  = null;
+    /* One dedicated Audio instance per track — never swap src */
+    var pool = CLIPS.map(function (src, idx) {
+      var a = new Audio();
+      a.preload = 'auto';
+      a.src = src;
+      /* Seek to clip start once enough data is buffered */
+      a.addEventListener('canplay', function seek() {
+        try { a.currentTime = START_AT[idx] || 0; } catch (e) {}
+        a.removeEventListener('canplay', seek);
+      });
+      return a;
+    });
 
-    audio.addEventListener('ended', stopActive);
-    window.addEventListener('pagehide', function () { audio.pause(); });
+    var activeCell  = null;
+    var activeAudio = null;
+    var stopTimer   = null;
+    var kickedLoad  = false;
+
+    /* Mobile browsers block audio loading until a user gesture.
+       Kick off load() for all tracks on the very first touch anywhere. */
+    function kickLoad() {
+      if (kickedLoad) return;
+      kickedLoad = true;
+      pool.forEach(function (a) { a.load(); });
+    }
+    document.addEventListener('touchstart', kickLoad, { once: true, passive: true });
 
     function reset(cell) {
       cell.classList.remove('album-cell--active');
@@ -191,38 +204,46 @@
 
     function stopActive() {
       clearTimeout(stopTimer);
-      audio.pause();
-      if (activeCell) { reset(activeCell); activeCell = null; }
+      if (activeAudio) { activeAudio.pause(); activeAudio = null; }
+      if (activeCell)  { reset(activeCell);   activeCell  = null; }
     }
-
-    /* Start offset (seconds) per cell index — 0 = beginning of track */
-    var START_AT = [46, 50, 7, 29]; /* index 0 (like-animal) starts at 46s | index 1 (Beto) starts at 50s | index 2 (MK) starts at 7s | index 3 (cinderella) starts at 29s */
 
     function play(cell) {
       var idx = parseInt(cell.getAttribute('data-index'), 10);
-      audio.src = CLIPS[idx];
-      audio.currentTime = START_AT[idx] || 0;
-      audio.play().catch(function () {});
+      var a   = pool[idx];
+      try { a.currentTime = START_AT[idx] || 0; } catch (e) {}
+      a.play().catch(function () {});
+      a.addEventListener('ended', stopActive, { once: true });
 
       cell.classList.add('album-cell--active');
       var name = cell.closest('.album-card') && cell.closest('.album-card').querySelector('.album-card__name');
       if (name) name.classList.add('artist-name-visible');
-      activeCell = cell;
+      activeCell  = cell;
+      activeAudio = a;
 
-      /* Stop after 35-second clip */
       clearTimeout(stopTimer);
       stopTimer = setTimeout(stopActive, 60000);
     }
 
+    var isTouch = ('ontouchstart' in window);
+
     cells.forEach(function (cell) {
-      cell.addEventListener('click', function () {
+      function handleTap(e) {
+        if (isTouch) e.preventDefault(); /* suppress ghost click on mobile */
+        kickLoad();
         if (cell === activeCell) {
           stopActive();
         } else {
-          if (activeCell) { clearTimeout(stopTimer); audio.pause(); reset(activeCell); }
+          if (activeAudio) { clearTimeout(stopTimer); activeAudio.pause(); }
+          if (activeCell)  { reset(activeCell); }
           play(cell);
         }
-      });
+      }
+      cell.addEventListener(isTouch ? 'touchstart' : 'click', handleTap, { passive: false });
+    });
+
+    window.addEventListener('pagehide', function () {
+      pool.forEach(function (a) { a.pause(); });
     });
   }());
 
@@ -304,24 +325,10 @@
     });
   }());
 
-  /* ── Pre-buffer all audio + photo strip images after page load ──────────
-     Audio objects with preload='auto' tell the browser to fully buffer
-     each file before it's needed — play becomes instant with no network lag.
-     Images are fetched via Image() to warm the cache for the photo strip.
+  /* ── Pre-cache photo strip images after page load ───────────────────────
+     Audio is pre-loaded by the album grid pool above (one instance per clip).
   ─────────────────────────────────────────────────────────────────────── */
   window.addEventListener('load', function () {
-    /* Audio pre-buffer */
-    [
-      'audio/like-animal.mp3',
-      'audio/Beto.mp3',
-      'audio/MK.mp3',
-      'audio/cinderella.mp3',
-      'audio/fuckin-problems.mp3',
-    ].forEach(function (src) {
-      var a = new Audio();
-      a.preload = 'auto';
-      a.src = src;
-    });
 
     /* Photo strip image pre-cache */
     [
