@@ -260,7 +260,7 @@ p {
   font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
   line-height: var(--line-height-snug);
-  margin-bottom: var(--space-4);
+  margin-bottom: 29px;
   max-width: 38ch;
 }
 
@@ -269,7 +269,7 @@ p {
   width: 100%;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  margin-bottom: var(--space-3);
+  margin-bottom: 22px;
   /* Placeholder styles — overridden when content is an <img> */
   background-color: var(--color-surface);
   display: flex;
@@ -314,7 +314,7 @@ img.headshot {
   font-size: 15px;
   font-weight: var(--font-weight-regular);
   color: var(--color-text);
-  margin-top: 16px;
+  margin-top: 14px;
   margin-bottom: 0;
   max-width: none;
 }
