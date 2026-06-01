@@ -1010,6 +1010,16 @@ img.headshot {
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* ── Tablet / small desktop (640px+) ── */
+@media (max-width: 639px) {
+  .page {
+    padding-top: 10px;
+  }
+
+  .hero {
+    padding-top: 16px;
+  }
+}
+
 @media (min-width: 640px) {
   .page {
     padding-top: var(--space-5);
