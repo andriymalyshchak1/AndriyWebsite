@@ -1398,7 +1398,7 @@ img.headshot {
     "photo name  links"
     "photo role  role";
   column-gap: 20px;
-  row-gap: 7px;
+  row-gap: 8px;
   padding: 12px 0;
   border-top: 0.5px solid var(--color-border);
   opacity: 0;
