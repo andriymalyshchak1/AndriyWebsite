@@ -186,7 +186,7 @@ p {
 .page {
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: var(--space-2) var(--padding-x) 0;
+  padding: 14px var(--padding-x) 0;
 }
 
 
@@ -240,7 +240,7 @@ p {
    HERO
 ════════════════════════════════════════ */
 .hero {
-  padding-top: var(--space-3);
+  padding-top: 20px;
   padding-bottom: var(--space-5);
 }
 
