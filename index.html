@@ -304,13 +304,20 @@
 
   <script src="js/main.js"></script>
   <script>
-    /* Prevent forward navigation */
+    /* A refresh of ANY page resets the login session — clear the token on reload
+       so returning to the gated pages requires re-entering the birthday. */
     (function () {
-      var currentUrl = window.location.href;
-      window.addEventListener('popstate', function () {
-        window.location.replace(currentUrl);
-      });
-      window.history.pushState(null, '', currentUrl);
+      function isReload() {
+        try {
+          var nav = performance.getEntriesByType('navigation')[0];
+          if (nav && nav.type) return nav.type === 'reload';
+        } catch (e) {}
+        if (performance.navigation) return performance.navigation.type === 1;
+        return false;
+      }
+      if (isReload()) {
+        sessionStorage.removeItem('authToken');
+      }
     }());
   </script>
 </body>

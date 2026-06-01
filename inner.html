@@ -262,35 +262,25 @@
     (function () {
       var SESSION_TOKEN = 'authToken';
 
-      // Clear session on page refresh so user must re-authenticate
-      var navEntry = performance.getEntriesByType('navigation')[0];
-      if (navEntry && navEntry.type === 'reload') {
+      // A refresh of ANY page resets the session — detect reload and clear it.
+      function isReload() {
+        try {
+          var nav = performance.getEntriesByType('navigation')[0];
+          if (nav && nav.type) return nav.type === 'reload';
+        } catch (e) {}
+        if (performance.navigation) return performance.navigation.type === 1;
+        return false;
+      }
+
+      if (isReload()) {
         sessionStorage.removeItem(SESSION_TOKEN);
       }
 
-      // Prevent direct access without authentication
+      // No token (never logged in, or cleared by refresh) → back to birthday prompt.
+      // Session persists across all normal navigation (back link, back/forward button).
       if (!sessionStorage.getItem(SESSION_TOKEN)) {
         window.location.replace('secret.html');
       }
-
-      // Clear session when clicking back link
-      var backLink = document.querySelector('.back-link');
-      if (backLink) {
-        backLink.addEventListener('click', function () {
-          sessionStorage.removeItem(SESSION_TOKEN);
-        });
-      }
-
-      // On browser back, clear session and go to index.html
-      window.addEventListener('popstate', function () {
-        sessionStorage.removeItem(SESSION_TOKEN);
-        window.location.replace('index.html');
-      });
-
-      // Clear session if user somehow navigates away
-      window.addEventListener('beforeunload', function () {
-        sessionStorage.removeItem(SESSION_TOKEN);
-      });
     }());
 
     /* Show body immediately — no fade delay */
