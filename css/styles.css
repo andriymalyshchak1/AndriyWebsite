@@ -1144,14 +1144,43 @@ img.headshot {
   max-width: none;
 }
 
+/* ── Article lede — slightly larger opening paragraph ── */
+.article-lede {
+  font-size: 17px;
+  font-weight: var(--font-weight-light);
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: 2.5rem;
+  max-width: 65ch;
+}
+
+/* ── Goals list — plain lines with thin dividers ── */
+.goals-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.goals-list li {
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  padding: 6px 0;
+  border-top: 0.5px solid var(--color-divider);
+  max-width: 65ch;
+}
+
+.goals-list li:first-child {
+  border-top: none;
+}
+
 /* ── Pull quote ── */
 .pull-quote {
   font-style: italic;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: var(--font-weight-light);
-  line-height: var(--line-height-loose);
+  line-height: 1.55;
   color: var(--color-text);
-  border-left: 2px solid var(--color-border);
+  border-left: 2px solid var(--color-border-secondary);
   padding-left: 20px;
   margin: 2rem 0;
   max-width: 52ch;
