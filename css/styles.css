@@ -832,84 +832,36 @@ img.headshot {
 }
 
 /* Gentle left-right nudge on writing + thinking arrows */
-/* ── Back-link arrow pulse (kept separate) ── */
 @keyframes arrowPulse {
   0%   { transform: translateX(0);   opacity: 0.3; }
   50%  { transform: translateX(4px); opacity: 0.9; }
   100% { transform: translateX(0);   opacity: 0.3; }
 }
 
-/* ── Ripple + nudge for writing and thinking article links ── */
-.ripple-text {
-  font-size: inherit;
-  font-weight: inherit;
-  background: linear-gradient(
-    90deg,
-    rgba(28, 25, 23, 1)   0%,
-    rgba(28, 25, 23, 0.3) 50%,
-    rgba(28, 25, 23, 1)   100%
-  );
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: titleRipple 5s ease-in-out infinite;
-}
-
-@keyframes titleRipple {
-  0%   { background-position: 100% 0; }
-  40%  { background-position: 0%   0; }
-  100% { background-position: 100% 0; }
-}
-
-.pulse-arrow {
-  display: inline-block;
+/* Scoped only to writing and thinking section arrows */
+.writing__title .arrow,
+.thinking__title .arrow {
+  opacity: 0.3;
   font-size: 1.08em;
-  color: var(--color-text-very-muted);
-  -webkit-text-fill-color: var(--color-text-very-muted);
-  animation: arrowNudge 2.8s ease-in-out infinite;
-  flex-shrink: 0;
-  margin-left: 6px;
+  animation: arrowPulse 2s ease-in-out infinite;
 }
 
-@keyframes arrowNudge {
-  0%   { transform: translateX(0px); opacity: 0.35; }
-  40%  { transform: translateX(4px); opacity: 0.35; }
-  100% { transform: translateX(0px); opacity: 0.35; }
-}
-
-.article-link:hover .ripple-text,
-.article-link:active .ripple-text {
-  animation: none;
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: var(--color-text);
-  color: var(--color-text);
-}
-
-.article-link:hover .pulse-arrow,
-.article-link:active .pulse-arrow {
+/* Hover/touch-active: pause pulse, snap to nudged position */
+.writing__title .arrow.arrow--active,
+.thinking__title .arrow.arrow--active {
   animation: none;
   transform: translateX(4px);
-  color: var(--color-text-very-muted);
-  -webkit-text-fill-color: var(--color-text-very-muted);
+  opacity: 1;
+  transition: transform 150ms ease, opacity 150ms ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ripple-text {
-    animation: none;
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    -webkit-text-fill-color: var(--color-text);
-  }
-  .pulse-arrow {
-    animation: none;
-    opacity: 0.35;
-    transform: none;
-  }
+/* Returning: transition back to rest before pulse resumes */
+.writing__title .arrow.arrow--returning,
+.thinking__title .arrow.arrow--returning {
+  animation: none;
+  transform: translateX(0);
+  opacity: 0.3;
+  transition: transform 150ms ease, opacity 150ms ease;
 }
 
 @keyframes blink {
