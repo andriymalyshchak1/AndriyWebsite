@@ -447,7 +447,7 @@ img.headshot {
 .thinking__item {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* title → its own blurb — stays tight */
+  gap: 3px; /* title → its own blurb — stays tight */
 }
 
 .thinking__title {
