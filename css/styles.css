@@ -407,7 +407,7 @@ img.headshot {
   text-decoration: none;
   touch-action: manipulation;
   min-height: 44px;
-  margin-bottom: var(--space-1-5);
+  margin-bottom: 10px;
   transition: color var(--transition-fast);
 }
 
