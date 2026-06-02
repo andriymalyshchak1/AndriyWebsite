@@ -903,7 +903,7 @@ img.headshot {
 .headshot-link     { animation-delay:  90ms; }
 .hero__location    { animation-delay: 135ms; }
 .hero__roles       { animation-delay: 135ms; }
-.section.writing   { animation-delay: 180ms; }
+.section.writing   { animation-delay: 180ms; padding-bottom: 20px; }
 .section.thinking  { animation-delay: 225ms; }
 .section.rotation  { animation-delay: 270ms; }
 .section.cooking   { animation-delay: 315ms; }
@@ -956,8 +956,8 @@ img.headshot {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-2) 0 var(--space-1-5) 0;
-  margin: var(--space-2) 0 var(--space-1-5) 0;
+  padding: var(--space-1) 0 var(--space-1-5) 0;
+  margin: var(--space-1) 0 var(--space-1-5) 0;
 }
 
 .image-wrap {
