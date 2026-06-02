@@ -842,6 +842,7 @@ img.headshot {
 .writing__title .arrow,
 .thinking__title .arrow {
   opacity: 0.3;
+  font-size: 1.2em;
   animation: arrowPulse 2s ease-in-out infinite;
 }
 
