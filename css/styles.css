@@ -654,7 +654,7 @@ img.headshot {
 
 .cooking__name--link {
   text-decoration: underline;
-  text-decoration-color: rgba(28, 25, 23, 0.35);
+  text-decoration-color: rgba(28, 25, 23, 0.13);
   text-underline-offset: 2px;
   transition: text-decoration-color var(--transition-fast);
 }
