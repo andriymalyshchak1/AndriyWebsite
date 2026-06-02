@@ -422,6 +422,13 @@ img.headshot {
   max-width: 50ch;
 }
 
+.link-label {
+  text-decoration: underline;
+  text-decoration-color: rgba(28, 25, 23, 0.22);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
 
 /* ════════════════════════════════════════
    THINKING
