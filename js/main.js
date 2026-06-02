@@ -6,6 +6,9 @@
  * 2. Current year in footer
  */
 
+/* Always show andriymal.com/ regardless of current page */
+window.history.replaceState(null, '', '/');
+
 (function () {
   'use strict';
 
