@@ -844,6 +844,13 @@ img.headshot {
   100% { transform: translateX(0);   opacity: 0.3; }
 }
 
+/* Mirrored nudge for back arrows */
+@keyframes arrowPulseBack {
+  0%   { transform: translateX(0);    opacity: 0.9; }
+  50%  { transform: translateX(-4px); opacity: 1;   }
+  100% { transform: translateX(0);    opacity: 0.9; }
+}
+
 /* Scoped only to writing and thinking section arrows */
 .writing__title .arrow,
 .thinking__title .arrow {
@@ -934,6 +941,17 @@ img.headshot {
 
   .writing__title .arrow.arrow--returning,
   .thinking__title .arrow.arrow--returning {
+    transition: none;
+  }
+
+  .back-link .arrow {
+    animation: none;
+    opacity: 0.9;
+    transform: none;
+  }
+
+  .back-link:hover .arrow {
+    transform: none;
     transition: none;
   }
 }
@@ -1112,13 +1130,22 @@ img.headshot {
 
 .back-link .arrow {
   display: inline-flex;
+  align-items: center;
   opacity: 0.9;
-  animation: arrowPulse 2s ease-in-out infinite;
+  animation: arrowPulseBack 2s ease-in-out infinite;
+}
+
+.back-link .arrow svg {
+  display: block;
+  height: 0.72em;
+  width: auto;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .back-link:hover .arrow {
   animation: none;
-  transform: translateX(4px);
+  transform: translateX(-4px);
   opacity: 1;
   transition: transform 150ms ease, opacity 150ms ease;
 }
