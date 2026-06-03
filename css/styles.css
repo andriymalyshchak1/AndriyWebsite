@@ -222,18 +222,12 @@ p {
   background-color: var(--color-divider);
 }
 
-/* ── .arrow — animated → glyph inside links ── */
+/* ── .arrow — animated SVG arrow inside links ── */
 .arrow {
   display: inline-block;
   transition: transform var(--transition-fast);
   margin-left: 2px;
   white-space: nowrap;
-  /* Force Inter on all platforms — prevents Android falling back to emoji/system font */
-  font-family: var(--font-sans);
-  font-style: normal;
-  font-variant: normal;
-  -webkit-font-feature-settings: normal;
-  font-feature-settings: normal;
 }
 
 
@@ -854,8 +848,19 @@ img.headshot {
 .writing__title .arrow,
 .thinking__title .arrow {
   opacity: 0.3;
-  font-size: 1.08em;
   animation: arrowPulse 2s ease-in-out infinite;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* SVG arrow — pixel-perfect rendering on all platforms including Samsung/Android */
+.writing__title .arrow svg,
+.thinking__title .arrow svg {
+  display: block;
+  height: 0.72em;
+  width: auto;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 /* Hover/touch-active: pause pulse, snap to nudged position */
