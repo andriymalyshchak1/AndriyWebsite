@@ -322,5 +322,15 @@
       }
     }());
   </script>
+
+  <script>
+    /* Prevent forward navigation — clears the forward history stack on load.
+       The popstate listener re-pushes on any history traversal so forward
+       stays blocked even if the user navigates back to this page. */
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, location.href);
+    });
+  </script>
 </body>
 </html>
