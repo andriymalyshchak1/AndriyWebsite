@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DJ Bookings — a preview of Andriy Malyshchak's mixes across Balearic, UK garage, deep house, and more." />
+  <title>DJ Bookings — Andriy Malyshchak</title>
+
+  <link rel="canonical" href="https://andriymal.com/dj-bookings/" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='7' fill='%231C1917'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital@1&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* =========================================================================
+       DJ BOOKINGS — mix library
+       Layout, interactions, timings and shapes are taken verbatim from the
+       supplied wireframe. Palette is remapped to andriymal.com: warm cream
+       ground, Inter throughout, Playfair Display italic labels, hairline rules.
+    ========================================================================= */
+
+    :root {
+      --bg:      #F5F2EE;   /* warm off-white page background */
+      --panel:   #EDE9E3;   /* player surface                 */
+      --line:    rgba(28, 25, 23, 0.12);
+      --divider: rgba(0, 0, 0, 0.07);
+      --text:    #1C1917;
+      --text-dim:#78716C;
+      --faint:   #A8A29E;
+      --accent:  #1C1917;   /* inverts against the cream — plays the role of the wireframe's cream */
+
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: 40px 19px 140px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid rgba(28, 25, 23, 0.35);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    :focus:not(:focus-visible) { outline: none; }
+
+    /* ── Back link ─────────────────────────────────────────────────────── */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 34px;
+      transition: color .16s var(--ease);
+    }
+    .back .arrow { transition: transform .16s var(--ease); }
+    .back:hover { color: var(--text); }
+    .back:hover .arrow { transform: translateX(-3px); }
+
+    /* ── Header ────────────────────────────────────────────────────────── */
+    header { margin-bottom: 40px; }
+
+    header h1 {
+      font-size: 30px;
+      font-weight: 300;
+      letter-spacing: -0.6px;
+      line-height: 1.15;
+      margin: 0 0 8px;
+    }
+
+    header p {
+      margin: 0;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+
+    header p a {
+      color: var(--text-dim);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: var(--line);
+      transition: color .15s ease, text-decoration-color .15s ease;
+    }
+
+    header p a:hover,
+    header p a:focus-visible {
+      color: var(--text);
+      text-decoration-color: var(--text);
+    }
+
+    /* ── Grid ──────────────────────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px 16px;
+    }
+
+    .slot {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .genre {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-dim);
+      text-align: left;
+      margin: 0 0 8px 2px;
+    }
+
+    .card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      display: block;
+      width: 100%;
+      background: var(--panel);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+      touch-action: manipulation;
+      transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    @media (hover: hover) {
+      .card:hover {
+        transform: scale(1.057);
+        transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+    }
+
+    .card.playing {
+      transform: scale(1.057);
+      transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card .art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card .art.sunset { background: linear-gradient(160deg, #d97a4d 0%, #c25a3f 38%, #f2c98d 55%, #9fc4d8 72%, #3d5163 100%); }
+    .card .art.crowd  { background: radial-gradient(ellipse at 50% 30%, #6b625a 0%, #2c2622 60%, #14110d 100%); }
+    .card .art.ticket { background: linear-gradient(135deg, #1c3d33 0%, #2f6350 45%, #7fae7a 70%, #dfe6b8 100%); }
+    .card .art.duo    { background: linear-gradient(200deg, #2a2438 0%, #3a3350 55%, #574d6e 100%); }
+    .card .art.desert { background: linear-gradient(150deg, #3d2c22 0%, #86502f 40%, #d99a4e 62%, #f4d9a0 80%, #cfe3e6 100%); }
+    .card .art.rain   { background: linear-gradient(200deg, #1a2530 0%, #24323d 45%, #3c5563 75%, #6d8894 100%); }
+
+    .play-dot {
+      position: absolute;
+      left: 12px;
+      bottom: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.4;
+      transition: opacity .15s ease;
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      .card:hover .play-dot { opacity: 1; }
+    }
+
+    .card.playing .play-dot { opacity: 1; }
+
+    .play-dot svg { width: 10px; height: 10px; }
+    .play-dot .icon-play { fill: #1a1a1a; }
+    .card.playing .icon-play { display: none; }
+
+    .icon-bars { display: none; width: 11px; height: 11px; }
+    .card.playing .icon-bars { display: block; }
+
+    .icon-bars .bar {
+      fill: #1a1a1a;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: eqBar .85s ease-in-out infinite;
+    }
+    .icon-bars .bar:nth-child(1) { animation-delay: 0s; }
+    .icon-bars .bar:nth-child(2) { animation-delay: .18s; }
+    .icon-bars .bar:nth-child(3) { animation-delay: .36s; }
+
+    @keyframes eqBar {
+      0%, 100% { transform: scaleY(0.35); }
+      50%      { transform: scaleY(1); }
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .meta .title {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .meta .dur {
+      font-size: 12px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* ── Bottom timeline player ────────────────────────────────────────── */
+    .player {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 18px 24px 22px;
+      background: linear-gradient(180deg, rgba(245, 242, 238, 0) 0%, var(--panel) 34%);
+      transform: translateY(115%);
+      opacity: 0;
+      transition: transform .45s var(--ease), opacity .4s ease;
+      pointer-events: none;
+    }
+
+    .player.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .player-inner {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .player-head {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .player-head .countdown {
+      font-size: 12.5px;
+      color: var(--text-dim);
+      font-variant-numeric: tabular-nums;
+      margin: 0;
+      transition: opacity .2s ease;
+    }
+
+    .player.buffering .countdown {
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.35; }
+    }
+
+    .timeline {
+      position: relative;
+      height: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .timeline .track {
+      position: relative;
+      width: 100%;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--line);
+    }
+
+    .timeline .fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--text-dim);
+      width: 0%;
+    }
+
+    .timeline .knob {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      width: 30px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      transform: translate(-50%, -50%);
+      transition: left .15s linear;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .timeline .knob:active { cursor: grabbing; transition: none; }
+    .timeline.dragging .knob { transition: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .player, .timeline .knob, .card, .icon-bars .bar,
+      .back .arrow, header p a, .player .countdown { transition: none !important; animation: none !important; }
+      .card { transform: none !important; }
+    }
+
+    /* ── Small screens ────────────────────────────────────────────────── */
+    @media (max-width: 560px) {
+      body { padding: 28px 19px 132px; }
+      .grid { gap: 22px 14px; }
+      header h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back" href="https://andriymal.com">
+    <span class="arrow" aria-hidden="true"><svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M13 5H1M5 1L1 5L5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    andriymal.com
+  </a>
+
+  <header>
+    <h1>DJ Bookings</h1>
+    <p>andriy_malyshchak@utexas.edu &nbsp;·&nbsp; (817)-808-0706 &nbsp;·&nbsp; <a href="https://www.instagram.com/andriy_malyshchak/" target="_blank" rel="noopener">Instagram</a></p>
+  </header>
+
+  <div class="grid">
+
+    <div class="slot">
+      <p class="genre">Deep house</p>
+      <button class="card" data-id="1" data-title="Coastline, slowly"
+              data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyDeepHouse.m4a"
+              data-duration="2702">
+        <div class="art sunset"></div>
+        <div class="play-dot">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
+          <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
+        </div>
+      </button>
+      <div class="meta">
+        <span class="title">Coastline, slowly</span>
+        <span class="dur">45 min</span>
+      </div>
+    </div>
+
+    <div class="slot">
+      <p class="genre">House</p>
+      <button class="card" data-id="2" data-title="Basement, 2am"
+              data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyHouse.m4a"
+              data-duration="1906">
+        <div class="art crowd"></div>
+        <div class="play-dot">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
+          <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
+        </div>
+      </button>
+      <div class="meta">
+        <span class="title">Basement, 2am</span>
+        <span class="dur">32 min</span>
+      </div>
+    </div>
+
+    <div class="slot">
+      <p class="genre">Deep house</p>
+      <button class="card" data-id="3" data-title="Never let you go" data-duration="2760">
+        <div class="art ticket"></div>
+        <div class="play-dot">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
+          <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
+        </div>
+      </button>
+      <div class="meta">
+        <span class="title">Never let you go</span>
+        <span class="dur">46 min</span>
+      </div>
+    </div>
+
+    <div class="slot">
+      <p class="genre">Trap / R&amp;B</p>
+      <button class="card" data-id="4" data-title="Low light, two voices" data-duration="1980">
+        <div class="art duo"></div>
+        <div class="play-dot">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
+          <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
+        </div>
+      </button>
+      <div class="meta">
+        <span class="title">Low light, two voices</span>
+        <span class="dur">33 min</span>
+      </div>
+    </div>
+
+    <div class="slot">
+      <p class="genre">Afro house</p>
+      <button class="card" data-id="5" data-title="Dust, mid-afternoon" data-duration="2340">
+        <div class="art desert"></div>
+        <div class="play-dot">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
+          <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
+        </div>
+      </button>
+      <div class="meta">
+        <span class="title">Dust, mid-afternoon</span>
+        <span class="dur">39 min</span>
+      </div>
+    </div>
+
+    <div class="slot">
+      <p class="genre">Ambient / dub</p>
+      <button class="card" data-id="6" data-title="Window, grey city" data-duration="3360">
+        <div class="art rain"></div>
+        <div class="play-dot">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
+          <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
+        </div>
+      </button>
+      <div class="meta">
+        <span class="title">Window, grey city</span>
+        <span class="dur">56 min</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Real playback streams from Cloudflare R2 (public bucket, HTTP range requests).
+       Add a mix by dropping the object in the bucket and setting data-src on its card. -->
+  <audio id="audio" preload="none"></audio>
+
+  <div class="player" id="player">
+    <div class="player-inner">
+      <div class="player-head">
+        <p class="countdown" id="countdown">–:––</p>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="track">
+          <div class="fill" id="fill"></div>
+          <div class="knob" id="knob" role="slider" tabindex="0"
+               aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const player = document.getElementById('player');
+    const countdown = document.getElementById('countdown');
+    const timeline = document.getElementById('timeline');
+    const track = timeline.querySelector('.track');
+    const knob = document.getElementById('knob');
+    const fill = document.getElementById('fill');
+    const audio = document.getElementById('audio');
+
+    let activeId = null;
+    let mode = 'sim';        // 'audio' for real R2 playback, 'sim' for placeholder cards
+    let duration = 0;
+    let elapsed = 0;
+    let ticker = null;
+    let dragging = false;
+
+    function formatTime(s) {
+      s = Math.max(0, Math.round(s));
+      const m = Math.floor(s / 60);
+      const sec = s % 60;
+      return m + ':' + String(sec).padStart(2, '0');
+    }
+
+    function tick() {
+      if (dragging || mode !== 'sim') return;
+      elapsed += 1;
+      if (elapsed >= duration) {
+        closePlayer();
+        return;
+      }
+      updateTimeline();
+    }
+
+    function updateTimeline() {
+      const pct = duration ? (elapsed / duration) * 100 : 0;
+      knob.style.left = pct + '%';
+      fill.style.width = pct + '%';
+      knob.setAttribute('aria-valuenow', Math.round(pct));
+      countdown.textContent = duration ? '-' + formatTime(duration - elapsed) : '–:––';
+    }
+
+    function pctFromEvent(e) {
+      const rect = track.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      return Math.min(1, Math.max(0, x / rect.width));
+    }
+
+    function startDrag(e) {
+      dragging = true;
+      timeline.classList.add('dragging');
+      knob.setPointerCapture(e.pointerId);
+      moveDrag(e);
+    }
+
+    function moveDrag(e) {
+      if (!dragging) return;
+      const pct = pctFromEvent(e);
+      elapsed = pct * duration;
+      knob.style.left = (pct * 100) + '%';
+      fill.style.width = (pct * 100) + '%';
+      knob.setAttribute('aria-valuenow', Math.round(pct * 100));
+      countdown.textContent = duration ? '-' + formatTime(duration - elapsed) : '–:––';
+    }
+
+    function endDrag() {
+      dragging = false;
+      timeline.classList.remove('dragging');
+      if (mode === 'audio' && isFinite(audio.duration)) {
+        audio.currentTime = Math.min(audio.duration - 0.25, Math.max(0, elapsed));
+      }
+    }
+
+    knob.addEventListener('pointerdown', startDrag);
+    knob.addEventListener('pointermove', moveDrag);
+    knob.addEventListener('pointerup', endDrag);
+    knob.addEventListener('pointercancel', endDrag);
+
+    // Keyboard nudge on the scrubber
+    knob.addEventListener('keydown', (e) => {
+      if (activeId === null) return;
+      const step = 5; // seconds
+      const max = (duration || 0);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        elapsed = Math.min(max - 1, elapsed + step);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        elapsed = Math.max(0, elapsed - step);
+      } else if (e.key === 'Home') {
+        elapsed = 0;
+      } else if (e.key === 'End') {
+        elapsed = Math.max(0, max - 1);
+      } else {
+        return;
+      }
+      e.preventDefault();
+      if (mode === 'audio' && isFinite(audio.duration)) {
+        audio.currentTime = Math.max(0, elapsed);
+      }
+      updateTimeline();
+    });
+
+    // ── Real audio element wiring (streams from Cloudflare R2) ──
+    const setBuffering = (on) => player.classList.toggle('buffering', mode === 'audio' && on);
+
+    audio.addEventListener('loadedmetadata', () => {
+      if (isFinite(audio.duration) && audio.duration > 0) duration = audio.duration;
+      if (!dragging) updateTimeline();
+    });
+    audio.addEventListener('timeupdate', () => {
+      if (dragging || mode !== 'audio') return;
+      elapsed = audio.currentTime;
+      updateTimeline();
+    });
+    audio.addEventListener('waiting', () => setBuffering(true));
+    audio.addEventListener('stalled', () => setBuffering(true));
+    audio.addEventListener('playing', () => setBuffering(false));
+    audio.addEventListener('canplay', () => setBuffering(false));
+    audio.addEventListener('ended', () => closePlayer());
+    audio.addEventListener('error', () => {
+      if (mode === 'audio') {
+        console.warn('R2 audio failed to load', audio.currentSrc, audio.error);
+        closePlayer();
+      }
+    });
+
+    function stopAudio() {
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+    }
+
+    function openPlayer(card) {
+      activeId = card.dataset.id;
+      elapsed = 0;
+      cards.forEach(c => c.classList.toggle('playing', c === card));
+      player.classList.add('open');
+      clearInterval(ticker);
+
+      const src = card.dataset.src;
+      if (src) {
+        mode = 'audio';
+        duration = Number(card.dataset.duration) || 0;
+        updateTimeline();
+        audio.src = src;
+        const p = audio.play();
+        if (p && p.catch) p.catch(() => {});
+      } else {
+        mode = 'sim';
+        stopAudio();
+        duration = Number(card.dataset.duration);
+        updateTimeline();
+        ticker = setInterval(tick, 1000);
+      }
+    }
+
+    function closePlayer() {
+      clearInterval(ticker);
+      stopAudio();
+      mode = 'sim';
+      player.classList.remove('open', 'buffering');
+      cards.forEach(c => c.classList.remove('playing'));
+      activeId = null;
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        if (activeId === card.dataset.id) {
+          closePlayer();
+        } else {
+          openPlayer(card);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
