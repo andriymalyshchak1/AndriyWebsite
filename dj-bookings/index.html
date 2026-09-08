@@ -115,11 +115,11 @@
     /* Portrait — curved card mirroring the mix covers */
     .header-portrait {
       flex: none;
-      width: 150px;
-      height: 150px;
+      width: 180px;
+      height: 180px;
       object-fit: cover;
       object-position: 50% 20%;
-      border-radius: 20px;
+      border-radius: 24px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
       display: block;
     }
@@ -495,9 +495,10 @@
     .timeline.dragging .knob { transition: none; }
 
     @media (prefers-reduced-motion: reduce) {
-      .player, .timeline .knob, .card, .icon-bars .bar,
-      .back .arrow, header p a, .player .countdown { transition: none !important; animation: none !important; }
+      .player, .timeline .knob, .card, .icon-bars .bar, .slot,
+      .back .arrow, .contact a, .play-dot, .player .countdown { transition: none !important; animation: none !important; }
       .card { transform: none !important; }
+      .slot { opacity: 1 !important; transform: none !important; }
     }
 
     /* ── Small screens ────────────────────────────────────────────────── */
@@ -507,12 +508,16 @@
         padding-bottom: calc(150px + env(safe-area-inset-bottom));
       }
       .grid {
-        gap: 22px 14px;
+        gap: 14px 14px;
+      }
+      header {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 16px;
       }
       header h1 { font-size: 26px; }
-      header p { flex-direction: column; gap: 6px; }
-      header p .dot { display: none; }
-      .header-portrait { width: 119px; height: 119px; border-radius: 17px; }
+      .tagline { font-size: 14px; }
+      .header-portrait { width: 130px; height: 130px; border-radius: 19px; }
 
       /* Bring the scrubber in from the screen edges and lift it up */
       .player {
@@ -534,11 +539,10 @@
   <header>
     <div class="header-text">
       <h1>DJ Bookings</h1>
-      <p>
-        <a href="mailto:andriy_malyshchak@utexas.edu">Email</a>
-        <span class="dot" aria-hidden="true">·</span>
-        <a href="tel:+18178080706">(817)-808-0706</a>
-        <span class="dot" aria-hidden="true">·</span>
+      <p class="tagline">House, deep house, Afro house and club sets — open for parties, bars and events.</p>
+      <p class="contact">
+        <a href="mailto:andriy_malyshchak@utexas.edu?subject=DJ%20booking%20enquiry">Email</a>
+        <a href="tel:+18178080706">(817) 808-0706</a>
         <a href="https://www.instagram.com/andriy_malyshchak/" target="_blank" rel="noopener">Instagram</a>
       </p>
     </div>
@@ -549,98 +553,98 @@
 
     <div class="slot">
       <button class="card" data-id="1" data-title="Club Mix"
+              aria-label="Play Club Mix — 32 min"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/ClubMix1.m4a"
               data-duration="1946">
         <div class="art ticket"></div>
+        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
+        <span class="card-name">Club Mix</span>
+        <span class="card-dur">32 min</span>
       </button>
-      <div class="meta">
-        <span class="title">Club Mix</span>
-        <span class="dur">32 min</span>
-      </div>
     </div>
 
     <div class="slot">
       <button class="card" data-id="2" data-title="Club Mix 2"
+              aria-label="Play Club Mix 2 — 29 min"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/ClubMix2.m4a"
               data-duration="1765">
         <div class="art night"></div>
+        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
+        <span class="card-name">Club Mix 2</span>
+        <span class="card-dur">29 min</span>
       </button>
-      <div class="meta">
-        <span class="title">Club Mix 2</span>
-        <span class="dur">29 min</span>
-      </div>
     </div>
 
     <div class="slot">
       <button class="card" data-id="3" data-title="Summer Mix"
+              aria-label="Play Summer Mix — 32 min"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/SummerMix.m4a"
               data-duration="1928">
         <div class="art desert"></div>
+        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
+        <span class="card-name">Summer Mix</span>
+        <span class="card-dur">32 min</span>
       </button>
-      <div class="meta">
-        <span class="title">Summer Mix</span>
-        <span class="dur">32 min</span>
-      </div>
     </div>
 
     <div class="slot">
       <button class="card" data-id="4" data-title="House"
+              aria-label="Play House — 32 min"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyHouse.m4a"
               data-duration="1906">
         <div class="art crowd"></div>
+        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
+        <span class="card-name">House</span>
+        <span class="card-dur">32 min</span>
       </button>
-      <div class="meta">
-        <span class="title">House</span>
-        <span class="dur">32 min</span>
-      </div>
     </div>
 
     <div class="slot">
       <button class="card" data-id="5" data-title="Deep House"
+              aria-label="Play Deep House — 45 min"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyDeepHouse.m4a"
               data-duration="2702">
         <div class="art sunset"></div>
+        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
+        <span class="card-name">Deep House</span>
+        <span class="card-dur">45 min</span>
       </button>
-      <div class="meta">
-        <span class="title">Deep House</span>
-        <span class="dur">45 min</span>
-      </div>
     </div>
 
     <div class="slot">
       <button class="card" data-id="6" data-title="Afro House"
+              aria-label="Play Afro House — 27 min"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AfroHouse.m4a"
               data-duration="1636">
         <div class="art duo"></div>
+        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
+        <span class="card-name">Afro House</span>
+        <span class="card-dur">27 min</span>
       </button>
-      <div class="meta">
-        <span class="title">Afro House</span>
-        <span class="dur">27 min</span>
-      </div>
     </div>
 
 
@@ -653,6 +657,7 @@
   <div class="player" id="player">
     <div class="player-inner">
       <div class="player-head">
+        <p class="now-playing" id="nowPlaying"></p>
         <p class="countdown" id="countdown">–:––</p>
       </div>
       <div class="timeline" id="timeline">
@@ -674,6 +679,7 @@
     const knob = document.getElementById('knob');
     const fill = document.getElementById('fill');
     const audio = document.getElementById('audio');
+    const nowPlaying = document.getElementById('nowPlaying');
 
     const START_OFFSET = 13; // real R2 mixes begin 13s in
 
@@ -707,7 +713,9 @@
       knob.style.left = pct + '%';
       fill.style.width = pct + '%';
       knob.setAttribute('aria-valuenow', Math.round(pct));
-      countdown.textContent = duration ? '-' + formatTime(duration - elapsed) : '–:––';
+      countdown.textContent = duration
+        ? formatTime(elapsed) + '  ·  -' + formatTime(duration - elapsed)
+        : '–:––';
     }
 
     function pctFromEvent(e) {
@@ -731,7 +739,9 @@
       knob.style.left = (pct * 100) + '%';
       fill.style.width = (pct * 100) + '%';
       knob.setAttribute('aria-valuenow', Math.round(pct * 100));
-      countdown.textContent = duration ? '-' + formatTime(duration - elapsed) : '–:––';
+      countdown.textContent = duration
+        ? formatTime(elapsed) + '  ·  -' + formatTime(duration - elapsed)
+        : '–:––';
     }
 
     function endDrag() {
