@@ -86,6 +86,22 @@
     header {
       margin-bottom: 40px;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Portrait — curved card mirroring the mix covers */
+    .header-portrait {
+      flex: none;
+      width: 96px;
+      height: 96px;
+      object-fit: cover;
+      object-position: 50% 20%;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+      display: block;
     }
 
     header h1 {
@@ -409,6 +425,7 @@
       header h1 { font-size: 26px; }
       header p { flex-direction: column; gap: 6px; }
       header p .dot { display: none; }
+      .header-portrait { width: 76px; height: 76px; border-radius: 12px; }
 
       /* Bring the scrubber in from the screen edges and lift it up */
       .player {
@@ -438,6 +455,7 @@
         <a href="https://www.instagram.com/andriy_malyshchak/" target="_blank" rel="noopener">Instagram</a>
       </p>
     </div>
+    <img class="header-portrait" src="portrait.jpg" alt="Andriy Malyshchak" width="745" height="745" />
   </header>
 
   <div class="grid">
