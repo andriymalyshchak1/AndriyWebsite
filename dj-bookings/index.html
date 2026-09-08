@@ -115,11 +115,11 @@
     /* Portrait — curved card mirroring the mix covers */
     .header-portrait {
       flex: none;
-      width: 180px;
-      height: 180px;
+      width: 162px;
+      height: 162px;
       object-fit: cover;
       object-position: 50% 20%;
-      border-radius: 24px;
+      border-radius: 22px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
       display: block;
     }
@@ -129,17 +129,7 @@
       font-weight: 300;
       letter-spacing: -0.6px;
       line-height: 1.15;
-      margin: 0 0 6px;
-    }
-
-    .tagline {
-      margin: 0 0 14px;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-style: italic;
-      font-size: 15px;
-      line-height: 1.4;
-      color: var(--text-dim);
-      max-width: 30ch;
+      margin: 0 0 12px;
     }
 
     .contact {
@@ -172,7 +162,7 @@
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px 16px;
+      gap: 26px 16px;
     }
 
     .slot {
@@ -227,39 +217,24 @@
       transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 400ms ease;
     }
 
-    /* Caption laid over the art */
-    .card-scrim {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.40) 100%);
-      pointer-events: none;
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
     }
 
-    .card-name,
-    .card-dur {
-      position: absolute;
-      bottom: 12px;
-      z-index: 2;
-      color: #fff;
-      pointer-events: none;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-    }
-    .card-name {
-      left: 13px;
-      right: 52px;
-      font-size: 13px;
+    .meta .title {
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: -0.1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: var(--text);
     }
-    .card-dur {
-      right: 13px;
+
+    .meta .dur {
       font-size: 12px;
-      font-weight: 400;
-      opacity: 0.92;
-      font-variant-numeric: tabular-nums;
+      color: var(--text-dim);
+      white-space: nowrap;
     }
 
     /* Cover art — RÜFÜS DU SOL palette: desert minimalism, warm dusk light,
@@ -337,39 +312,31 @@
 
     .play-dot {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      width: 44px;
-      height: 44px;
+      left: 12px;
+      bottom: 10px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.82);
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.88);
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      transition: opacity .18s ease, transform .18s ease;
+      opacity: 0.4;
+      transition: opacity .15s ease;
       pointer-events: none;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
     }
 
     @media (hover: hover) {
-      .card:hover .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      .card:hover .play-dot { opacity: 1; }
     }
 
-    @media (hover: none) {
-      .play-dot { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
-    }
+    .card.playing .play-dot { opacity: 1; }
 
-    .card.playing .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-
-    .play-dot svg { width: 14px; height: 14px; }
-    .play-dot .icon-play { fill: #1a1a1a; margin-left: 2px; }
+    .play-dot svg { width: 10px; height: 10px; }
+    .play-dot .icon-play { fill: #1a1a1a; }
     .card.playing .icon-play { display: none; }
 
-    .icon-bars { display: none; width: 15px; height: 15px; }
+    .icon-bars { display: none; width: 11px; height: 11px; }
     .card.playing .icon-bars { display: block; }
 
     .icon-bars .bar {
@@ -508,7 +475,7 @@
         padding-bottom: calc(150px + env(safe-area-inset-bottom));
       }
       .grid {
-        gap: 14px 14px;
+        gap: 22px 14px;
       }
       header {
         flex-direction: column-reverse;
@@ -516,8 +483,7 @@
         gap: 16px;
       }
       header h1 { font-size: 26px; }
-      .tagline { font-size: 14px; }
-      .header-portrait { width: 130px; height: 130px; border-radius: 19px; }
+      .header-portrait { width: 117px; height: 117px; border-radius: 17px; }
 
       /* Bring the scrubber in from the screen edges and lift it up */
       .player {
@@ -539,7 +505,6 @@
   <header>
     <div class="header-text">
       <h1>DJ Bookings</h1>
-      <p class="tagline">House, deep house, Afro house and club sets — open for parties, bars and events.</p>
       <p class="contact">
         <a href="mailto:andriy_malyshchak@utexas.edu?subject=DJ%20booking%20enquiry">Email</a>
         <a href="tel:+18178080706">(817) 808-0706</a>
@@ -557,14 +522,15 @@
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/ClubMix1.m4a"
               data-duration="1946">
         <div class="art ticket"></div>
-        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
-        <span class="card-name">Club Mix</span>
-        <span class="card-dur">32 min</span>
       </button>
+      <div class="meta">
+        <span class="title">Club Mix</span>
+        <span class="dur">32 min</span>
+      </div>
     </div>
 
     <div class="slot">
@@ -573,14 +539,15 @@
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/ClubMix2.m4a"
               data-duration="1765">
         <div class="art night"></div>
-        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
-        <span class="card-name">Club Mix 2</span>
-        <span class="card-dur">29 min</span>
       </button>
+      <div class="meta">
+        <span class="title">Club Mix 2</span>
+        <span class="dur">29 min</span>
+      </div>
     </div>
 
     <div class="slot">
@@ -589,14 +556,15 @@
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/SummerMix.m4a"
               data-duration="1928">
         <div class="art desert"></div>
-        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
-        <span class="card-name">Summer Mix</span>
-        <span class="card-dur">32 min</span>
       </button>
+      <div class="meta">
+        <span class="title">Summer Mix</span>
+        <span class="dur">32 min</span>
+      </div>
     </div>
 
     <div class="slot">
@@ -605,14 +573,15 @@
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyHouse.m4a"
               data-duration="1906">
         <div class="art crowd"></div>
-        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
-        <span class="card-name">House</span>
-        <span class="card-dur">32 min</span>
       </button>
+      <div class="meta">
+        <span class="title">House</span>
+        <span class="dur">32 min</span>
+      </div>
     </div>
 
     <div class="slot">
@@ -621,14 +590,15 @@
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyDeepHouse.m4a"
               data-duration="2702">
         <div class="art sunset"></div>
-        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
-        <span class="card-name">Deep House</span>
-        <span class="card-dur">45 min</span>
       </button>
+      <div class="meta">
+        <span class="title">Deep House</span>
+        <span class="dur">45 min</span>
+      </div>
     </div>
 
     <div class="slot">
@@ -637,14 +607,15 @@
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AfroHouse.m4a"
               data-duration="1636">
         <div class="art duo"></div>
-        <div class="card-scrim"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
           <svg class="icon-bars" viewBox="0 0 24 24"><rect class="bar" x="4" y="7" width="4" height="10" rx="1"/><rect class="bar" x="10" y="3" width="4" height="18" rx="1"/><rect class="bar" x="16" y="7" width="4" height="10" rx="1"/></svg>
         </div>
-        <span class="card-name">Afro House</span>
-        <span class="card-dur">27 min</span>
       </button>
+      <div class="meta">
+        <span class="title">Afro House</span>
+        <span class="dur">27 min</span>
+      </div>
     </div>
 
 
@@ -713,9 +684,7 @@
       knob.style.left = pct + '%';
       fill.style.width = pct + '%';
       knob.setAttribute('aria-valuenow', Math.round(pct));
-      countdown.textContent = duration
-        ? formatTime(elapsed) + '  ·  -' + formatTime(duration - elapsed)
-        : '–:––';
+      countdown.textContent = duration ? '-' + formatTime(duration - elapsed) : '–:––';
     }
 
     function pctFromEvent(e) {
@@ -739,9 +708,7 @@
       knob.style.left = (pct * 100) + '%';
       fill.style.width = (pct * 100) + '%';
       knob.setAttribute('aria-valuenow', Math.round(pct * 100));
-      countdown.textContent = duration
-        ? formatTime(elapsed) + '  ·  -' + formatTime(duration - elapsed)
-        : '–:––';
+      countdown.textContent = duration ? '-' + formatTime(duration - elapsed) : '–:––';
     }
 
     function endDrag() {
@@ -820,6 +787,7 @@
     function openPlayer(card) {
       activeId = card.dataset.id;
       elapsed = 0;
+      nowPlaying.textContent = card.dataset.title || '';
       cards.forEach(c => c.classList.toggle('playing', c === card));
       player.classList.add('open');
       document.body.classList.add('player-active');
@@ -852,6 +820,7 @@
       player.classList.remove('open', 'buffering');
       document.body.classList.remove('player-active');
       cards.forEach(c => c.classList.remove('playing'));
+      nowPlaying.textContent = '';
       activeId = null;
     }
 
