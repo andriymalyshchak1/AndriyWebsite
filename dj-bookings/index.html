@@ -3,17 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="DJ Bookings — a preview of Andriy Malyshchak's mixes across Balearic, UK garage, deep house, and more." />
+  <meta name="description" content="Andriy Malyshchak — DJ bookings. Mixes across house, deep house, Afro house and club. Available for parties, bars and events." />
   <title>DJ Bookings — Andriy Malyshchak</title>
 
   <link rel="canonical" href="https://andriymal.com/dj-bookings/" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='7' fill='%231C1917'/></svg>" />
+  <!-- Social share / link unfurl -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://andriymal.com/dj-bookings/" />
+  <meta property="og:title" content="DJ Bookings — Andriy Malyshchak" />
+  <meta property="og:description" content="Mixes across house, deep house, Afro house and club. Available for parties, bars and events." />
+  <meta property="og:image" content="https://andriymal.com/dj-bookings/portrait.jpg" />
+  <meta property="og:image:width" content="745" />
+  <meta property="og:image:height" content="745" />
+  <meta property="og:image:alt" content="Andriy Malyshchak" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DJ Bookings — Andriy Malyshchak" />
+  <meta name="twitter:description" content="Mixes across house, deep house, Afro house and club. Available for parties, bars and events." />
+  <meta name="twitter:image" content="https://andriymal.com/dj-bookings/portrait.jpg" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23b0502c'/><stop offset='0.52' stop-color='%23edd3a1'/><stop offset='1' stop-color='%235c7c96'/></linearGradient></defs><circle cx='8' cy='8' r='7' fill='url(%23g)'/></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital@1&display=swap"
     rel="stylesheet"
   />
 
@@ -54,9 +68,15 @@
     }
 
     body {
-      padding: 40px 19px 150px;
+      padding: 40px 19px 48px;
       max-width: 520px;
       margin: 0 auto;
+      transition: padding-bottom .35s var(--ease);
+    }
+
+    /* Reserve room for the fixed player only while it's on screen */
+    body.player-active {
+      padding-bottom: 140px;
     }
 
     a { color: inherit; }
@@ -109,47 +129,67 @@
       font-weight: 300;
       letter-spacing: -0.6px;
       line-height: 1.15;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
     }
 
-    header p {
-      margin: 0;
+    .tagline {
+      margin: 0 0 14px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.4;
       color: var(--text-dim);
-      font-size: 14px;
+      max-width: 30ch;
+    }
+
+    .contact {
+      margin: 0;
       display: flex;
       flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0 10px;
+      gap: 8px;
     }
 
-    header p .dot {
-      color: var(--faint);
-    }
-
-    header p a {
+    .contact a {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 13px;
+      font-size: 13px;
       color: var(--text-dim);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      text-decoration-color: var(--line);
-      transition: color .15s ease, text-decoration-color .15s ease;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      text-decoration: none;
+      transition: color .15s ease, border-color .15s ease, background-color .15s ease;
     }
 
-    header p a:hover,
-    header p a:focus-visible {
+    .contact a:hover,
+    .contact a:focus-visible {
       color: var(--text);
-      text-decoration-color: var(--text);
+      border-color: var(--text);
+      background-color: rgba(28, 25, 23, 0.04);
     }
 
     /* ── Grid ──────────────────────────────────────────────────────────── */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 26px 16px;
+      gap: 18px 16px;
     }
 
     .slot {
       display: flex;
       flex-direction: column;
+      animation: slotIn .5s var(--ease) both;
+    }
+    .slot:nth-child(1) { animation-delay: .04s; }
+    .slot:nth-child(2) { animation-delay: .09s; }
+    .slot:nth-child(3) { animation-delay: .14s; }
+    .slot:nth-child(4) { animation-delay: .19s; }
+    .slot:nth-child(5) { animation-delay: .24s; }
+    .slot:nth-child(6) { animation-delay: .29s; }
+
+    @keyframes slotIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .card {
@@ -165,19 +205,61 @@
       background: var(--panel);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
       touch-action: manipulation;
-      transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 400ms ease;
     }
 
     @media (hover: hover) {
       .card:hover {
         transform: scale(1.057);
-        transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+        transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 400ms ease;
       }
+    }
+
+    .card:active {
+      transform: scale(0.97);
+      transition: transform .1s ease;
     }
 
     .card.playing {
       transform: scale(1.057);
-      transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+      transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 400ms ease;
+    }
+
+    /* Caption laid over the art */
+    .card-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.40) 100%);
+      pointer-events: none;
+    }
+
+    .card-name,
+    .card-dur {
+      position: absolute;
+      bottom: 12px;
+      z-index: 2;
+      color: #fff;
+      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    }
+    .card-name {
+      left: 13px;
+      right: 52px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-dur {
+      right: 13px;
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.92;
+      font-variant-numeric: tabular-nums;
     }
 
     /* Cover art — RÜFÜS DU SOL palette: desert minimalism, warm dusk light,
@@ -219,67 +301,75 @@
     /* cobalt → aqua → seafoam */
     .card .art.sunset {
       background:
-        radial-gradient(75% 55% at 28% 82%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
-        linear-gradient(150deg, #1f4bb0 0%, #3f77c9 34%, #cfeae4 52%, #6cc39a 68%, #2f9463 100%);
+        radial-gradient(70% 52% at 22% 80%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 60%),
+        linear-gradient(136deg, #1f4bb0 0%, #3f77c9 34%, #cfeae4 52%, #6cc39a 68%, #2f9463 100%);
     }
     /* violet → lilac → amber */
     .card .art.crowd {
       background:
-        radial-gradient(75% 55% at 28% 82%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
-        linear-gradient(150deg, #5b3aa6 0%, #7d5cc0 34%, #e6d7ef 52%, #e6b877 68%, #cf8a3c 100%);
+        radial-gradient(80% 58% at 80% 26%, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0) 60%),
+        linear-gradient(164deg, #5b3aa6 0%, #7d5cc0 34%, #e6d7ef 52%, #e6b877 68%, #cf8a3c 100%);
     }
     /* burnt orange → cream → dusty blue */
     .card .art.ticket {
       background:
-        radial-gradient(75% 55% at 28% 82%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
+        radial-gradient(75% 55% at 30% 84%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
         linear-gradient(150deg, #b0502c 0%, #c1663f 34%, #edd3a1 52%, #a2b4c1 68%, #5c7c96 100%);
     }
     /* crimson → gold → plum */
     .card .art.duo {
       background:
-        radial-gradient(75% 55% at 28% 82%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
-        linear-gradient(150deg, #a81f3c 0%, #c8464f 34%, #f0d59a 52%, #b06a8e 68%, #6a3a63 100%);
+        radial-gradient(78% 56% at 82% 78%, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0) 60%),
+        linear-gradient(124deg, #a81f3c 0%, #c8464f 34%, #f0d59a 52%, #b06a8e 68%, #6a3a63 100%);
     }
     /* teal → pale gold → coral */
     .card .art.desert {
       background:
-        radial-gradient(75% 55% at 28% 82%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
-        linear-gradient(150deg, #1f7d7a 0%, #4aa39a 34%, #f0e2b0 52%, #eaa878 68%, #d9603f 100%);
+        radial-gradient(66% 46% at 50% 12%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 60%),
+        linear-gradient(172deg, #1f7d7a 0%, #4aa39a 34%, #f0e2b0 52%, #eaa878 68%, #d9603f 100%);
     }
     /* magenta → peach → indigo */
     .card .art.night {
       background:
-        radial-gradient(75% 55% at 28% 82%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 60%),
-        linear-gradient(150deg, #a6317e 0%, #c24f7c 34%, #f2d0b0 52%, #8f7bc4 68%, #3f3f8f 100%);
+        radial-gradient(72% 52% at 18% 24%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 60%),
+        linear-gradient(142deg, #a6317e 0%, #c24f7c 34%, #f2d0b0 52%, #8f7bc4 68%, #3f3f8f 100%);
     }
 
     .play-dot {
       position: absolute;
-      left: 12px;
-      bottom: 10px;
-      width: 28px;
-      height: 28px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.82);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0.4;
-      transition: opacity .15s ease;
+      opacity: 0;
+      transition: opacity .18s ease, transform .18s ease;
       pointer-events: none;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
     }
 
     @media (hover: hover) {
-      .card:hover .play-dot { opacity: 1; }
+      .card:hover .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
 
-    .card.playing .play-dot { opacity: 1; }
+    @media (hover: none) {
+      .play-dot { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
+    }
 
-    .play-dot svg { width: 10px; height: 10px; }
-    .play-dot .icon-play { fill: #1a1a1a; }
+    .card.playing .play-dot { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    .play-dot svg { width: 14px; height: 14px; }
+    .play-dot .icon-play { fill: #1a1a1a; margin-left: 2px; }
     .card.playing .icon-play { display: none; }
 
-    .icon-bars { display: none; width: 11px; height: 11px; }
+    .icon-bars { display: none; width: 15px; height: 15px; }
     .card.playing .icon-bars { display: block; }
 
     .icon-bars .bar {
@@ -295,26 +385,6 @@
     @keyframes eqBar {
       0%, 100% { transform: scaleY(0.35); }
       50%      { transform: scaleY(1); }
-    }
-
-    .meta {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-    }
-
-    .meta .title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .meta .dur {
-      font-size: 12px;
-      color: var(--text-dim);
-      white-space: nowrap;
     }
 
     /* ── Bottom timeline player ────────────────────────────────────────── */
@@ -344,8 +414,21 @@
 
     .player-head {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
       margin-bottom: 10px;
+    }
+
+    .player-head .now-playing {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .player-head .countdown {
@@ -353,6 +436,7 @@
       color: var(--text-dim);
       font-variant-numeric: tabular-nums;
       margin: 0;
+      flex: none;
       transition: opacity .2s ease;
     }
 
@@ -418,7 +502,10 @@
 
     /* ── Small screens ────────────────────────────────────────────────── */
     @media (max-width: 560px) {
-      body { padding: 28px 19px 160px; }
+      body { padding: 28px 19px 36px; }
+      body.player-active {
+        padding-bottom: calc(150px + env(safe-area-inset-bottom));
+      }
       .grid {
         gap: 22px 14px;
       }
@@ -725,6 +812,7 @@
       elapsed = 0;
       cards.forEach(c => c.classList.toggle('playing', c === card));
       player.classList.add('open');
+      document.body.classList.add('player-active');
       clearInterval(ticker);
 
       const src = card.dataset.src;
@@ -752,6 +840,7 @@
       stopAudio();
       mode = 'sim';
       player.classList.remove('open', 'buffering');
+      document.body.classList.remove('player-active');
       cards.forEach(c => c.classList.remove('playing'));
       activeId = null;
     }
