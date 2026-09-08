@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital@1&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap"
     rel="stylesheet"
   />
 
@@ -22,7 +22,7 @@
        DJ BOOKINGS — mix library
        Layout, interactions, timings and shapes are taken verbatim from the
        supplied wireframe. Palette is remapped to andriymal.com: warm cream
-       ground, Inter throughout, Playfair Display italic labels, hairline rules.
+       ground, Inter throughout, hairline rules.
     ========================================================================= */
 
     :root {
@@ -36,7 +36,6 @@
       --accent:  #1C1917;   /* inverts against the cream — plays the role of the wireframe's cream */
 
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
       --ease: cubic-bezier(.22, 1, .36, 1);
     }
@@ -55,8 +54,8 @@
     }
 
     body {
-      padding: 40px 19px 140px;
-      max-width: 520px;
+      padding: 40px 19px 150px;
+      max-width: 446px;
       margin: 0 auto;
     }
 
@@ -84,7 +83,24 @@
     .back:hover .arrow { transform: translateX(-3px); }
 
     /* ── Header ────────────────────────────────────────────────────────── */
-    header { margin-bottom: 40px; }
+    header {
+      margin-bottom: 40px;
+      position: relative;
+      padding-right: 108px;   /* reserve space for the portrait */
+    }
+
+    /* Portrait strip — height tracks the text block (title top → last link bottom) */
+    .header-portrait {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 88px;
+      object-fit: cover;
+      object-position: 50% 22%;
+      border-radius: 8px;
+      display: block;
+    }
 
     header h1 {
       font-size: 30px;
@@ -98,6 +114,14 @@
       margin: 0;
       color: var(--text-dim);
       font-size: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 10px;
+    }
+
+    header p .dot {
+      color: var(--faint);
     }
 
     header p a {
@@ -124,15 +148,6 @@
     .slot {
       display: flex;
       flex-direction: column;
-    }
-
-    .genre {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 14px;
-      color: var(--text-dim);
-      text-align: left;
-      margin: 0 0 8px 2px;
     }
 
     .card {
@@ -231,8 +246,8 @@
     }
 
     .meta .title {
-      font-size: 13.5px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       color: var(--text);
     }
 
@@ -248,7 +263,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 18px 24px 22px;
+      padding: 18px 24px 30px;
       background: linear-gradient(180deg, rgba(245, 242, 238, 0) 0%, var(--panel) 34%);
       transform: translateY(115%);
       opacity: 0;
@@ -263,7 +278,7 @@
     }
 
     .player-inner {
-      max-width: 520px;
+      max-width: 446px;
       margin: 0 auto;
     }
 
@@ -292,9 +307,11 @@
 
     .timeline {
       position: relative;
-      height: 24px;
+      height: 30px;
       display: flex;
       align-items: center;
+      cursor: pointer;
+      touch-action: none;
     }
 
     .timeline .track {
@@ -319,10 +336,11 @@
       position: absolute;
       top: 50%;
       left: 0%;
-      width: 30px;
-      height: 14px;
+      width: 38px;
+      height: 18px;
       border-radius: 999px;
       background: var(--accent);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
       transform: translate(-50%, -50%);
       transition: left .15s linear;
       cursor: grab;
@@ -340,9 +358,25 @@
 
     /* ── Small screens ────────────────────────────────────────────────── */
     @media (max-width: 560px) {
-      body { padding: 28px 19px 132px; }
-      .grid { gap: 22px 14px; }
+      body { padding: 28px 19px 160px; }
+      .grid {
+        gap: 22px 14px;
+        max-width: 300px;
+        margin-inline: auto;
+      }
+      header { padding-right: 84px; }
       header h1 { font-size: 26px; }
+      header p { flex-direction: column; gap: 6px; }
+      header p .dot { display: none; }
+      .header-portrait { width: 70px; }
+
+      /* Bring the scrubber in from the screen edges and lift it up */
+      .player {
+        padding: 16px 46px 40px;
+        padding-bottom: calc(40px + env(safe-area-inset-bottom));
+      }
+      .timeline { height: 38px; }
+      .timeline .knob { width: 44px; height: 22px; }
     }
   </style>
 </head>
@@ -354,15 +388,23 @@
   </a>
 
   <header>
-    <h1>DJ Bookings</h1>
-    <p>andriy_malyshchak@utexas.edu &nbsp;·&nbsp; (817)-808-0706 &nbsp;·&nbsp; <a href="https://www.instagram.com/andriy_malyshchak/" target="_blank" rel="noopener">Instagram</a></p>
+    <div class="header-text">
+      <h1>DJ Bookings</h1>
+      <p>
+        <a href="mailto:andriy_malyshchak@utexas.edu">Email</a>
+        <span class="dot" aria-hidden="true">·</span>
+        <a href="tel:+18178080706">(817)-808-0706</a>
+        <span class="dot" aria-hidden="true">·</span>
+        <a href="https://www.instagram.com/andriy_malyshchak/" target="_blank" rel="noopener">Instagram</a>
+      </p>
+    </div>
+    <img class="header-portrait" src="portrait.jpg" alt="Andriy Malyshchak" width="427" height="640" />
   </header>
 
   <div class="grid">
 
     <div class="slot">
-      <p class="genre">Deep house</p>
-      <button class="card" data-id="1" data-title="Coastline, slowly"
+      <button class="card" data-id="1" data-title="Deep House"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyDeepHouse.m4a"
               data-duration="2702">
         <div class="art sunset"></div>
@@ -372,14 +414,13 @@
         </div>
       </button>
       <div class="meta">
-        <span class="title">Coastline, slowly</span>
+        <span class="title">Deep House</span>
         <span class="dur">45 min</span>
       </div>
     </div>
 
     <div class="slot">
-      <p class="genre">House</p>
-      <button class="card" data-id="2" data-title="Basement, 2am"
+      <button class="card" data-id="2" data-title="House"
               data-src="https://pub-058945f9be524f22badbe50b42d08fc1.r2.dev/AndriyHouse.m4a"
               data-duration="1906">
         <div class="art crowd"></div>
@@ -389,14 +430,13 @@
         </div>
       </button>
       <div class="meta">
-        <span class="title">Basement, 2am</span>
+        <span class="title">House</span>
         <span class="dur">32 min</span>
       </div>
     </div>
 
     <div class="slot">
-      <p class="genre">Deep house</p>
-      <button class="card" data-id="3" data-title="Never let you go" data-duration="2760">
+      <button class="card" data-id="3" data-title="Deep House" data-duration="2760">
         <div class="art ticket"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
@@ -404,14 +444,13 @@
         </div>
       </button>
       <div class="meta">
-        <span class="title">Never let you go</span>
+        <span class="title">Deep House</span>
         <span class="dur">46 min</span>
       </div>
     </div>
 
     <div class="slot">
-      <p class="genre">Trap / R&amp;B</p>
-      <button class="card" data-id="4" data-title="Low light, two voices" data-duration="1980">
+      <button class="card" data-id="4" data-title="Trap / R&amp;B" data-duration="1980">
         <div class="art duo"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
@@ -419,14 +458,13 @@
         </div>
       </button>
       <div class="meta">
-        <span class="title">Low light, two voices</span>
+        <span class="title">Trap / R&amp;B</span>
         <span class="dur">33 min</span>
       </div>
     </div>
 
     <div class="slot">
-      <p class="genre">Afro house</p>
-      <button class="card" data-id="5" data-title="Dust, mid-afternoon" data-duration="2340">
+      <button class="card" data-id="5" data-title="Afro House" data-duration="2340">
         <div class="art desert"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
@@ -434,14 +472,13 @@
         </div>
       </button>
       <div class="meta">
-        <span class="title">Dust, mid-afternoon</span>
+        <span class="title">Afro House</span>
         <span class="dur">39 min</span>
       </div>
     </div>
 
     <div class="slot">
-      <p class="genre">Ambient / dub</p>
-      <button class="card" data-id="6" data-title="Window, grey city" data-duration="3360">
+      <button class="card" data-id="6" data-title="Ambient / Dub" data-duration="3360">
         <div class="art rain"></div>
         <div class="play-dot">
           <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
@@ -449,7 +486,7 @@
         </div>
       </button>
       <div class="meta">
-        <span class="title">Window, grey city</span>
+        <span class="title">Ambient / Dub</span>
         <span class="dur">56 min</span>
       </div>
     </div>
@@ -524,9 +561,10 @@
     }
 
     function startDrag(e) {
+      if (activeId === null) return;
       dragging = true;
       timeline.classList.add('dragging');
-      knob.setPointerCapture(e.pointerId);
+      timeline.setPointerCapture(e.pointerId);
       moveDrag(e);
     }
 
@@ -541,6 +579,7 @@
     }
 
     function endDrag() {
+      if (!dragging) return;
       dragging = false;
       timeline.classList.remove('dragging');
       if (mode === 'audio' && isFinite(audio.duration)) {
@@ -548,10 +587,11 @@
       }
     }
 
-    knob.addEventListener('pointerdown', startDrag);
-    knob.addEventListener('pointermove', moveDrag);
-    knob.addEventListener('pointerup', endDrag);
-    knob.addEventListener('pointercancel', endDrag);
+    // Tap or drag anywhere on the bar — not just the pill — to scrub
+    timeline.addEventListener('pointerdown', startDrag);
+    timeline.addEventListener('pointermove', moveDrag);
+    timeline.addEventListener('pointerup', endDrag);
+    timeline.addEventListener('pointercancel', endDrag);
 
     // Keyboard nudge on the scrubber
     knob.addEventListener('keydown', (e) => {
