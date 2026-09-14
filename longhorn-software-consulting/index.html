@@ -108,26 +108,26 @@
     .page {
       max-width: 1180px;
       margin-inline: auto;
-      padding: clamp(44px, 9vh, 104px) clamp(24px, 6vw, 88px);
+      padding: clamp(32px, 6vh, 76px) clamp(24px, 6vw, 88px);
       min-height: 100vh;
     }
 
     .grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 56px;
+      gap: 48px;
     }
 
     @media (min-width: 900px) {
       .grid {
-        grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
-        column-gap: clamp(56px, 10vw, 152px);
+        grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+        column-gap: clamp(40px, 6vw, 96px);
         row-gap: 0;
         align-items: start;
       }
       .identity {
         position: sticky;
-        top: clamp(44px, 9vh, 104px);
+        top: clamp(32px, 6vh, 76px);
       }
     }
 
@@ -163,7 +163,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 50% 62%;
+      object-position: 50% 38%;
       display: block;
     }
 
@@ -173,6 +173,7 @@
       line-height: 1.6;
       max-width: 34ch;
     }
+    .identity__tagline + .identity__tagline { margin-top: 10px; }
 
     .identity__rule {
       width: 44px;
@@ -220,7 +221,7 @@
     /* ── Content column ────────────────────────────────────────────────── */
     .content { padding-top: 4px; }
 
-    .block { padding: 0 0 clamp(48px, 7vw, 76px); }
+    .block { padding: 0 0 clamp(32px, 4.5vw, 52px); }
     .block:last-child { padding-bottom: 0; }
 
     .block__label {
@@ -230,24 +231,24 @@
       font-weight: 400;
       font-size: 17px;
       color: var(--label);
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
 
     .divider {
       width: 100%;
       height: 1px;
       background-color: var(--divider);
-      margin-bottom: clamp(48px, 7vw, 76px);
+      margin-bottom: clamp(32px, 4.5vw, 52px);
     }
 
-    /* Services — roomy two-line entries */
+    /* Services — three plain entries */
     .services {
       display: grid;
       grid-template-columns: 1fr;
       gap: 30px;
     }
     @media (min-width: 620px) {
-      .services { grid-template-columns: 1fr 1fr; column-gap: 48px; row-gap: 34px; }
+      .services { grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
     }
     .service__name { font-size: 15px; font-weight: 500; }
     .service__desc {
@@ -259,22 +260,71 @@
     }
 
     /* Process */
-    .process { display: flex; flex-direction: column; gap: 26px; }
-    .step { display: grid; grid-template-columns: 24px 1fr; column-gap: 16px; }
-    .step__num {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 16px;
-      color: var(--accent);
-      line-height: 1.5;
-    }
-    .step__title { font-size: 15px; font-weight: 500; }
-    .step__text {
-      font-size: 13.5px;
+    .process__text {
+      font-size: 14.5px;
       color: var(--muted);
-      line-height: 1.6;
-      margin-top: 4px;
-      max-width: 52ch;
+      line-height: 1.7;
+      max-width: 56ch;
+    }
+
+    /* Previous work — rebuild cards */
+    .rebuilds {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 560px) {
+      .rebuilds { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .rebuilds { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .rebuild-card {
+      display: block;
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 5 / 4;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    @media (hover: hover) {
+      .rebuild-card:hover { transform: scale(1.025); }
+      .rebuild-card:hover .rebuild-card__name .label { border-color: var(--accent); }
+    }
+
+    .rebuild-card__frame-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .rebuild-card__frame-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 65%;
+    }
+
+    .rebuild-card__name {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 14px 16px;
+      background: linear-gradient(to top, rgba(28,25,23,0.6), rgba(28,25,23,0));
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .rebuild-card__name .label {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #FBFAF8;
+      border-bottom: 1px solid rgba(251,250,248,0.4);
+      padding-bottom: 1px;
+      transition: border-color var(--t-fast);
     }
 
     /* ── Primary button ───────────────────────────────────────────────── */
@@ -330,7 +380,7 @@
     .field input,
     .field textarea {
       font-family: inherit;
-      font-size: 14px;
+      font-size: 16px;
       color: var(--text);
       background-color: #FBFAF8;
       border: 1px solid var(--border);
@@ -366,6 +416,14 @@
     }
     .site-footer .dot { color: var(--border); }
 
+    @media (max-width: 599px) {
+      .site-footer {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .site-footer .dot { display: none; }
+    }
+
     /* ── Reveal animation — pure CSS, runs once on load ────────────────── */
     @keyframes rise {
       from { opacity: 0; transform: translateY(14px); }
@@ -390,11 +448,15 @@
         <h1 class="identity__name reveal" style="--d: 0ms">Longhorn Software&nbsp;Consulting</h1>
 
         <div class="portrait reveal" style="--d: 80ms">
-          <img src="../images/andriy-alex.jpg" srcset="../images/andriy-alex-mobile.jpg 800w, ../images/andriy-alex.jpg 1179w" alt="Andriy Malyshchak in San Francisco" width="1179" height="1548" />
+          <img src="../images/andriy-grad.jpg" srcset="../images/andriy-grad-mobile.jpg 800w, ../images/andriy-grad.jpg 1179w" alt="Andriy Malyshchak at UT Austin graduation" width="785" height="1179" />
         </div>
 
         <p class="identity__tagline reveal" style="--d: 140ms">
-          I rebuild real estate agent websites. Modern, fast, and built to bring in leads.
+          I rebuild real estate agent websites so they're fast, modern, and actually bring in leads.
+        </p>
+
+        <p class="identity__tagline reveal" style="--d: 170ms">
+          I've previously interned as a software engineer at Coinbase and General Motors. I promise to hold your site to the same standard.
         </p>
 
         <div class="identity__rule reveal" style="--d: 200ms" aria-hidden="true"></div>
@@ -407,41 +469,25 @@
           </a>
 
         </div>
-
-        <p class="identity__meta reveal" style="--d: 300ms">
-          <span>Austin, TX</span><span class="dot" aria-hidden="true">·</span><span>San Francisco</span><span class="dot" aria-hidden="true">·</span><span>2026</span>
-        </p>
       </aside>
 
       <!-- ── CONTENT ──────────────────────────────────────────────────── -->
       <div class="content">
 
         <section class="block">
-          <h2 class="block__label reveal">what I do</h2>
+          <h2 class="block__label reveal">what you get</h2>
           <div class="services">
             <div class="service reveal" style="--d: 40ms">
-              <p class="service__name">Full site rebuild</p>
-              <p class="service__desc">A modern, mobile-first replacement for a slow or dated agent site.</p>
+              <p class="service__name">Rebuild</p>
+              <p class="service__desc">A new site built around your listings, not a theme with your logo on it.</p>
             </div>
             <div class="service reveal" style="--d: 90ms">
-              <p class="service__name">Listings &amp; search</p>
-              <p class="service__desc">IDX / MLS integration, map search, and saved favorites that keep buyers on your site.</p>
+              <p class="service__name">Leads</p>
+              <p class="service__desc">IDX/MLS search, valuation tools, and a contact flow that hands off cleanly to your CRM.</p>
             </div>
             <div class="service reveal" style="--d: 140ms">
-              <p class="service__name">Lead capture</p>
-              <p class="service__desc">Valuation tools and tuned contact flows with a clean handoff into your CRM.</p>
-            </div>
-            <div class="service reveal" style="--d: 190ms">
-              <p class="service__name">Performance &amp; local SEO</p>
-              <p class="service__desc">Core Web Vitals, Google Business Profile, and structured data for local search.</p>
-            </div>
-            <div class="service reveal" style="--d: 240ms">
-              <p class="service__name">Brand &amp; photography</p>
-              <p class="service__desc">A cohesive identity, with treatment for your headshot and listing photos.</p>
-            </div>
-            <div class="service reveal" style="--d: 290ms">
-              <p class="service__name">Hosting &amp; upkeep</p>
-              <p class="service__desc">Ongoing edits and monitoring &mdash; the site stays current without you touching code.</p>
+              <p class="service__name">Upkeep</p>
+              <p class="service__desc">Hosting and edits after launch, so the site stays current without you touching code.</p>
             </div>
           </div>
         </section>
@@ -450,36 +496,46 @@
 
         <section class="block">
           <h2 class="block__label reveal">how it works</h2>
-          <div class="process">
-            <div class="step reveal" style="--d: 40ms">
-              <span class="step__num" aria-hidden="true">i</span>
-              <div class="step__body">
-                <p class="step__title">Audit</p>
-                <p class="step__text">A teardown of your current site and a few competitors &mdash; what's slow, what's confusing, and where leads drop off.</p>
-              </div>
-            </div>
-            <div class="step reveal" style="--d: 100ms">
-              <span class="step__num" aria-hidden="true">ii</span>
-              <div class="step__body">
-                <p class="step__title">Rebuild</p>
-                <p class="step__text">Design and build the new site, wire up listings and lead capture, and migrate your existing content.</p>
-              </div>
-            </div>
-            <div class="step reveal" style="--d: 160ms">
-              <span class="step__num" aria-hidden="true">iii</span>
-              <div class="step__body">
-                <p class="step__title">Handoff</p>
-                <p class="step__text">Launch, walk you through editing it yourself, and stay on for hosting and upkeep if you want it.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- TODO: set these to your real numbers before sharing. -->
-          <p class="engagement reveal" style="--d: 200ms">
-            <strong>Timeline &amp; cost.</strong> Most rebuilds run 2&ndash;3 weeks start to launch.
-            Projects start around $500 depending on listing integration and page count;
-            optional hosting and upkeep is $50/mo.
+          <p class="process__text reveal" style="--d: 40ms">
+            I audit your current site, build the new one using your existing content, then launch and walk you through it.
           </p>
+
+          <p class="engagement reveal" style="--d: 90ms">
+            <strong>Timeline &amp; cost.</strong> Most projects take 2 to 3 weeks and start at $1000.
+            Hosting is $50/mo after that.
+          </p>
+        </section>
+
+        <hr class="divider reveal" aria-hidden="true" />
+
+        <section class="block">
+          <h2 class="block__label reveal">previous work</h2>
+          <div class="rebuilds">
+            <a class="rebuild-card reveal" style="--d: 80ms" href="https://txrootsglobalre.com/" target="_blank" rel="noopener">
+              <div class="rebuild-card__frame-wrap">
+                <img src="preview-agency-dallas.jpg" alt="" loading="lazy" />
+              </div>
+              <span class="rebuild-card__name">
+                <span class="label">The Agency Dallas</span>
+              </span>
+            </a>
+            <a class="rebuild-card reveal" style="--d: 130ms" href="https://gingermartin.com/" target="_blank" rel="noopener">
+              <div class="rebuild-card__frame-wrap">
+                <img src="preview-ginger-martin.jpg" alt="" loading="lazy" />
+              </div>
+              <span class="rebuild-card__name">
+                <span class="label">Ginger Martin</span>
+              </span>
+            </a>
+            <a class="rebuild-card reveal" style="--d: 180ms" href="https://thebargroup.com/" target="_blank" rel="noopener">
+              <div class="rebuild-card__frame-wrap">
+                <img src="preview-bar-group.jpg" alt="" loading="lazy" />
+              </div>
+              <span class="rebuild-card__name">
+                <span class="label">The BAR Group</span>
+              </span>
+            </a>
+          </div>
         </section>
 
         <hr class="divider reveal" aria-hidden="true" />
@@ -513,10 +569,6 @@
   </main>
 
   <footer class="site-footer">
-    <span>Longhorn Software Consulting</span>
-    <span class="dot" aria-hidden="true">·</span>
-    <span>Austin, TX &mdash; working with agents across Texas and the Bay Area</span>
-    <span class="dot" aria-hidden="true">·</span>
     <span>&copy; 2026 Andriy Malyshchak</span>
   </footer>
 </body>
