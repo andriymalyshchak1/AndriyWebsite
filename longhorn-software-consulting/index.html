@@ -189,6 +189,16 @@
       margin-bottom: 32px;
     }
 
+    /* Below 900px the sidebar isn't sticky — it's just the top of the scroll,
+       so the email link is a detour before "get in touch" further down.
+       Keep it on desktop where it sits beside the page the whole time. */
+    @media (max-width: 899px) {
+      .identity__rule,
+      .identity__links {
+        display: none;
+      }
+    }
+
     .identity__meta {
       font-size: 12px;
       color: var(--faint);
