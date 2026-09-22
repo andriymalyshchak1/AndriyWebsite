@@ -3,41 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Longhorn Software Consulting — I rebuild real estate agent websites. Modern, fast, lead-focused agent sites, built and maintained by Andriy Malyshchak." />
-  <title>Longhorn Software Consulting</title>
 
-  <!-- Canonical + social. TODO: if you move to a dedicated domain, update these URLs. -->
-  <link rel="canonical" href="https://andriymal.com/longhorn-software-consulting/" />
+  <title>Custom Software Consulting in Austin | Longhorn Software Consulting</title>
+  <meta name="description" content="Longhorn Software Consulting builds custom applications, business tools, automations, and websites for businesses with software needs off-the-shelf tools can't meet." />
+
+  <!-- Route-specific canonical + social, scoped to this page only.
+       No trailing slash: vercel.json sets trailingSlash:false, so the slashed
+       form 308-redirects and the canonical would point at a redirect. -->
+  <link rel="canonical" href="https://andriymal.com/longhorn-software-consulting" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Longhorn Software Consulting" />
-  <meta property="og:title" content="Longhorn Software Consulting — real estate agent website rebuilds" />
-  <meta property="og:description" content="Modern, fast, lead-focused websites for real estate agents. Audit, rebuild, handoff — plus hosting and upkeep." />
-  <meta property="og:url" content="https://andriymal.com/longhorn-software-consulting/" />
-  <!-- TODO: add a 1200×630 share image at this path (a screenshot of recent work works well). -->
-  <meta property="og:image" content="https://andriymal.com/longhorn-software-consulting/photo.jpg" />
-  <meta name="twitter:card" content="summary_large_image
-  " />
-  <meta name="twitter:title" content="Longhorn Software Consulting — real estate agent website rebuilds" />
-  <meta name="twitter:description" content="Modern, fast, lead-focused websites for real estate agents." />
-  <meta name="twitter:image" content="https://andriymal.com/longhorn-software-consulting/photo.jpg" />
+  <meta property="og:title" content="Custom Software Consulting in Austin | Longhorn Software Consulting" />
+  <meta property="og:description" content="Custom applications, business tools, automations, and websites. You work with the engineer directly." />
+  <meta property="og:url" content="https://andriymal.com/longhorn-software-consulting" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://andriymal.com/longhorn-software-consulting/og-longhorn.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Longhorn Software Consulting — custom software consulting, Austin, Texas" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Custom Software Consulting in Austin | Longhorn Software Consulting" />
+  <meta name="twitter:description" content="Custom applications, business tools, automations, and websites. You work with the engineer directly." />
+  <meta name="twitter:image" content="https://andriymal.com/longhorn-software-consulting/og-longhorn.jpg" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Longhorn Software Consulting",
-    "description": "Website rebuilds for real estate agents — modern, fast, and built to bring in leads.",
-    "url": "https://andriymal.com/longhorn-software-consulting/",
+    "description": "Custom software consulting in Austin, Texas. Custom applications, internal business tools, workflow automation, AI and data solutions, and websites.",
+    "url": "https://andriymal.com/longhorn-software-consulting",
+    "image": "https://andriymal.com/longhorn-software-consulting/og-longhorn.jpg",
     "email": "andriy_malyshchak@utexas.edu",
-    "founder": { "@type": "Person", "name": "Andriy Malyshchak" },
-    "areaServed": ["Austin, TX", "San Francisco Bay Area", "United States"],
+    "priceRange": "Project-based",
+    "founder": {
+      "@type": "Person",
+      "name": "Andriy Malyshchak",
+      "jobTitle": "Software Engineer",
+      "url": "https://andriymal.com/"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Austin",
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Austin" },
+      { "@type": "State", "name": "Texas" },
+      { "@type": "Country", "name": "United States" }
+    ],
     "serviceType": [
-      "Real estate website design",
-      "IDX / MLS integration",
-      "Website performance optimization",
-      "Local SEO",
-      "Website hosting and maintenance"
+      "Custom software development",
+      "Custom application development",
+      "MVP development",
+      "Internal business tools",
+      "Business process automation",
+      "AI and machine learning consulting",
+      "Website design and development"
     ]
   }
   </script>
@@ -47,539 +73,820 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital@1&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Playfair+Display:ital@1&amp;display=swap"
     rel="stylesheet"
   />
+  <link rel="preload" as="image" href="/images/andriy-grad-mobile.jpg" />
 
   <style>
     /* =========================================================================
-       LONGHORN SOFTWARE CONSULTING
-       Design logic from andriymal.com: warm cream ground, Inter throughout,
-       Playfair Display italic labels, hairline dividers, arrow links.
-       Single-theme by choice — the cream is the brand.
+       LONGHORN SOFTWARE CONSULTING — /longhorn-software-consulting/
+
+       Self-contained: this page does not load css/styles.css. Every rule is
+       namespaced under the `.lsc` body class or an `lsc-` prefix, so nothing
+       here can reach `/`, `/dj-bookings/`, or any other route.
+
+       Contrast: the homepage's --color-text-muted (#78716C, 4.36:1) and
+       --color-text-very-muted (#A8A29E, 2.26:1) miss WCAG AA on this cream,
+       so the greys below are a little darker.
+
+       Every reset selector uses :where() so a single component class can
+       still override it. Written plainly, `.lsc p` (0-1-1) would outrank
+       `.lsc-tagline` (0-1-0) and silently kill its margin.
     ========================================================================= */
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; font-size: 16px; }
 
-    :root {
-      --bg:          #F5F2EE;
-      --surface:     #EDE9E3;
-      --text:        #1C1917;
-      --muted:       #78716C;
-      --faint:       #A8A29E;
-      --divider:     rgba(0, 0, 0, 0.07);
-      --border:      rgba(28, 25, 23, 0.12);
-      --label:       #767676;
-      --link-active: #0C0A09;
-      --accent:      #BF5B3E;   /* burnt orange — one Texas note, used sparingly */
+    body.lsc, .lsc *, .lsc *::before, .lsc *::after { box-sizing: border-box; }
+    body.lsc { margin: 0; }
 
-      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    .lsc :where(h1, h2, h3, p, ul, ol, li, figure, fieldset, legend) { margin: 0; padding: 0; }
+    .lsc :where(ul, ol) { list-style: none; }
+    .lsc :where(fieldset) { border: 0; min-width: 0; }
+    .lsc :where(img, svg) { display: block; max-width: 100%; }
+    .lsc :where(a) { color: inherit; text-decoration: none; }
+    .lsc :where(button, input, select, textarea) { font: inherit; color: inherit; }
+    .lsc :where(hr) { border: none; }
 
-      --ease:   cubic-bezier(0.22, 1, 0.36, 1);
-      --t-fast: 160ms var(--ease);
-    }
+    .lsc {
+      --bg:      #F5F2EE;
+      --surface: #EDE9E3;
+      --field:   #FBFAF8;
 
-    body {
-      font-family: var(--font-sans);
-      font-weight: 400;
+      --text:  #1C1917;   /* 15.9:1 */
+      --muted: #6A625C;   /*  5.4:1 */
+      --label: #5F5852;   /*  6.3:1 */
+
+      --rule:   rgba(28, 25, 23, 0.10);
+      --border: rgba(28, 25, 23, 0.16);
+
+      --accent:        #BF5B3E;   /* rules and marks only, 3.9:1 */
+      --accent-strong: #A94B31;   /* button fill and accent text, 5.0:1 */
+      --accent-deep:   #8F3E28;
+      --danger:        #9B3226;
+
+      --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --ease:  cubic-bezier(0.22, 1, 0.36, 1);
+      --t:     160ms var(--ease);
+
+      font-family: var(--sans);
       line-height: 1.55;
       color: var(--text);
       background-color: var(--bg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+      overflow-x: hidden;
     }
 
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-    hr { border: none; }
-
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-      border-radius: 3px;
+    .lsc :focus-visible {
+      outline: 2px solid var(--accent-strong);
+      outline-offset: 3px;
+      border-radius: 4px;
     }
-    :focus:not(:focus-visible) { outline: none; }
+    .lsc :focus:not(:focus-visible) { outline: none; }
 
-    /* ── Shell ─────────────────────────────────────────────────────────── */
-    .page {
-      max-width: 1180px;
+    .lsc-sr {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip-path: inset(50%); white-space: nowrap;
+    }
+    .lsc-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+    /* ── Shell ──────────────────────────────────────────────────────────── */
+    .lsc-page {
+      max-width: 1080px;
       margin-inline: auto;
-      padding: clamp(32px, 6vh, 76px) clamp(24px, 6vw, 88px);
-      min-height: 100vh;
+      padding: clamp(28px, 5vh, 68px) clamp(20px, 5vw, 76px) 0;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 48px;
-    }
+    .lsc-grid { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 52px); }
 
     @media (min-width: 900px) {
-      .grid {
-        grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
-        column-gap: clamp(40px, 6vw, 96px);
+      .lsc-grid {
+        grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+        column-gap: clamp(48px, 6vw, 92px);
         row-gap: 0;
         align-items: start;
       }
-      .identity {
-        position: sticky;
-        top: clamp(32px, 6vh, 76px);
-      }
+      .lsc-id { position: sticky; top: clamp(28px, 5vh, 68px); }
     }
 
-    /* ── Identity column ───────────────────────────────────────────────── */
-    .identity__name {
-      font-size: clamp(26px, 3.2vw, 34px);
+    /* ── Identity ───────────────────────────────────────────────────────── */
+    .lsc-portrait {
+      width: 100%;
+      max-width: 190px;
+      aspect-ratio: 8 / 9;
+      overflow: hidden;
+      border-radius: 12px;
+      background-color: var(--surface);
+      margin-bottom: 22px;
+      transition: transform 400ms var(--ease);
+    }
+    @media (min-width: 900px) { .lsc-portrait { max-width: 100%; } }
+    @media (hover: hover) { .lsc-portrait:hover { transform: scale(1.03); } }
+    .lsc-portrait img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 50% 36%;
+    }
+
+    .lsc-name {
+      font-size: clamp(25px, 3vw, 32px);
       font-weight: 300;
       line-height: 1.16;
-      letter-spacing: -0.8px;
+      letter-spacing: -0.02em;
       text-wrap: balance;
-      margin-bottom: 22px;
     }
 
-    .portrait {
-      width: 100%;
-      aspect-ratio: 8 / 9;
-      border-radius: 12px;
-      overflow: hidden;
-      background-color: var(--surface);
-      margin-bottom: 26px;
-      transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1),
-                  margin-bottom 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    .lsc-tagline a {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-color: rgba(28, 25, 23, 0.22);
+      text-underline-offset: 3px;
+      transition: text-decoration-color var(--t);
     }
-    @media (hover: hover) {
-      .portrait:hover {
-        transform: scale(1.046);
-        margin-bottom: 36px;
-        transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
-                    margin-bottom 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-    }
-    .portrait img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 50% 38%;
-      display: block;
-    }
+    .lsc-tagline a:hover { text-decoration-color: var(--accent); }
 
-    .identity__tagline {
+    .lsc-tagline {
+      margin-top: 16px;
       font-size: 15px;
-      color: var(--muted);
       line-height: 1.6;
+      color: var(--muted);
       max-width: 34ch;
     }
-    .identity__tagline + .identity__tagline { margin-top: 10px; }
+    .lsc-tagline + .lsc-tagline { margin-top: 12px; }
 
-    .identity__rule {
-      width: 44px;
-      height: 1px;
+    .lsc-id__rule {
+      width: 44px; height: 1px;
       background-color: var(--border);
-      margin: 28px 0;
+      margin: 26px 0;
     }
 
-    .identity__links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
+    /* ── Links and buttons ──────────────────────────────────────────────── */
+    .lsc-arrow { display: inline-flex; align-items: center; flex: none; transition: transform var(--t); }
+    .lsc-arrow svg { height: 0.7em; width: auto; overflow: visible; }
 
-    /* Below 900px the sidebar isn't sticky — it's just the top of the scroll,
-       so the email link is a detour before "get in touch" further down.
-       Keep it on desktop where it sits beside the page the whole time. */
-    @media (max-width: 899px) {
-      .identity__rule,
-      .identity__links {
-        display: none;
-      }
-    }
-
-    .identity__meta {
-      font-size: 12px;
-      color: var(--faint);
-      letter-spacing: 0.03em;
-      line-height: 1.7;
-    }
-    .identity__meta span { white-space: nowrap; }
-    .identity__meta .dot { margin: 0 8px; }
-
-    /* ── Arrow link ────────────────────────────────────────────────────── */
-    .arrow-link {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 7px;
+    .lsc-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      min-height: 44px;
+      width: fit-content; max-width: 100%;
       font-size: 14px;
-      color: var(--text);
-      width: fit-content;
-      transition: color var(--t-fast);
+      overflow-wrap: anywhere;
     }
-    .arrow-link .label {
+    .lsc-link .lbl {
       border-bottom: 1px solid var(--border);
       padding-bottom: 2px;
-      transition: border-color var(--t-fast);
+      transition: border-color var(--t);
     }
-    .arrow-link .arrow { transition: transform var(--t-fast); }
-    .arrow-link:hover { color: var(--link-active); }
-    .arrow-link:hover .label { border-color: var(--accent); }
-    .arrow-link:hover .arrow { transform: translateX(4px); }
+    .lsc-link:hover .lbl { border-bottom-color: var(--accent); }
+    .lsc-link:hover .lsc-arrow { transform: translateX(4px); }
 
-    /* ── Content column ────────────────────────────────────────────────── */
-    .content { padding-top: 4px; }
+    .lsc-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 48px; padding: 0 20px;
+      font-size: 15px; font-weight: 500;
+      color: #FBFAF8;
+      background-color: var(--accent-strong);
+      border: 1px solid var(--accent-strong);
+      border-radius: 8px;
+      cursor: pointer;
+      width: fit-content; max-width: 100%;
+      transition: background-color var(--t), border-color var(--t), transform var(--t);
+    }
+    .lsc-btn:hover { background-color: var(--accent-deep); border-color: var(--accent-deep); }
+    .lsc-btn:active { transform: translateY(1px); }
+    .lsc-btn:disabled { cursor: progress; opacity: 0.78; }
+    .lsc-btn:hover .lsc-arrow { transform: translateX(3px); }
 
-    .block { padding: 0 0 clamp(32px, 4.5vw, 52px); }
-    .block:last-child { padding-bottom: 0; }
+    /* ── Blocks ─────────────────────────────────────────────────────────── */
+    /* Every hairline on this page is a TOP rule: section boundaries below,
+       list rows further down. Nothing draws a bottom border, so two rules can
+       never end up stacked with dead space between them. */
+    .lsc-block { padding-block: clamp(30px, 4vw, 44px); }
+    .lsc-block:first-child { padding-top: 0; }
+    .lsc-block:last-child  { padding-bottom: 0; }
+    .lsc-block + .lsc-block { border-top: 1px solid var(--rule); }
 
-    .block__label {
+    .lsc-block__label {
       display: block;
-      font-family: var(--font-serif);
+      font-family: var(--serif);
       font-style: italic;
       font-weight: 400;
       font-size: 17px;
       color: var(--label);
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
-    .divider {
-      width: 100%;
-      height: 1px;
-      background-color: var(--divider);
-      margin-bottom: clamp(32px, 4.5vw, 52px);
+    /* ── Work ───────────────────────────────────────────────────────────── */
+    .lsc-work { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 3.5vw, 40px); }
+    @media (min-width: 680px) {
+      .lsc-work { grid-template-columns: repeat(2, 1fr); column-gap: clamp(24px, 3vw, 40px); }
     }
 
-    /* Services — three plain entries */
-    .services {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-    @media (min-width: 620px) {
-      .services { grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
-    }
-    .service__name { font-size: 15px; font-weight: 500; }
-    .service__desc {
-      font-size: 13.5px;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-top: 5px;
-      max-width: 40ch;
-    }
-
-    /* Process */
-    .process__text {
-      font-size: 14.5px;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 56ch;
-    }
-
-    /* Previous work — rebuild cards */
-    .rebuilds {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    @media (min-width: 560px) {
-      .rebuilds { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (min-width: 900px) {
-      .rebuilds { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    .rebuild-card {
-      display: block;
-      position: relative;
-      border-radius: 14px;
+    .lsc-shot {
       overflow: hidden;
-      aspect-ratio: 5 / 4;
-      background-color: var(--surface);
       border: 1px solid var(--border);
-      transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+      border-radius: 10px;
+      background-color: var(--surface);
+      aspect-ratio: 16 / 10;
+      margin-bottom: 14px;
     }
-    @media (hover: hover) {
-      .rebuild-card:hover { transform: scale(1.025); }
-      .rebuild-card:hover .rebuild-card__name .label { border-color: var(--accent); }
-    }
-
-    .rebuild-card__frame-wrap {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-    .rebuild-card__frame-wrap img {
-      width: 100%;
-      height: 100%;
+    .lsc-shot img, .lsc-shot svg {
+      width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 65%;
+      object-position: center top;
     }
 
-    .rebuild-card__name {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 14px 16px;
-      background: linear-gradient(to top, rgba(28,25,23,0.6), rgba(28,25,23,0));
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
+    .lsc-work__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+    .lsc-work__title { font-size: 16.5px; font-weight: 500; letter-spacing: -0.01em; }
+    .lsc-tag {
+      font-size: 10.5px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--label);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      white-space: nowrap;
     }
-    .rebuild-card__name .label {
-      font-size: 13.5px;
-      font-weight: 500;
-      color: #FBFAF8;
-      border-bottom: 1px solid rgba(251,250,248,0.4);
-      padding-bottom: 1px;
-      transition: border-color var(--t-fast);
-    }
-
-    /* ── Primary button ───────────────────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 18px;
+    .lsc-work__desc {
+      margin-top: 7px;
       font-size: 14px;
-      font-weight: 500;
-      color: var(--bg);
-      background-color: var(--accent);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      width: fit-content;
-      cursor: pointer;
-      transition: background-color var(--t-fast), transform var(--t-fast);
-    }
-    .btn:hover { background-color: #A94B31; }
-    .btn:active { transform: translateY(1px); }
-    .btn .arrow { transition: transform var(--t-fast); }
-    .btn:hover .arrow { transform: translateX(3px); }
-
-    .identity__cta { margin-bottom: 28px; }
-
-    /* ── Engagement note (price + timeline) ────────────────────────────── */
-    .engagement {
-      margin-top: 34px;
-      padding-top: 22px;
-      border-top: 1px solid var(--divider);
-      font-size: 13px;
+      line-height: 1.6;
       color: var(--muted);
-      line-height: 1.7;
-      max-width: 52ch;
     }
-    .engagement strong { font-weight: 500; color: var(--text); }
+    .lsc-work__link { margin-top: 4px; }
 
-    /* ── Contact form ─────────────────────────────────────────────────── */
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 460px;
-      margin-top: 26px;
+    /* Decorative stand-in for a screenshot on the ML project. No axes and no
+       numbers: it signals the domain without implying a measured result. */
+    .lsc-tape__base { stroke: rgba(28, 25, 23, 0.18); stroke-width: 1; }
+    .lsc-tape__bar  { stroke: rgba(28, 25, 23, 0.38); stroke-width: 2.4; stroke-linecap: round; }
+    .lsc-tape__bar--accent { stroke: var(--accent); }
+    .lsc-tape__frame { fill: none; stroke: rgba(191, 91, 62, 0.5); stroke-width: 1; stroke-dasharray: 3 4; }
+
+    /* ── Offer ──────────────────────────────────────────────────────────── */
+    .lsc-offer { display: grid; grid-template-columns: 1fr; }
+    @media (min-width: 620px) {
+      .lsc-offer { grid-template-columns: repeat(2, 1fr); column-gap: clamp(28px, 3.5vw, 52px); }
     }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label {
-      font-size: 12px;
-      letter-spacing: 0.04em;
+    .lsc-offer li { padding: 15px 0; border-top: 1px solid var(--rule); }
+    .lsc-offer h3 { font-size: 15px; font-weight: 500; letter-spacing: -0.005em; }
+    .lsc-offer p { margin-top: 4px; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+
+    .lsc-terms { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+    /* ── Form ───────────────────────────────────────────────────────────── */
+    .lsc-form { display: grid; gap: 16px; max-width: 520px; }
+    .lsc-row { display: grid; gap: 16px; }
+    @media (min-width: 620px) { .lsc-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+    .lsc-field { display: grid; gap: 6px; min-width: 0; }
+    .lsc-field > label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       color: var(--label);
     }
-    .field input,
-    .field textarea {
-      font-family: inherit;
+    .lsc-opt { text-transform: none; letter-spacing: 0.02em; font-weight: 400; color: var(--muted); }
+
+    .lsc-field input, .lsc-field select, .lsc-field textarea {
+      width: 100%;
+      min-height: 46px;
+      /* 16px keeps iOS Safari from zooming the viewport on focus. */
       font-size: 16px;
-      color: var(--text);
-      background-color: #FBFAF8;
+      line-height: 1.5;
+      background-color: var(--field);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 10px 12px;
-      transition: border-color var(--t-fast);
+      transition: border-color var(--t), box-shadow var(--t);
     }
-    .field input:focus,
-    .field textarea:focus {
+    .lsc-field textarea { min-height: 104px; resize: vertical; }
+    .lsc-field input::placeholder, .lsc-field textarea::placeholder { color: #8A827C; }
+
+    .lsc-field select {
+      appearance: none; -webkit-appearance: none;
+      padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%235F5852' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+    }
+
+    .lsc-field input:focus, .lsc-field select:focus, .lsc-field textarea:focus {
       outline: none;
-      border-color: var(--accent);
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 3px rgba(169, 75, 49, 0.14);
     }
-    .field textarea { resize: vertical; min-height: 96px; }
-    .form__fallback {
-      font-size: 12.5px;
-      color: var(--faint);
-      line-height: 1.6;
-    }
-    .form__fallback a { border-bottom: 1px solid var(--border); }
+    .lsc-field :focus-visible { outline: none; }
+    .lsc-field [aria-invalid="true"] { border-color: var(--danger); }
 
-    /* ── Footer ───────────────────────────────────────────────────────── */
-    .site-footer {
-      max-width: 1180px;
+    .lsc-err { font-size: 12.5px; line-height: 1.5; color: var(--danger); }
+    .lsc-err:empty { display: none; }
+
+    /* Hidden from people, reachable by naive bots. */
+    .lsc-honey { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    .lsc-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 2px; }
+    .lsc-status { font-size: 13px; line-height: 1.5; max-width: 34ch; }
+    .lsc-status[data-tone="error"] { color: var(--danger); }
+    .lsc-status[data-tone="busy"]  { color: var(--muted); }
+    .lsc-status:empty { display: none; }
+    .lsc-status a { text-decoration: underline; text-underline-offset: 3px; }
+
+    .lsc-spinner {
+      width: 14px; height: 14px;
+      border: 1.5px solid rgba(251, 250, 248, 0.4);
+      border-top-color: #FBFAF8;
+      border-radius: 50%;
+      animation: lsc-spin 640ms linear infinite;
+    }
+    @keyframes lsc-spin { to { transform: rotate(360deg); } }
+
+    .lsc-done {
+      display: grid; gap: 8px;
+      max-width: 520px;
+      padding: 20px 22px;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--accent);
+      border-radius: 10px;
+      background-color: var(--surface);
+    }
+    .lsc-done__title { font-size: 16px; font-weight: 500; }
+    .lsc-done__text { font-size: 14px; line-height: 1.6; color: var(--muted); }
+    .lsc-done__text a {
+      text-decoration: underline;
+      text-decoration-color: var(--border);
+      text-underline-offset: 3px;
+      transition: text-decoration-color var(--t);
+    }
+    .lsc-done__text a:hover { text-decoration-color: var(--accent); }
+
+    [hidden] { display: none !important; }
+
+    /* ── Footer ─────────────────────────────────────────────────────────── */
+    .lsc-footer {
+      max-width: 1080px;
       margin-inline: auto;
-      padding: 28px clamp(24px, 6vw, 88px) 44px;
-      border-top: 1px solid var(--divider);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-      font-size: 12px;
-      color: var(--faint);
-      letter-spacing: 0.03em;
+      padding: 24px clamp(20px, 5vw, 76px) 40px;
+      margin-top: clamp(36px, 5vw, 60px);
+      border-top: 1px solid var(--rule);
+      font-size: 12.5px;
+      letter-spacing: 0.02em;
+      color: var(--muted);
     }
-    .site-footer .dot { color: var(--border); }
+    .lsc-footer .sep { margin: 0 9px; color: var(--border); }
 
-    @media (max-width: 599px) {
-      .site-footer {
-        flex-direction: column;
-        gap: 6px;
-      }
-      .site-footer .dot { display: none; }
-    }
-
-    /* ── Reveal animation — pure CSS, runs once on load ────────────────── */
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
+    /* ── Entrance ───────────────────────────────────────────────────────── */
+    @keyframes lsc-rise {
+      from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: none; }
     }
-    .reveal {
-      animation: rise 760ms var(--ease) both;
-      animation-delay: var(--d, 0ms);
-    }
+    .lsc-rise { animation: lsc-rise 640ms var(--ease) both; animation-delay: var(--d, 0ms); }
+    .lsc-id  > *:nth-child(2) { --d:  60ms; }
+    .lsc-id  > *:nth-child(3) { --d: 100ms; }
+    .lsc-id  > *:nth-child(4) { --d: 130ms; }
+    .lsc-id  > *:nth-child(5) { --d: 160ms; }
+    .lsc-id  > *:nth-child(6) { --d: 190ms; }
+    .lsc-content > *:nth-child(n+2) { --d: 120ms; }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal { animation: none; }
+      .lsc-rise { animation: none; }
+      .lsc-portrait { transition: none; }
+      .lsc-spinner { animation-duration: 2s; }
     }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+    .lsc :target { scroll-margin-top: 24px; }
   </style>
 </head>
-<body>
-  <main class="page">
-    <div class="grid">
+<body class="lsc">
+  <svg class="lsc-sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="arrow" viewBox="0 0 14 10">
+        <path d="M1 5H13M9 1L13 5L9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+    </defs>
+  </svg>
 
-      <!-- ── IDENTITY ─────────────────────────────────────────────────── -->
-      <aside class="identity">
-        <h1 class="identity__name reveal" style="--d: 0ms">Longhorn Software&nbsp;Consulting</h1>
+  <div class="lsc-page">
+    <div class="lsc-grid">
 
-        <div class="portrait reveal" style="--d: 80ms">
-          <img src="../images/andriy-grad.jpg" srcset="../images/andriy-grad-mobile.jpg 800w, ../images/andriy-grad.jpg 1179w" alt="Andriy Malyshchak at UT Austin graduation" width="785" height="1179" />
+      <!-- ══ IDENTITY ══════════════════════════════════════════════════ -->
+      <aside class="lsc-id">
+        <div class="lsc-portrait lsc-rise">
+          <img
+            src="/images/andriy-grad.jpg"
+            srcset="/images/andriy-grad-mobile.jpg 533w, /images/andriy-grad.jpg 785w"
+            sizes="(min-width: 900px) 300px, 190px"
+            width="785" height="1179"
+            alt="Andriy Malyshchak, founder of Longhorn Software Consulting."
+            fetchpriority="high" decoding="async"
+          />
         </div>
 
-        <p class="identity__tagline reveal" style="--d: 140ms">
-          I rebuild real estate agent websites so they're fast, modern, and actually bring in leads.
+        <h1 class="lsc-name lsc-rise">Longhorn Software&nbsp;Consulting</h1>
+
+        <p class="lsc-tagline lsc-rise">
+          Custom software for Austin businesses. Apps, internal tools, automations, and websites.
         </p>
 
-        <p class="identity__tagline reveal" style="--d: 170ms">
-          I've previously interned as a software engineer at Coinbase and General Motors. I promise to hold your site to the same standard.
+        <p class="lsc-tagline lsc-rise">
+          I've previously interned as a software engineer at
+          <a href="https://www.coinbase.com/blog/our-mission-strategy-and-culture" target="_blank" rel="noopener noreferrer">Coinbase<span class="lsc-sr"> (opens in a new tab)</span></a>
+          and <a href="https://www.gm.com" target="_blank" rel="noopener noreferrer">General Motors<span class="lsc-sr"> (opens in a new tab)</span></a>,
+          and study Electrical and Computer Engineering at
+          <a href="https://www.ece.utexas.edu/" target="_blank" rel="noopener noreferrer">UT Austin<span class="lsc-sr"> (opens in a new tab)</span></a>.
         </p>
+        <div class="lsc-id__rule lsc-rise" aria-hidden="true"></div>
 
-        <div class="identity__rule reveal" style="--d: 200ms" aria-hidden="true"></div>
-
-
-        <div class="identity__links reveal" style="--d: 240ms">
-          <a class="arrow-link" href="mailto:andriy_malyshchak@utexas.edu?subject=Website%20overhaul%20inquiry">
-            <span class="label">andriy_malyshchak@utexas.edu</span>
-            <span class="arrow" aria-hidden="true"><svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M1 5H13M9 1L13 5L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-
-        </div>
+        <a class="lsc-link lsc-rise" href="mailto:andriy_malyshchak@utexas.edu?subject=Project%20inquiry">
+          <span class="lbl">andriy_malyshchak@utexas.edu</span>
+          <span class="lsc-arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg></span>
+        </a>
       </aside>
 
-      <!-- ── CONTENT ──────────────────────────────────────────────────── -->
-      <div class="content">
+      <!-- ══ CONTENT ═══════════════════════════════════════════════════ -->
+      <main class="lsc-content">
 
-        <section class="block">
-          <h2 class="block__label reveal">what you get</h2>
-          <div class="services">
-            <div class="service reveal" style="--d: 40ms">
-              <p class="service__name">Rebuild</p>
-              <p class="service__desc">A new site built around your listings, not a theme with your logo on it.</p>
-            </div>
-            <div class="service reveal" style="--d: 90ms">
-              <p class="service__name">Leads</p>
-              <p class="service__desc">IDX/MLS search, valuation tools, and a contact flow that hands off cleanly to your CRM.</p>
-            </div>
-            <div class="service reveal" style="--d: 140ms">
-              <p class="service__name">Upkeep</p>
-              <p class="service__desc">Hosting and edits after launch, so the site stays current without you touching code.</p>
-            </div>
+        <section class="lsc-block lsc-rise" aria-labelledby="h-work">
+          <h2 class="lsc-block__label" id="h-work">work</h2>
+          <div class="lsc-work">
+
+            <article>
+              <div class="lsc-shot">
+                <img src="/longhorn-software-consulting/preview-onlook.jpg"
+                     width="1459" height="812" loading="lazy" decoding="async"
+                     alt="Onlook home page, a local-first visual editor for React." />
+              </div>
+              <div class="lsc-work__head">
+                <h3 class="lsc-work__title">Onlook</h3>
+              </div>
+              <p class="lsc-work__desc">
+                A local-first visual editor where designers edit React apps straight in the code.
+              </p>
+              <a class="lsc-link lsc-work__link" href="https://www.onlook.com/" target="_blank" rel="noopener noreferrer">
+                <span class="lbl">Visit the site</span><span class="lsc-sr"> (opens in a new tab)</span>
+                <span class="lsc-arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg></span>
+              </a>
+            </article>
+
+            <article>
+              <div class="lsc-shot">
+                <img src="/longhorn-software-consulting/preview-bond.jpg"
+                     width="1459" height="812" loading="lazy" decoding="async"
+                     alt="Bond home page, a Slack-based assistant that tracks what needs your attention." />
+              </div>
+              <div class="lsc-work__head">
+                <h3 class="lsc-work__title">Bond</h3>
+              </div>
+              <p class="lsc-work__desc">
+                A Slack-based assistant that connects to your work and tracks what needs your attention.
+              </p>
+              <a class="lsc-link lsc-work__link" href="https://www.bondapp.io/" target="_blank" rel="noopener noreferrer">
+                <span class="lbl">Visit the site</span><span class="lsc-sr"> (opens in a new tab)</span>
+                <span class="lsc-arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg></span>
+              </a>
+            </article>
+
+            <article>
+              <div class="lsc-shot"><svg viewBox="0 0 400 250" role="presentation" focusable="false" preserveAspectRatio="xMidYMid meet"><path class="lsc-tape__base" d="M20 125 H380" /><path class="lsc-tape__bar" d="M30.0 125 V125.0" /><path class="lsc-tape__bar" d="M40.3 125 V72.7" /><path class="lsc-tape__bar" d="M50.6 125 V82.5" /><path class="lsc-tape__bar" d="M60.9 125 V86.9" /><path class="lsc-tape__bar" d="M71.2 125 V82.2" /><path class="lsc-tape__bar" d="M81.5 125 V125.1" /><path class="lsc-tape__bar" d="M91.8 125 V151.9" /><path class="lsc-tape__bar" d="M102.1 125 V118.8" /><path class="lsc-tape__bar" d="M112.4 125 V109.7" /><path class="lsc-tape__bar" d="M122.7 125 V130.1" /><path class="lsc-tape__bar" d="M133.0 125 V119.7" /><path class="lsc-tape__bar" d="M143.3 125 V130.4" /><path class="lsc-tape__bar lsc-tape__bar--accent" d="M153.6 125 V184.2" /><path class="lsc-tape__bar" d="M163.9 125 V188.2" /><path class="lsc-tape__bar" d="M174.2 125 V148.3" /><path class="lsc-tape__bar" d="M184.5 125 V136.7" /><path class="lsc-tape__bar" d="M194.8 125 V111.5" /><path class="lsc-tape__bar" d="M205.1 125 V60.4" /><path class="lsc-tape__bar" d="M215.4 125 V69.6" /><path class="lsc-tape__bar" d="M225.7 125 V114.0" /><path class="lsc-tape__bar lsc-tape__bar--accent" d="M236.0 125 V114.6" /><path class="lsc-tape__bar" d="M246.3 125 V118.5" /><path class="lsc-tape__bar" d="M256.6 125 V144.8" /><path class="lsc-tape__bar" d="M266.9 125 V122.8" /><path class="lsc-tape__bar" d="M277.2 125 V92.3" /><path class="lsc-tape__bar" d="M287.5 125 V125.1" /><path class="lsc-tape__bar lsc-tape__bar--accent" d="M297.8 125 V155.6" /><path class="lsc-tape__bar" d="M308.1 125 V153.0" /><path class="lsc-tape__bar" d="M318.4 125 V178.1" /><path class="lsc-tape__bar" d="M328.7 125 V189.4" /><path class="lsc-tape__bar" d="M339.0 125 V132.5" /><path class="lsc-tape__bar" d="M349.3 125 V90.3" /><path class="lsc-tape__bar" d="M359.6 125 V94.1" /><path class="lsc-tape__bar" d="M369.9 125 V77.9" /><rect class="lsc-tape__frame" x="146" y="26" width="118" height="198" rx="4" /></svg></div>
+              <div class="lsc-work__head">
+                <h3 class="lsc-work__title">Custom trade-flow transformer</h3>
+                <span class="lsc-tag">Client confidential</span>
+              </div>
+              <p class="lsc-work__desc">
+                Built for a customer from the TradeFM paper: event tokenizer, model, market simulator.
+              </p>
+              <a class="lsc-link lsc-work__link" href="https://arxiv.org/abs/2602.23784" target="_blank" rel="noopener noreferrer">
+                <span class="lbl">Read the paper</span><span class="lsc-sr"> (opens in a new tab)</span>
+                <span class="lsc-arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg></span>
+              </a>
+            </article>
+
+            <article>
+              <div class="lsc-shot">
+                <img src="/longhorn-software-consulting/preview-agency-dallas.jpg"
+                     width="1459" height="812" loading="lazy" decoding="async"
+                     alt="Home page of a Dallas real estate brokerage, with listing search in the hero." />
+              </div>
+              <div class="lsc-work__head">
+                <h3 class="lsc-work__title">Real estate website concept</h3>
+                <span class="lsc-tag">Reference example</span>
+              </div>
+              <p class="lsc-work__desc">
+                Listing search up front, content organized by neighborhood, fast on a phone.
+              </p>
+              <a class="lsc-link lsc-work__link" href="https://txrootsglobalre.com/" target="_blank" rel="noopener noreferrer">
+                <span class="lbl">Visit the site</span><span class="lsc-sr"> (opens in a new tab)</span>
+                <span class="lsc-arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg></span>
+              </a>
+            </article>
           </div>
         </section>
 
-        <hr class="divider reveal" aria-hidden="true" />
-
-        <section class="block">
-          <h2 class="block__label reveal">how it works</h2>
-          <p class="process__text reveal" style="--d: 40ms">
-            I audit your current site, build the new one using your existing content, then launch and walk you through it.
-          </p>
-
-          <p class="engagement reveal" style="--d: 90ms">
-            <strong>Timeline &amp; cost.</strong> Most projects take 2 to 3 weeks and start at $1000.
-            Hosting is $50/mo after that.
-          </p>
+        <section class="lsc-block lsc-rise" aria-labelledby="h-offer">
+          <h2 class="lsc-block__label" id="h-offer">what I build</h2>
+          <ul class="lsc-offer">
+            <li>
+              <h3>Custom applications</h3>
+              <p>Web apps, portals, dashboards, first working versions.</p>
+            </li>
+            <li>
+              <h3>Business tools</h3>
+              <p>Internal systems, scheduling, reporting, spreadsheet replacements.</p>
+            </li>
+            <li>
+              <h3>Automation &amp; AI</h3>
+              <p>Workflow automation, AI tools, data work, integrations.</p>
+            </li>
+            <li>
+              <h3>Websites</h3>
+              <p>New builds, redesigns, performance, lead capture.</p>
+            </li>
+          </ul>
+          <p class="lsc-terms">Project-based pricing, quoted after a short call.</p>
         </section>
 
-        <hr class="divider reveal" aria-hidden="true" />
+        <section class="lsc-block lsc-rise" id="inquiry" aria-labelledby="h-form">
+          <h2 class="lsc-block__label" id="h-form">get in touch</h2>
 
-        <section class="block">
-          <h2 class="block__label reveal">previous work</h2>
-          <div class="rebuilds">
-            <a class="rebuild-card reveal" style="--d: 80ms" href="https://txrootsglobalre.com/" target="_blank" rel="noopener">
-              <div class="rebuild-card__frame-wrap">
-                <img src="/longhorn-software-consulting/preview-agency-dallas.jpg" alt="" loading="lazy" />
-              </div>
-              <span class="rebuild-card__name">
-                <span class="label">The Agency Dallas</span>
-              </span>
-            </a>
-            <a class="rebuild-card reveal" style="--d: 130ms" href="https://gingermartin.com/" target="_blank" rel="noopener">
-              <div class="rebuild-card__frame-wrap">
-                <img src="/longhorn-software-consulting/preview-ginger-martin.jpg" alt="" loading="lazy" />
-              </div>
-              <span class="rebuild-card__name">
-                <span class="label">Ginger Martin</span>
-              </span>
-            </a>
-            <a class="rebuild-card reveal" style="--d: 180ms" href="https://thebargroup.com/" target="_blank" rel="noopener">
-              <div class="rebuild-card__frame-wrap">
-                <img src="/longhorn-software-consulting/preview-bar-group.jpg" alt="" loading="lazy" />
-              </div>
-              <span class="rebuild-card__name">
-                <span class="label">The BAR Group</span>
-              </span>
-            </a>
-          </div>
-        </section>
-
-        <hr class="divider reveal" aria-hidden="true" />
-
-        <section class="block" id="contact">
-          <h2 class="block__label reveal">get in touch</h2>
-          <form class="form reveal" style="--d: 90ms" action="https://api.web3forms.com/submit" method="POST">
+          <!-- Same Web3Forms endpoint as before. With JS the submit is sent by
+               fetch so the visitor stays put; without it the native POST runs
+               unchanged. -->
+          <form class="lsc-form" id="lsc-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
             <input type="hidden" name="access_key" value="01abd321-5998-458b-abf7-009bad357bf0" />
-            <div class="field">
-              <label for="f-site">Your current site</label>
-              <input type="url" id="f-site" name="current_site" placeholder="https://" required />
+            <input type="hidden" name="subject" value="New project inquiry — Longhorn Software Consulting" />
+            <input type="hidden" name="from_name" value="Longhorn Software Consulting" />
+
+            <div class="lsc-honey" aria-hidden="true">
+              <label for="f-botcheck">Leave this field empty</label>
+              <input type="checkbox" id="f-botcheck" name="botcheck" tabindex="-1" />
             </div>
-            <div class="field">
-              <label for="f-issue">What's bugging you about it</label>
-              <textarea id="f-issue" name="whats_wrong" placeholder="Slow on mobile, no lead capture, looks dated…" required></textarea>
+
+            <div class="lsc-row">
+              <div class="lsc-field">
+                <label for="f-name">Name</label>
+                <input type="text" id="f-name" name="name" autocomplete="name" required aria-required="true" aria-describedby="e-name" />
+                <span class="lsc-err" id="e-name"></span>
+              </div>
+              <div class="lsc-field">
+                <label for="f-email">Email</label>
+                <input type="email" id="f-email" name="email" autocomplete="email" inputmode="email" spellcheck="false" required aria-required="true" aria-describedby="e-email" />
+                <span class="lsc-err" id="e-email"></span>
+              </div>
             </div>
-            <div class="field">
-              <label for="f-timeline">Timeline</label>
-              <input type="text" id="f-timeline" name="timeline" placeholder="ASAP, next quarter, just exploring…" />
+
+            <div class="lsc-row">
+              <div class="lsc-field">
+                <label for="f-company">Company <span class="lsc-opt">(optional)</span></label>
+                <input type="text" id="f-company" name="company" autocomplete="organization" />
+              </div>
+              <div class="lsc-field">
+                <label for="f-website">Website or link <span class="lsc-opt">(optional)</span></label>
+                <input type="text" id="f-website" name="website" autocomplete="url" inputmode="url" spellcheck="false" placeholder="yourcompany.com" aria-describedby="e-website" />
+                <span class="lsc-err" id="e-website"></span>
+              </div>
             </div>
-            <div class="field">
-              <label for="f-email">Your email</label>
-              <input type="email" id="f-email" name="email" placeholder="you@example.com" required />
+
+            <div class="lsc-field">
+              <label for="f-help">What do you need?</label>
+              <select id="f-help" name="help_with" required aria-required="true" aria-describedby="e-help">
+                <option value="">Select one</option>
+                <option>Build a new application</option>
+                <option>Improve existing software</option>
+                <option>Automate a business process</option>
+                <option>Build or update a website</option>
+                <option>Create an AI or data solution</option>
+                <option>Connect existing systems</option>
+                <option>Technical consulting</option>
+                <option>Not sure yet</option>
+              </select>
+              <span class="lsc-err" id="e-help"></span>
             </div>
-            <button type="submit" class="btn">Send it over</button>
+
+            <div class="lsc-field">
+              <label for="f-project">About the project</label>
+              <textarea id="f-project" name="project_details" rows="4" required aria-required="true" aria-describedby="e-project"
+                        placeholder="What are you trying to build or improve? What's getting in the way?"></textarea>
+              <span class="lsc-err" id="e-project"></span>
+            </div>
+
+            <div class="lsc-row">
+              <div class="lsc-field">
+                <label for="f-timeline">Timeline</label>
+                <select id="f-timeline" name="timeline">
+                  <option value="">Select one</option>
+                  <option>As soon as possible</option>
+                  <option>Within 1–2 months</option>
+                  <option>Within 3–6 months</option>
+                  <option>Exploring for later</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="lsc-field">
+                <label for="f-budget">Budget</label>
+                <select id="f-budget" name="budget">
+                  <option value="">Select one</option>
+                  <option>Under $2,500</option>
+                  <option>$2,500–$5,000</option>
+                  <option>$5,000–$10,000</option>
+                  <option>$10,000+</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="lsc-foot">
+              <button type="submit" class="lsc-btn" id="lsc-submit">
+                <span class="lsc-btn__label">Start the conversation</span>
+                <span class="lsc-arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg></span>
+              </button>
+              <p class="lsc-status" id="lsc-status" role="status" aria-live="polite"></p>
+            </div>
           </form>
+
+          <div class="lsc-done" id="lsc-done" tabindex="-1" hidden>
+            <p class="lsc-done__title">Thanks, that came through.</p>
+            <p class="lsc-done__text">
+              I'll reply within a couple of business days. If it's urgent,
+              <a href="mailto:andriy_malyshchak@utexas.edu">email me</a>.
+            </p>
+          </div>
         </section>
 
-      </div>
+      </main>
     </div>
-  </main>
+  </div>
 
-  <footer class="site-footer">
-    <span>&copy; 2026 Andriy Malyshchak</span>
+  <footer class="lsc-footer">
+    <span>&copy; 2026 Andriy Malyshchak</span><span class="sep" aria-hidden="true">·</span><span>Austin, Texas</span>
   </footer>
+
+  <script>
+    /* Inquiry form. Degrades cleanly: with JS off the native POST to the same
+       Web3Forms endpoint runs exactly as it did before. */
+    (function () {
+      'use strict';
+
+      var form = document.getElementById('lsc-form');
+      if (!form || typeof window.fetch !== 'function') { return; }
+
+      var statusEl = document.getElementById('lsc-status');
+      var doneEl   = document.getElementById('lsc-done');
+      var btn      = document.getElementById('lsc-submit');
+      var btnLabel = btn.querySelector('.lsc-btn__label');
+      var btnArrow = btn.querySelector('.lsc-arrow');
+      var sending  = false;
+      var fellBack = false;
+
+      /* Errors the API itself reported (bad key, spam rejection) show inline.
+         Anything else means the request never completed, which is what the
+         native POST fallback below is for. */
+      function apiError(message) {
+        var e = new Error(message);
+        e.isApiError = true;
+        return e;
+      }
+
+      var CHECKS = [
+        { id: 'f-name',    err: 'e-name',    missing: 'Please add your name.' },
+        { id: 'f-email',   err: 'e-email',   missing: 'Please add an email I can reply to.',
+          valid: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); },
+          invalid: 'That email doesn’t look right.' },
+        { id: 'f-help',    err: 'e-help',    missing: 'Pick the closest option.' },
+        { id: 'f-project', err: 'e-project', missing: 'A sentence or two is plenty.' }
+      ];
+
+      function setError(check, message) {
+        var input = document.getElementById(check.id);
+        document.getElementById(check.err).textContent = message || '';
+        if (message) { input.setAttribute('aria-invalid', 'true'); }
+        else { input.removeAttribute('aria-invalid'); }
+      }
+
+      /* People type "acme.com". A bare hostname is not a valid URL, so add the
+         scheme for them rather than rejecting an optional field. */
+      function normalizeWebsite() {
+        var input = document.getElementById('f-website');
+        var slot  = document.getElementById('e-website');
+        var value = input.value.trim();
+
+        slot.textContent = '';
+        input.removeAttribute('aria-invalid');
+        if (!value) { input.value = ''; return true; }
+
+        if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) { value = 'https://' + value; }
+        try {
+          if (!/\./.test(new URL(value).hostname)) { throw new Error('no dot'); }
+        } catch (e) {
+          slot.textContent = 'That link doesn’t look right.';
+          input.setAttribute('aria-invalid', 'true');
+          return false;
+        }
+        input.value = value;
+        return true;
+      }
+
+      function validate() {
+        var firstInvalid = null;
+        CHECKS.forEach(function (check) {
+          var input = document.getElementById(check.id);
+          var value = (input.value || '').trim();
+          var message = '';
+          if (!value) { message = check.missing; }
+          else if (check.valid && !check.valid(value)) { message = check.invalid; }
+          setError(check, message);
+          if (message && !firstInvalid) { firstInvalid = input; }
+        });
+        if (!normalizeWebsite() && !firstInvalid) { firstInvalid = document.getElementById('f-website'); }
+        return firstInvalid;
+      }
+
+      function setStatus(tone, html) {
+        statusEl.innerHTML = html || '';
+        if (tone) { statusEl.setAttribute('data-tone', tone); }
+        else { statusEl.removeAttribute('data-tone'); }
+      }
+
+      function setSending(is) {
+        sending = is;
+        btn.disabled = is;
+        btnLabel.textContent = is ? 'Sending…' : 'Start the conversation';
+        btnArrow.innerHTML = is
+          ? '<span class="lsc-spinner"></span>'
+          : '<svg viewBox="0 0 14 10" focusable="false"><use href="#arrow" /></svg>';
+      }
+
+      /* Clear a field's error as soon as the visitor starts fixing it. */
+      CHECKS.forEach(function (check) {
+        var input = document.getElementById(check.id);
+        ['input', 'change'].forEach(function (evt) {
+          input.addEventListener(evt, function () {
+            if (input.getAttribute('aria-invalid') === 'true') { setError(check, ''); }
+          });
+        });
+      });
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (sending) { return; }
+
+        var firstInvalid = validate();
+        if (firstInvalid) {
+          setStatus('error', 'Check the highlighted fields.');
+          firstInvalid.focus();
+          return;
+        }
+
+        setSending(true);
+        setStatus('busy', 'Sending…');
+
+        var payload = {};
+        new FormData(form).forEach(function (value, key) { payload[key] = value; });
+
+        fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(function (res) {
+            return res.json().catch(function () { return {}; })
+              .then(function (body) { return { ok: res.ok, body: body }; });
+          })
+          .then(function (result) {
+            if (!result.ok || !result.body || result.body.success !== true) {
+              throw apiError((result.body && result.body.message) || 'Submission failed');
+            }
+            /* Nothing is cleared until we know it arrived, so a failure never
+               costs the visitor what they typed. */
+            form.reset();
+            form.hidden = true;
+            setStatus('', '');
+            doneEl.hidden = false;
+            doneEl.focus();
+          })
+          .catch(function (error) {
+            /* The fetch never completed (offline, CORS, blocked upstream). The
+               plain POST is what this page shipped with before, so use it
+               rather than stranding a filled-in form. */
+            if (!(error && error.isApiError) && !fellBack) {
+              fellBack = true;
+              HTMLFormElement.prototype.submit.call(form);
+              return;
+            }
+            setSending(false);
+            setStatus('error',
+              'That didn’t send. Your answers are still here, or ' +
+              '<a href="mailto:andriy_malyshchak@utexas.edu">email me</a>.');
+          });
+      });
+    }());
+  </script>
 </body>
 </html>
