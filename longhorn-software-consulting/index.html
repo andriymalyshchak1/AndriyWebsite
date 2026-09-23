@@ -161,6 +161,39 @@
       padding: clamp(28px, 5vh, 68px) clamp(20px, 5vw, 76px) 0;
     }
 
+    /* Mirrors the .back-link on the site's other subpages, restyled here
+       because this page doesn't load css/styles.css. */
+    .lsc-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 44px;
+      margin-bottom: clamp(18px, 2.5vw, 30px);
+      font-size: 14px;
+      color: var(--muted);
+      transition: color var(--t);
+    }
+    .lsc-back__arrow {
+      display: inline-flex;
+      align-items: center;
+      opacity: 0.9;
+      animation: lsc-nudge-back 2s ease-in-out infinite;
+    }
+    .lsc-back__arrow svg { height: 0.72em; width: auto; overflow: visible; }
+    .lsc-back:hover { color: var(--text); }
+    .lsc-back:hover .lsc-back__arrow {
+      animation: none;
+      transform: translateX(-4px);
+      opacity: 1;
+      transition: transform 150ms ease, opacity 150ms ease;
+    }
+    .lsc-back:active { opacity: 0.65; }
+
+    @keyframes lsc-nudge-back {
+      0%, 100% { transform: translateX(0);    opacity: 0.9; }
+      50%      { transform: translateX(-4px); opacity: 1;   }
+    }
+
     .lsc-grid { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 52px); }
 
     @media (min-width: 900px) {
@@ -236,12 +269,14 @@
       font-size: 14px;
       overflow-wrap: anywhere;
     }
-    .lsc-link .lbl {
+    .lsc-link .lbl,
+    .lsc-back .lbl {
       border-bottom: 1px solid var(--border);
       padding-bottom: 2px;
       transition: border-color var(--t);
     }
-    .lsc-link:hover .lbl { border-bottom-color: var(--accent); }
+    .lsc-link:hover .lbl,
+    .lsc-back:hover .lbl { border-bottom-color: var(--accent); }
     .lsc-link:hover .lsc-arrow { transform: translateX(4px); }
 
     .lsc-btn {
@@ -300,18 +335,7 @@
       object-position: center top;
     }
 
-    .lsc-work__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
     .lsc-work__title { font-size: 16.5px; font-weight: 500; letter-spacing: -0.01em; }
-    .lsc-tag {
-      font-size: 10.5px;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--label);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 2px 6px;
-      white-space: nowrap;
-    }
     .lsc-work__desc {
       margin-top: 7px;
       font-size: 14px;
@@ -455,6 +479,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .lsc-rise { animation: none; }
+      .lsc-back__arrow { animation: none; transform: none; }
       .lsc-portrait { transition: none; }
       .lsc-spinner { animation-duration: 2s; }
     }
@@ -471,10 +496,18 @@
       <symbol id="arrow" viewBox="0 0 14 10">
         <path d="M1 5H13M9 1L13 5L9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </symbol>
+      <symbol id="arrow-back" viewBox="0 0 14 10">
+        <path d="M13 5H1M5 1L1 5L5 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
     </defs>
   </svg>
 
   <div class="lsc-page">
+    <a class="lsc-back lsc-rise" href="/">
+      <span class="lsc-back__arrow" aria-hidden="true"><svg viewBox="0 0 14 10" focusable="false"><use href="#arrow-back" /></svg></span>
+      <span class="lbl">andriymal.com</span>
+    </a>
+
     <div class="lsc-grid">
 
       <!-- ══ IDENTITY ══════════════════════════════════════════════════ -->
@@ -524,9 +557,7 @@
                      width="1459" height="812" loading="lazy" decoding="async"
                      alt="Onlook home page, a local-first visual editor for React." />
               </div>
-              <div class="lsc-work__head">
-                <h3 class="lsc-work__title">Onlook</h3>
-              </div>
+              <h3 class="lsc-work__title">Onlook</h3>
               <p class="lsc-work__desc">
                 A local-first visual editor where designers edit React apps straight in the code.
               </p>
@@ -542,9 +573,7 @@
                      width="1459" height="812" loading="lazy" decoding="async"
                      alt="Bond home page, a Slack-based assistant that tracks what needs your attention." />
               </div>
-              <div class="lsc-work__head">
-                <h3 class="lsc-work__title">Bond</h3>
-              </div>
+              <h3 class="lsc-work__title">Bond</h3>
               <p class="lsc-work__desc">
                 A Slack-based assistant that connects to your work and tracks what needs your attention.
               </p>
@@ -556,10 +585,7 @@
 
             <article>
               <div class="lsc-shot"><svg viewBox="0 0 400 250" role="presentation" focusable="false" preserveAspectRatio="xMidYMid meet"><path class="lsc-tape__base" d="M20 125 H380" /><path class="lsc-tape__bar" d="M30.0 125 V125.0" /><path class="lsc-tape__bar" d="M40.3 125 V72.7" /><path class="lsc-tape__bar" d="M50.6 125 V82.5" /><path class="lsc-tape__bar" d="M60.9 125 V86.9" /><path class="lsc-tape__bar" d="M71.2 125 V82.2" /><path class="lsc-tape__bar" d="M81.5 125 V125.1" /><path class="lsc-tape__bar" d="M91.8 125 V151.9" /><path class="lsc-tape__bar" d="M102.1 125 V118.8" /><path class="lsc-tape__bar" d="M112.4 125 V109.7" /><path class="lsc-tape__bar" d="M122.7 125 V130.1" /><path class="lsc-tape__bar" d="M133.0 125 V119.7" /><path class="lsc-tape__bar" d="M143.3 125 V130.4" /><path class="lsc-tape__bar lsc-tape__bar--accent" d="M153.6 125 V184.2" /><path class="lsc-tape__bar" d="M163.9 125 V188.2" /><path class="lsc-tape__bar" d="M174.2 125 V148.3" /><path class="lsc-tape__bar" d="M184.5 125 V136.7" /><path class="lsc-tape__bar" d="M194.8 125 V111.5" /><path class="lsc-tape__bar" d="M205.1 125 V60.4" /><path class="lsc-tape__bar" d="M215.4 125 V69.6" /><path class="lsc-tape__bar" d="M225.7 125 V114.0" /><path class="lsc-tape__bar lsc-tape__bar--accent" d="M236.0 125 V114.6" /><path class="lsc-tape__bar" d="M246.3 125 V118.5" /><path class="lsc-tape__bar" d="M256.6 125 V144.8" /><path class="lsc-tape__bar" d="M266.9 125 V122.8" /><path class="lsc-tape__bar" d="M277.2 125 V92.3" /><path class="lsc-tape__bar" d="M287.5 125 V125.1" /><path class="lsc-tape__bar lsc-tape__bar--accent" d="M297.8 125 V155.6" /><path class="lsc-tape__bar" d="M308.1 125 V153.0" /><path class="lsc-tape__bar" d="M318.4 125 V178.1" /><path class="lsc-tape__bar" d="M328.7 125 V189.4" /><path class="lsc-tape__bar" d="M339.0 125 V132.5" /><path class="lsc-tape__bar" d="M349.3 125 V90.3" /><path class="lsc-tape__bar" d="M359.6 125 V94.1" /><path class="lsc-tape__bar" d="M369.9 125 V77.9" /><rect class="lsc-tape__frame" x="146" y="26" width="118" height="198" rx="4" /></svg></div>
-              <div class="lsc-work__head">
-                <h3 class="lsc-work__title">Custom trade-flow transformer</h3>
-                <span class="lsc-tag">Client confidential</span>
-              </div>
+              <h3 class="lsc-work__title">Custom trade-flow transformer</h3>
               <p class="lsc-work__desc">
                 Built for a customer from the TradeFM paper: event tokenizer, model, market simulator.
               </p>
@@ -575,10 +601,7 @@
                      width="1459" height="812" loading="lazy" decoding="async"
                      alt="Home page of a Dallas real estate brokerage, with listing search in the hero." />
               </div>
-              <div class="lsc-work__head">
-                <h3 class="lsc-work__title">Real estate website concept</h3>
-                <span class="lsc-tag">Reference example</span>
-              </div>
+              <h3 class="lsc-work__title">Real estate website concept</h3>
               <p class="lsc-work__desc">
                 Listing search up front, content organized by neighborhood, fast on a phone.
               </p>
