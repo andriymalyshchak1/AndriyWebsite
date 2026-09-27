@@ -55,6 +55,65 @@
   // Shared with page scripts (e.g. search.js) that open modals programmatically.
   window.EDSite = { openLayer, closeLayer };
 
+  /* ---------- Floating "Let's Connect" pill + message panel ----------
+     Like the original: a coral pill in the bottom-left corner that slides in once the visitor
+     scrolls and opens a "Leave a Message" card anchored in the same corner. Built here so every
+     page gets it; skipped on the map search, where it would sit over the results. */
+  if (!document.body.classList.contains('search-page')) {
+    const privacy = $('a[href*="privacy-policy"]')?.getAttribute('href') || '#';
+    const icon = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="${d}"/></svg>`;
+    const ltc = document.createElement('div');
+    ltc.className = 'ltc';
+    ltc.innerHTML = `
+      <button type="button" class="ltc__pill" aria-expanded="false" aria-controls="ltc-panel">Let's Connect ${icon('M6 15l6-6 6 6')}</button>
+      <div class="ltc__panel" id="ltc-panel" role="dialog" aria-labelledby="ltc-title" hidden>
+        <button type="button" class="ltc__close" aria-label="Close">${icon('M6 6l12 12M18 6L6 18')}</button>
+        <div class="form-wrap">
+          <form class="ltc__form" data-form>
+            <h3 id="ltc-title">Leave a Message</h3>
+            <label class="ltc__line"><span class="sr-only">Full name</span><input name="name" placeholder="Full Name" autocomplete="name" required></label>
+            <label class="ltc__line"><span class="sr-only">Email</span><input name="email" type="email" placeholder="Email" autocomplete="email" required></label>
+            <label class="ltc__line"><span class="sr-only">Phone</span><input name="phone" type="tel" placeholder="Phone" autocomplete="tel"></label>
+            <label class="ltc__line ltc__select"><span class="sr-only">Interested in</span>
+              <select name="interest">
+                <option value="" selected>Interested in…</option>
+                <option>Buying</option><option>Selling</option><option>Buying &amp; Selling</option>
+                <option>Renting / Leasing</option><option>Investing</option><option>Other</option>
+              </select>
+            </label>
+            <label class="ltc__area"><span class="sr-only">Message</span><textarea name="message" placeholder="Message" rows="5"></textarea></label>
+            <label class="ltc__consent">
+              <input type="checkbox" name="consent">
+              <span>I agree to be contacted by Eduardo Duran by call, email, and text about real estate services, including automated messages. Consent is not a condition of any purchase. Message and data rates may apply, and message frequency varies. Reply STOP to opt out or HELP for help at any time. <a href="${privacy}">Privacy Policy</a>.</span>
+            </label>
+            <button type="submit" class="ltc__submit">Submit</button>
+          </form>
+          <div class="form-success" role="status"><h3>Message Sent</h3><p>Thanks for reaching out. Eduardo will get back to you shortly.</p></div>
+        </div>
+      </div>`;
+    document.body.appendChild(ltc);
+    const pill = $('.ltc__pill', ltc);
+    const panel = $('.ltc__panel', ltc);
+    const setOpen = open => {
+      ltc.classList.toggle('is-open', open);
+      pill.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      if (open) {
+        $('.form-wrap', panel).classList.remove('is-sent');
+        setTimeout(() => $('input', panel).focus({ preventScroll: true }), 50);
+      } else {
+        pill.focus({ preventScroll: true });
+      }
+      syncPill();
+    };
+    const syncPill = () => ltc.classList.toggle('is-visible', window.scrollY > 300 || ltc.classList.contains('is-open'));
+    pill.addEventListener('click', () => setOpen(!ltc.classList.contains('is-open')));
+    $('.ltc__close', ltc).addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && ltc.classList.contains('is-open')) setOpen(false); });
+    syncPill();
+    addEventListener('scroll', syncPill, { passive: true });
+  }
+
   /* ---------- Forms ---------- */
   // With no action attribute the form just shows its thank-you state.
   // Set action="https://formspree.io/f/..." (or similar) to actually deliver submissions.

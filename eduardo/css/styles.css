@@ -990,3 +990,123 @@ h3 { font-size: clamp(19px, 2vw, 24px); }
   .drawer__nav a, .drawer__nav button { font-size: 19px; }
   .footer__bottom { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- Floating "Let's Connect" (built by main.js) ----------
+   Original sizing: 156x48 coral pill 19px/28px from the bottom-left corner, opening a 637px
+   cream card with 16px corners, 40px/56px padding, underlined fields and a coral outline submit. */
+.ltc { position: fixed; left: 19px; bottom: 28px; z-index: 90; }
+.ltc__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 156px; height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 25px;
+  background: var(--coral);
+  color: var(--cream);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
+  font: 500 10px/1 var(--font);
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(80px);
+  pointer-events: none;
+  transition: opacity .3s, transform .3s, background-color .25s;
+}
+.ltc.is-visible .ltc__pill { opacity: 1; transform: none; pointer-events: auto; }
+.ltc__pill:hover { background: var(--coral-dark); }
+.ltc__pill svg { width: 14px; height: 14px; transition: transform .3s; }
+.ltc.is-open .ltc__pill svg { transform: rotate(180deg); }
+.ltc__panel {
+  position: fixed;
+  left: 19px; bottom: 28px;
+  z-index: 91;
+  width: min(637px, calc(100vw - 38px));
+  max-height: calc(100vh - 56px);
+  max-height: calc(100dvh - 56px);
+  padding: 40px 56px;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: var(--cream);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
+  color: var(--navy);
+  animation: ltc-in .3s var(--ease);
+}
+@keyframes ltc-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.ltc__close {
+  position: absolute;
+  top: 22px; right: 22px;
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  cursor: pointer;
+  transition: color .25s;
+}
+.ltc__close:hover { color: var(--coral); }
+.ltc__close svg { width: 28px; height: 28px; }
+.ltc__form h3, .ltc .form-success h3 { margin: 0 0 16px; font-size: 26px; line-height: 33.8px; }
+.ltc__line { display: block; margin-bottom: 16px; }
+.ltc__line input, .ltc__line select, .ltc__area textarea {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--navy);
+  font: 400 16px/25px var(--font);
+  letter-spacing: 1px;
+  transition: border-color .25s;
+}
+.ltc__line input, .ltc__line select { height: 27px; padding: 0 0 1px; border-bottom: 1px solid #999; }
+.ltc__line input::placeholder, .ltc__area textarea::placeholder { color: #8b8f91; opacity: 1; }
+.ltc__select select {
+  padding-right: 28px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%230c242d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0 center / 20px;
+  text-transform: uppercase;
+  appearance: none;
+  cursor: pointer;
+}
+.ltc__select select:has(option[value=""]:checked) { color: #8b8f91; }
+.ltc__area textarea { height: 122px; margin: 18px 0 22px; padding: 10px; border: 1px solid #999; resize: vertical; }
+.ltc__line input:focus, .ltc__line select:focus, .ltc__area textarea:focus { border-color: var(--coral); }
+.ltc__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  letter-spacing: .5px;
+  text-align: justify;
+  cursor: pointer;
+}
+.ltc__consent input { flex: none; width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--coral); }
+.ltc__consent a { text-decoration: underline; }
+.ltc__submit {
+  padding: 20px 46px;
+  border: 2px solid var(--coral);
+  background: transparent;
+  color: var(--coral);
+  font: 700 14px/14px var(--font);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+}
+.ltc__submit:hover, .ltc__submit:focus-visible { background: var(--coral); color: #fff; }
+.ltc .form-success { padding: 8px 0; }
+@media (max-width: 640px) {
+  .ltc { left: 14px; bottom: 16px; }
+  .ltc__panel { left: 12px; bottom: 12px; width: calc(100vw - 24px); max-height: calc(100dvh - 24px); padding: 32px 24px 28px; }
+  .ltc__form h3 { font-size: 22px; }
+}
+@media print { .ltc { display: none; } }
