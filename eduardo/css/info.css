@@ -1,0 +1,121 @@
+/*
+  About, Testimonials, Press & Media, Vlog and Privacy Policy pages (tools/build_info.py).
+  Loaded after styles.css and pages.css.
+*/
+
+/* ---------- About: bio + agent card ---------- */
+.agent-bio__inner { max-width: 1140px; }
+.agent-bio__top { display: grid; grid-template-columns: minmax(0, 500px) minmax(0, 1fr); gap: 80px; align-items: start; }
+.agent-bio__photo { width: 100%; height: auto; aspect-ratio: 500 / 889; object-fit: cover; object-position: center top; }
+.agent-bio__text { max-width: 560px; }
+.agent-bio__text h2 { margin-bottom: 26px; }
+.agent-bio__text p { margin: 0 0 24px; }
+
+.agent-card { margin-top: 48px; padding: 48px; background: var(--navy); color: #fff; }
+.agent-card__head h3 { font-size: 26px; font-weight: 400; letter-spacing: .06em; }
+.agent-card__head p { margin: 4px 0 0; font-size: 15px; }
+.agent-card__info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 40px; margin: 40px 0 0; }
+.agent-card__info dt { font-size: 15px; letter-spacing: .08em; text-transform: uppercase; }
+.agent-card__info dd { margin: 0; font-size: 15px; line-height: 1.6; word-break: break-word; }
+.agent-card__info a { text-decoration: underline; text-underline-offset: 3px; }
+.agent-card__info a:hover { color: var(--coral); }
+.agent-card__social { margin-top: 44px; }
+
+/* ---------- Testimonials list ---------- */
+.t-list__inner { max-width: 840px; }
+.t-item { padding-block: 0 88px; }
+.t-item:last-child { padding-bottom: 0; }
+.t-item__head { display: flex; align-items: center; gap: 36px; margin-bottom: 40px; }
+.t-item__head img { flex: none; width: 80px; height: 80px; }
+.t-item__head h2 { font-size: clamp(30px, 3.2vw, 46px); font-weight: 400; }
+.t-item__text p { margin: 0; font-size: 15px; line-height: 1.7; letter-spacing: .06em; }
+.t-item__full, .t-item.is-open .t-item__short { display: none; }
+.t-item.is-open .t-item__full { display: block; }
+.no-js .t-item__short, .no-js .t-item__more { display: none; }
+.no-js .t-item__full { display: block; }
+.t-item__more {
+  margin-top: 16px;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.t-item__more::after { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 0 3px 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+.t-item.is-open .t-item__more::after { margin-bottom: -1px; transform: rotate(-135deg); }
+.t-item__more:hover { color: var(--coral); }
+
+/* ---------- Press & Media ---------- */
+.press__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 423px)); justify-content: center; gap: 40px; }
+.press-card { display: flex; flex-direction: column; background: #fff; box-shadow: 0 2px 18px rgba(12, 36, 45, .08); }
+.press-card__media { position: relative; aspect-ratio: 423 / 300; overflow: hidden; }
+.press-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.press-card__media::after { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, .28); }
+.press-card:hover .press-card__media img { transform: scale(1.05); }
+.press-card__title {
+  position: absolute;
+  right: 24px; bottom: 20px; left: 24px;
+  z-index: 1;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: .04em;
+  text-transform: none;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
+}
+.press-card__body { display: flex; flex-direction: column; align-items: flex-start; padding: 22px 24px 38px; }
+.press-card__meta { margin: 0 0 14px; color: #8a8a8a; font-size: 15px; font-weight: 700; letter-spacing: .12em; line-height: 1.6; text-transform: uppercase; }
+.press-card__meta span { margin-inline: 16px; }
+.press-card__summary { margin: 0 0 28px; font-size: 16px; line-height: 1.6; }
+.press-card .btn { min-width: 0; padding: 12px 22px; }
+.press-card:hover .btn { background: var(--coral); color: #fff; }
+
+/* ---------- Vlog ---------- */
+.vlog__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 30px; row-gap: 32px; }
+.vlog-card { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 12px; align-content: start; }
+.vlog-card__title { align-self: start; font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: .2em; }
+.vlog-card__player { position: relative; aspect-ratio: 16 / 9.5; overflow: hidden; background: #000; }
+.vlog-card__play { position: absolute; inset: 0; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.vlog-card__play img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.vlog-card__play:hover img { transform: scale(1.04); }
+.vlog-card__play .play-btn { width: 50px; height: 50px; font-size: 18px; pointer-events: none; }
+.vlog-card__play .play-btn::after { content: ""; position: absolute; inset: -12px; border: 1px solid rgba(255, 255, 255, .85); border-radius: 50%; }
+.vlog-card__play:hover .play-btn { transform: translate(-50%, -50%) scale(1.1); }
+.vlog-card__player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ---------- Privacy Policy ---------- */
+.page-hero--plain { background: #000; }
+.policy__inner { font-size: 15px; line-height: 1.8; }
+.policy__title { margin-bottom: 12px; font-size: 20px; font-weight: 600; }
+.policy__updated { margin: 0 0 28px; }
+.policy__inner p { margin: 0 0 16px; }
+.policy__inner a { color: var(--coral); text-decoration: underline; text-underline-offset: 2px; word-break: break-word; }
+.policy__inner ol, .policy__inner ul { margin: 0 0 16px; padding-left: 22px; }
+.policy__inner li { margin-bottom: 10px; }
+.policy__inner > ol > li > strong:first-child { display: block; margin-bottom: 6px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .agent-bio__top { gap: 48px; }
+  .vlog__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 800px) {
+  .agent-bio__top { grid-template-columns: 1fr; }
+  .agent-bio__photo { max-width: 500px; aspect-ratio: 4 / 5; }
+  .agent-card { padding: 36px 28px; }
+  .agent-card__info { grid-template-columns: 1fr; gap: 22px; }
+}
+
+@media (max-width: 640px) {
+  .vlog__grid { grid-template-columns: 1fr; row-gap: 24px; }
+  .t-item { padding-bottom: 64px; }
+  .t-item__head { gap: 20px; margin-bottom: 24px; }
+  .t-item__head img { width: 60px; height: 60px; }
+  .press-card__meta span { margin-inline: 10px; }
+}

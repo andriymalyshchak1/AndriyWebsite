@@ -1,0 +1,96 @@
+/*
+  contact.html ("Let's Connect" page). Sizing follows the original /contact page:
+  540px banner, 614px portrait beside a 614px form with underlined fields,
+  bold uppercase labels, and a coral outlined submit button.
+*/
+
+.page-hero--contact { height: 540px; }
+.page-hero--contact h1 { margin-bottom: 0; font-size: clamp(38px, 4vw, 56px); line-height: 1.25; letter-spacing: 1px; }
+
+/* ---------- Submit a message ---------- */
+.contact-page { background: var(--cream); color: var(--navy); }
+.contact-page .section-head { margin-bottom: 48px; }
+.contact-page__sub { margin: 16px auto 0; max-width: 640px; font-size: 16px; }
+.contact-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 614px));
+  justify-content: center;
+  gap: 48px 32px;
+  align-items: start;
+}
+.contact-page__photo { width: 100%; height: 649px; object-fit: cover; object-position: center top; }
+
+.contact-form { display: flex; flex-direction: column; }
+.cf-field { display: flex; flex-direction: column; margin-bottom: 36px; }
+.cf-field label {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.cf-field input, .cf-field textarea {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid #999;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--navy);
+  font: 400 16px/25px var(--font);
+  letter-spacing: 1px;
+  transition: border-color .25s;
+}
+.cf-field input { height: 26px; }
+.cf-field textarea { height: 122px; margin-top: 7px; padding: 10px; border: 1px solid #999; resize: vertical; }
+.cf-field input:focus, .cf-field textarea:focus { border-color: var(--coral); }
+.cf-field input:user-invalid, .cf-field textarea:user-invalid { border-color: #c0392b; }
+.cf-field--area { margin-bottom: 44px; }
+
+.cf-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 15.6px;
+  letter-spacing: 1px;
+  text-align: justify;
+  cursor: pointer;
+}
+.cf-consent input { flex: none; width: 13px; height: 13px; margin: 2px 0 0; accent-color: var(--coral); }
+.cf-consent a { text-decoration: underline; }
+
+.cf-submit {
+  align-self: flex-start;
+  padding: 20px 46px;
+  border: 2px solid var(--coral);
+  background: transparent;
+  color: var(--coral);
+  font: 700 14px/14px var(--font);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+}
+.cf-submit:hover, .cf-submit:focus-visible { background: var(--coral); color: #fff; }
+
+.contact-page__form .form-success { padding-top: 24px; }
+.contact-page__form .form-success h3 { margin-bottom: 12px; }
+
+/* ---------- Quick links ---------- */
+.contact-links { background: var(--cream); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .page-hero--contact { height: 400px; }
+  .contact-page__grid { grid-template-columns: minmax(0, 614px); }
+  .contact-page__photo { height: auto; aspect-ratio: 4 / 5; max-height: 560px; }
+}
+
+@media (max-width: 480px) {
+  .page-hero--contact { height: 320px; }
+  .cf-field { margin-bottom: 28px; }
+  .cf-submit { width: 100%; }
+}

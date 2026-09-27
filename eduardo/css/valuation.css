@@ -1,0 +1,87 @@
+/*
+  home-valuation.html: search banner, "What's Your Property Worth?", question boxes, timelines.
+  The banner reuses the home page's .valuation band, .checks and .address-bar from styles.css.
+*/
+
+/* ---------- Search banner ---------- */
+.valuation--hero { padding: 232px 0 80px; }
+.valuation--hero .checks { margin: 26px 0 30px; }
+.valuation--hero .address-bar { padding: 24px 12px 24px 44px; }
+.valuation--hero .address-bar .btn { padding: 19px 48px; }
+.valuation--hero .valuation__inner { max-width: 1216px; }
+.valuation--hero h1 { margin: 0; font-size: clamp(24px, 2.3vw, 34px); font-weight: 400; letter-spacing: .04em; }
+
+/* ---------- What's your property worth ---------- */
+.hv-worth__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 120px; align-items: center; }
+.hv-worth__text h2 { margin-bottom: 26px; }
+.hv-worth__text p { margin: 0 0 24px; font-size: 16px; line-height: 1.6; letter-spacing: .06em; }
+.hv-worth__text p:last-child { margin-bottom: 0; }
+.hv-worth__img { width: 100%; aspect-ratio: 650 / 512; object-fit: cover; }
+
+/* ---------- Question boxes ---------- */
+.hv-faqs__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; max-width: 1220px; }
+.hv-faq { padding: 40px 32px 56px; border: 1.5px solid var(--coral); text-align: center; }
+.hv-faq h3 { margin-bottom: 28px; font-size: clamp(17px, 1.4vw, 20px); font-weight: 400; letter-spacing: .06em; line-height: 1.45; }
+.hv-faq p { margin: 0; font-size: 15.5px; line-height: 1.6; letter-spacing: .06em; }
+
+/* ---------- Timelines ---------- */
+.hv-timeline__sub { margin: 18px 0 0; font-size: 15px; letter-spacing: .05em; }
+.timeline { position: relative; max-width: 1240px; margin: 0 auto; padding: 0; list-style: none; }
+.timeline::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--coral); }
+.timeline__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 72px;
+  padding: 36px 0;
+}
+.timeline__step::before {
+  content: "";
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--coral);
+}
+.timeline__tag {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+  padding: 9px 38px;
+  background: var(--coral);
+  color: var(--cream);
+  font-size: 15px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.timeline__body { grid-column: 2; grid-row: 1; }
+.timeline__step--flip .timeline__tag { grid-column: 2; justify-self: start; }
+.timeline__step--flip .timeline__body { grid-column: 1; text-align: right; }
+.timeline__body h3 { margin: 12px 0 14px; font-size: clamp(18px, 1.6vw, 22px); font-weight: 400; letter-spacing: .06em; }
+.timeline__body p { margin: 0; font-size: 15px; line-height: 1.75; letter-spacing: .08em; }
+/* Steps without a heading: line the text up with the tag */
+.timeline__body > p:first-child { margin-top: 10px; }
+.timeline__body a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .hv-worth__grid { gap: 56px; }
+  .hv-faqs__grid { grid-template-columns: minmax(0, 1fr); max-width: 640px; }
+  .timeline__step { column-gap: 48px; }
+}
+
+@media (max-width: 760px) {
+  .valuation--hero { padding: 150px 0 64px; }
+  .hv-worth__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .hv-faq { padding: 32px 22px 40px; }
+  .timeline::before { left: 4px; }
+  .timeline__step, .timeline__step--flip { grid-template-columns: minmax(0, 1fr); row-gap: 18px; padding: 24px 0 24px 32px; }
+  .timeline__step::before { top: 43px; left: 4px; }
+  .timeline__step .timeline__tag, .timeline__step--flip .timeline__tag { grid-column: 1; grid-row: 1; justify-self: start; padding-inline: 26px; }
+  .timeline__step .timeline__body, .timeline__step--flip .timeline__body { grid-column: 1; grid-row: 2; text-align: left; }
+  .timeline__body h3, .timeline__body > p:first-child { margin-top: 0; }
+}

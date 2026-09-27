@@ -1,0 +1,32 @@
+/*
+  Shared styles for the generated inner pages (loaded after styles.css).
+  Page-specific styles live in blog.css, property.css, neighborhood.css and info.css.
+*/
+
+/* ---------- Header that starts cream (pages without a dark banner) ---------- */
+.site-header--solid { background: var(--cream); color: var(--navy); }
+.site-header--solid .logo__img--light { opacity: 0; }
+.site-header--solid .logo__img--dark { opacity: 1; }
+:where(.site-header--solid) .menu-toggle span { background: var(--coral); }
+
+/* ---------- Pagination (built by js/paginate.js) ---------- */
+[data-paginate] > [hidden] { display: none !important; }
+.pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; margin-top: 56px; }
+.pagination button, .pagination__gap {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--coral);
+  background: transparent;
+  color: var(--coral);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.pagination button { cursor: pointer; }
+.pagination button:hover:not(:disabled), .pagination button[aria-current="page"] { background: var(--coral); color: var(--cream); }
+.pagination button:disabled { border-color: var(--line); color: rgba(12, 36, 45, .35); cursor: default; }
+.pagination__gap { border-color: transparent; }
