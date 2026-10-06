@@ -42,9 +42,13 @@
   padding-left:env(safe-area-inset-left,0px); padding-right:env(safe-area-inset-right,0px);
 }
 *{box-sizing:border-box;margin:0}
-/* One screen, never scrolls. 100% is the fallback where dvh is unsupported. */
-html,body{height:100%;overflow:hidden;overscroll-behavior:none}
-html{height:100dvh}
+/* Content fills exactly one screen (100% is the fallback where dvh is
+   unsupported). Overflow is left alone so phones keep the native elastic
+   bounce; what shows behind it is the cream canvas. */
+html,body{height:100%}
+html{height:100dvh;background:var(--bg)}
+/* While the order sheet is open, the page behind it stays put. */
+body.open{overflow:hidden}
 body{background:var(--bg);color:var(--red);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 main{height:100%;max-width:460px;margin:0 auto;padding:18px 24px 24px;display:flex;flex-direction:column;align-items:center;text-align:center}
 .meta{width:100%;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;color:var(--soft)}
@@ -59,6 +63,7 @@ h1{font-family:'Bowlby One SC',Impact,sans-serif;font-weight:400;font-size:clamp
 .sauce{stroke-dasharray:100;stroke-dashoffset:100}
 .wire .fillbg{fill:var(--bg)}
 .wire .flake{stroke-width:1.3}
+.wire .oil{stroke-width:1.1}
 .late{opacity:0;animation:pop .4s 2s forwards}
 .miles{width:100%;max-width:320px;margin-top:clamp(8px,1.8vh,16px)}
 .mrow{display:flex;align-items:center;gap:12px}
@@ -74,7 +79,7 @@ h1{font-family:'Bowlby One SC',Impact,sans-serif;font-weight:400;font-size:clamp
 .why{font-size:13px;line-height:1.5;color:var(--soft);margin-top:clamp(12px,2.4vh,20px);max-width:30ch}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--red);outline-offset:4px}
 .scrim{position:fixed;inset:0;background:rgba(20,20,18,.35);opacity:0;pointer-events:none;transition:opacity .25s}
-.sheet{position:fixed;left:0;right:0;bottom:0;max-width:460px;margin:0 auto;background:var(--sheet);border:1px solid var(--line);border-bottom:0;border-radius:4px 4px 0 0;padding:22px 24px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(101%);max-height:92vh;max-height:92dvh;overflow-y:auto;transition:transform .32s cubic-bezier(.2,.8,.2,1);text-align:left}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:460px;margin:0 auto;background:var(--sheet);border:1px solid var(--line);border-bottom:0;border-radius:4px 4px 0 0;padding:22px 24px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(101%);max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;transition:transform .32s cubic-bezier(.2,.8,.2,1);text-align:left}
 body.open .scrim{opacity:1;pointer-events:auto}
 body.open .sheet{transform:none}
 .sheet h2{font-family:'Bowlby One SC',Impact,sans-serif;font-weight:400;font-size:20px;margin-bottom:6px}
@@ -144,24 +149,34 @@ input[aria-invalid=true]{border-bottom-color:var(--red)}
       <path class="ink" pathLength="100" style="--d:1.35s" d="M192 170 C196 192 196 216 194 238"/>
       <!-- pizza -->
       <path class="ink" pathLength="100" style="--d:2.15s" d="M150 236 C110 236 90 243 90 250 C90 257 110 264 150 264 C190 264 210 257 210 250 C210 243 190 236 150 236 Z"/>
-      <!-- props: hot honey bottle, tomato can -->
-      <path class="ink" pathLength="100" style="--d:2.25s" d="M50 268 L50 244 C50 238 62 238 62 244 L62 268 M54 238 L56 228 L58 238"/>
+      <!-- prop: tomato can (the olive oil bottle is further down, so it draws over the pizza when he lifts it) -->
       <path class="ink" pathLength="100" style="--d:2.3s" d="M229 238 L229 267 M251 238 L251 267 M229 238 C229 234 251 234 251 238 C251 242 229 242 229 238"/>
       <!-- counter -->
       <path class="ink" pathLength="100" style="--d:2.35s" d="M24 270 L276 270"/>
       <!-- sauce swirl (driven by script) -->
       <path id="sauce" class="sauce" pathLength="100" d="M150 250 C150 244 161 244 163 250 C165 256 147 258 141 250 C135 242 160 237 175 244 C191 252 164 262 139 257 C115 252 134 234 178 240"/>
       <g id="flakes"></g>
+      <!-- olive oil ring around the crust + the stream from the nozzle (driven by script) -->
+      <path id="oil" class="sauce oil" pathLength="100"/>
+      <path id="drip" class="oil" style="opacity:0"/>
       <!-- arms: upper arms fixed, forearms + hands driven by script -->
       <path id="upL" class="ink" pathLength="100" style="--d:1.5s" d="M98 162 C86 188 80 220 82 250"/>
       <path class="ink" pathLength="100" style="--d:1.55s" d="M202 162 C214 188 220 220 218 250"/>
       <path id="lfore" class="ink" pathLength="100" style="--d:1.8s" d="M82 250 L101 242"/>
       <path id="rfore" class="ink" pathLength="100" style="--d:1.85s" d="M218 250 L199 239"/>
-      <!-- left hand holding an oregano shaker -->
-      <g id="lhand" class="late" transform="translate(108 242)">
+      <!-- oregano shaker: in the left hand, or standing on the counter -->
+      <g id="shaker" class="late" transform="translate(108 242)">
         <path class="fillbg" d="M-4.5 -17 L-4.5 2 C-4.5 4 4.5 4 4.5 2 L4.5 -17 Z"/>
         <path class="fillbg" d="M-5.5 -21 L5.5 -21 L5.5 -17 L-5.5 -17 Z"/>
         <path d="M-4.5 -11 L4.5 -11"/>
+      </g>
+      <!-- olive oil bottle, origin at the grip point; bbase closes the bottom once it leaves the counter -->
+      <g id="bottle" transform="translate(56 254)">
+        <path class="ink fillbg" pathLength="100" style="--d:2.25s" d="M-6 14 L-6 -10 C-6 -16 6 -16 6 -10 L6 14 M-2 -16 L0 -26 L2 -16"/>
+        <path id="bbase" d="M-6 14 L6 14" style="opacity:0"/>
+      </g>
+      <!-- left hand -->
+      <g id="lhand" class="late" transform="translate(108 242)">
         <path class="fillbg" d="M-7 -1 C-7 -6 4 -7 7 -3 C9 1 6 6 0 6 C-5 6 -7 3 -7 -1 Z"/>
         <path d="M-4 -3.5 C-1.5 -0.5 2 -0.5 4.5 -2.5"/>
       </g>
@@ -300,18 +315,30 @@ form.onsubmit=e=>{e.preventDefault();
     const t0=performance.now();const step=t=>{const k=Math.min(1,(t-t0)/1200);n.textContent=Math.round(MILES*(1-Math.pow(1-k,3))).toLocaleString('en-US');if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
   setTimeout(go,still?0:2600);})();
 
-// sauce, oregano, blink and smile loop
+// sauce, oregano, olive oil, blink and smile loop
 (()=>{const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
 const sauce=$('sauce'),SL=sauce.getTotalLength(),rh=$('rhand'),lh=$('lhand'),rf=$('rfore'),lf=$('lfore'),
-  fl=$('flakes'),upL=$('upL'),mouth=$('mouth'),eL=$('eyeL'),eR=$('eyeR');
+  fl=$('flakes'),upL=$('upL'),mouth=$('mouth'),eL=$('eyeL'),eR=$('eyeR'),
+  shk=$('shaker'),bot=$('bottle'),bbase=$('bbase'),oil=$('oil'),drip=$('drip');
 const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const LOOP=9000,T0=3200;
+const T0=3200;
+// One cycle, in ms: spoon to the center, spread the sauce, spoon back; lift the
+// shaker, shake oregano across, stand it on the counter; pick up the olive oil,
+// drizzle it round the crust, put it back; shaker back to rest; half smile.
+const T={spoonIn:[0,540],sauce:[540,5740],spoonOut:[5740,6460],
+  lift:[5920,6640],shake:[6640,8980],setDown:[8980,9880],
+  toOil:[10000,10450],oilUp:[10450,11150],drizzle:[11150,13750],oilDown:[13750,14450],
+  toShaker:[14550,15000],back:[15000,15700],
+  smile:[13750,14200],fade:[16160,16700],unsmile:[16250,16700]},CYCLE=16700;
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),seg=(p,a,b)=>clamp((p-a)/(b-a)),lerp=(a,b,k)=>a+(b-a)*k;
 const ease=k=>k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
 const rot=(x,y,d)=>{const r=d*Math.PI/180,c=Math.cos(r),s=Math.sin(r);return[x*c-y*s,x*s+y*c]};
 const f=n=>n.toFixed(2);
 const BOWL=[-16,11.5],WR=[7,-1],WL=[-7,0],ER=[218,250],EL=[82,250];
 const RREST=[176,251],LREST=[108,242],LLIFT=[118,213],LEND=[170,214];
+// SDOWN: where the shaker stands on the counter. BREST: the bottle's grip point
+// at rest. Pouring tilts the bottle TILT degrees, nozzle DRIP above the crust.
+const SDOWN=[72,264.5],BREST=[56,254],TILT=135,DRIP=12;
 const S0=sauce.getPointAtLength(0),S1=sauce.getPointAtLength(SL);
 function placeR(bx,by,a){const[ox,oy]=rot(BOWL[0],BOWL[1],a),fx=bx-ox,fy=by-oy;
   rh.setAttribute('transform',`translate(${f(fx)} ${f(fy)}) rotate(${f(a)})`);
@@ -326,9 +353,17 @@ function placeL(fx,fy,a){const lift=clamp((LREST[1]-fy)/(LREST[1]-LLIFT[1])),ex=
 const N=22,flakes=[];
 for(let i=0;i<N;i++){const el=document.createElementNS(NS,'path');el.setAttribute('class','flake');
   el.setAttribute('d','M-1.3 -0.5 L1.3 0.5');el.style.opacity=0;fl.appendChild(el);
-  flakes.push({el,ts:.555+(.78-.555)*(i/N)+Math.random()*.008,spawned:-1})}
+  flakes.push({el,ts:6775+2025*(i/N)+Math.random()*72,spawned:-1})}
 function landAt(mx){const tx=clamp(mx+(Math.random()*2-1)*10,104,196),
   half=11*Math.sqrt(Math.max(0,1-((tx-150)/60)**2));return[tx,250+(Math.random()*2-1)*half]}
+// olive oil: a slightly uneven ring just inside the crust, starting at the left
+// and going round the back first, overlapping itself a little at the end
+let od='';for(let i=0;i<=180;i++){const th=i/180*(Math.PI*2+.3);
+  od+=(i?' L':'M')+f(150-(52+.6*Math.sin(th*11))*Math.cos(th))+' '+f(250-(12+.7*Math.sin(th*13+.5))*Math.sin(th))}
+oil.setAttribute('d',od);const OL=oil.getTotalLength();
+// hand position that holds the nozzle DRIP above a point k along the ring
+const NOZ=rot(0,-26,TILT),handOn=k=>{const r=oil.getPointAtLength(k*OL);return[r.x-NOZ[0],r.y-DRIP-NOZ[1],r]};
+const H0=handOn(0),H1=handOn(1);
 // blink
 let blinkAt=performance.now()+1800,blinkEnd=0,second=false;
 function eyes(now){if(now>=blinkAt){blinkEnd=blinkAt+140;
@@ -338,37 +373,56 @@ function eyes(now){if(now>=blinkAt){blinkEnd=blinkAt+140;
   eR.setAttribute('transform',`translate(159 99) scale(1 ${s}) translate(-159 -99)`)}
 // neutral mouth; g lifts the right corner into a half smile
 function smile(g){mouth.setAttribute('d',`M143 116 C147 ${f(116.8+.5*g)} ${f(152+.5*g)} ${f(117+.4*g)} ${f(157+1.2*g)} ${f(116-2.6*g)}`)}
-function pose(p,loop){
+function pose(t,loop){
   // right hand: spoon spreads sauce from the center out, then rests
   let bx,by,a=-6,so=100;
-  if(p<.06){const k=ease(seg(p,0,.06));bx=lerp(RREST[0],S0.x,k);by=lerp(RREST[1],S0.y,k)}
-  else if(p<.44){const k=ease(seg(p,.06,.44)),pt=sauce.getPointAtLength(k*SL);bx=pt.x;by=pt.y;so=100*(1-k);a=-6+7*Math.sin(k*Math.PI*6)}
-  else if(p<.52){const k=ease(seg(p,.44,.52));bx=lerp(S1.x,RREST[0],k);by=lerp(S1.y,RREST[1],k);so=0}
+  if(t<T.spoonIn[1]){const k=ease(seg(t,...T.spoonIn));bx=lerp(RREST[0],S0.x,k);by=lerp(RREST[1],S0.y,k)}
+  else if(t<T.sauce[1]){const k=ease(seg(t,...T.sauce)),pt=sauce.getPointAtLength(k*SL);bx=pt.x;by=pt.y;so=100*(1-k);a=-6+7*Math.sin(k*Math.PI*6)}
+  else if(t<T.spoonOut[1]){const k=ease(seg(t,...T.spoonOut));bx=lerp(S1.x,RREST[0],k);by=lerp(S1.y,RREST[1],k);so=0}
   else{bx=RREST[0];by=RREST[1];so=0}
   placeR(bx,by,a);
-  const fade=1-seg(p,.94,1);
+  const fade=1-seg(t,...T.fade);
   sauce.style.strokeDashoffset=so;sauce.style.opacity=fade;fl.style.opacity=fade;
-  // left hand: lift the shaker, tilt, shake across the pizza, set it down
-  let lx=LREST[0],ly=LREST[1],la=0;
-  if(p>=.46&&p<.54){const k=ease(seg(p,.46,.54));lx=lerp(LREST[0],LLIFT[0],k);ly=lerp(LREST[1],LLIFT[1],k);la=140*k}
-  else if(p>=.54&&p<.80){const k=seg(p,.54,.80),e=ease(k),w=k*Math.PI*2*9;
-    lx=lerp(LLIFT[0],LEND[0],e);ly=lerp(LLIFT[1],LEND[1],e)+2.2*Math.sin(w);la=140+9*Math.sin(w+.6)}
-  else if(p>=.80&&p<.88){const k=ease(seg(p,.80,.88));lx=lerp(LEND[0],LREST[0],k);ly=lerp(LEND[1],LREST[1],k);la=140*(1-k)}
-  const[mx,my]=placeL(lx,ly,la);
+  oil.style.strokeDashoffset=100*(1-ease(seg(t,...T.drizzle)));oil.style.opacity=fade;
+  // left hand: lift the shaker, shake oregano across the pizza, stand it on the
+  // counter, drizzle olive oil round the crust, then take the shaker back.
+  // `down`: the shaker is standing on the counter. `oiling`: the bottle is in hand.
+  let lx=LREST[0],ly=LREST[1],la=0,down=false,oiling=false,tip=null;
+  const go=(A,B,k,arc=0)=>{lx=lerp(A[0],B[0],k);ly=lerp(A[1],B[1],k)-arc*Math.sin(k*Math.PI)};
+  if(t<T.lift[0]){}
+  else if(t<T.lift[1]){const k=ease(seg(t,...T.lift));go(LREST,LLIFT,k);la=140*k}
+  else if(t<T.shake[1]){const k=seg(t,...T.shake),e=ease(k),w=k*Math.PI*2*9;
+    go(LLIFT,LEND,e);ly+=2.2*Math.sin(w);la=140+9*Math.sin(w+.6)}
+  else if(t<T.setDown[1]){const k=ease(seg(t,...T.setDown));go(LEND,SDOWN,k);la=140*(1-k)}
+  else if(t<T.toOil[0]){down=true;go(SDOWN,SDOWN,0)}
+  else if(t<T.toOil[1]){down=true;go(SDOWN,BREST,ease(seg(t,...T.toOil)),4)}
+  else if(t<T.oilUp[1]){const k=ease(seg(t,...T.oilUp));down=oiling=true;go(BREST,H0,k,10);la=TILT*k}
+  else if(t<T.drizzle[1]){const k=ease(seg(t,...T.drizzle)),[hx,hy,r]=handOn(k);down=oiling=true;
+    lx=hx;ly=hy;la=TILT+4*Math.sin(k*Math.PI*10);const[nx,ny]=rot(0,-26,la);tip=[lx+nx,ly+ny,r.x,r.y]}
+  else if(t<T.oilDown[1]){const k=ease(seg(t,...T.oilDown));down=oiling=true;go(H1,BREST,k,10);la=TILT*(1-k)}
+  else if(t<T.toShaker[0]){down=true;go(BREST,BREST,0)}
+  else if(t<T.toShaker[1]){down=true;go(BREST,SDOWN,ease(seg(t,...T.toShaker)),4)}
+  else if(t<T.back[1]){go(SDOWN,LREST,ease(seg(t,...T.back)),6)}
+  const[mx,my]=placeL(lx,ly,la),held=`translate(${f(lx)} ${f(ly)}) rotate(${f(la)})`;
+  shk.setAttribute('transform',down?`translate(${SDOWN[0]} ${SDOWN[1]})`:held);
+  bot.setAttribute('transform',oiling?held:`translate(${BREST[0]} ${BREST[1]})`);
+  bbase.style.opacity=oiling&&Math.hypot(lx-BREST[0],ly-BREST[1])>1?1:0;
+  if(tip){drip.setAttribute('d',`M${f(tip[0])} ${f(tip[1])} L${f(tip[2])} ${f(tip[3])}`);drip.style.opacity=1}
+  else drip.style.opacity=0;
   for(const fk of flakes){
-    if(p<fk.ts||p>.995){if(fk.spawned!==-1&&p<fk.ts){fk.spawned=-1}fk.el.style.opacity=0;continue}
+    if(t<fk.ts||t>CYCLE-45){if(fk.spawned!==-1&&t<fk.ts){fk.spawned=-1}fk.el.style.opacity=0;continue}
     if(fk.spawned!==loop){fk.spawned=loop;fk.from=[mx,my];fk.to=landAt(mx);fk.r=Math.random()*180}
-    const k=clamp((p-fk.ts)/.05),x=lerp(fk.from[0],fk.to[0],k),y=fk.from[1]+(fk.to[1]-fk.from[1])*k*k;
+    const k=clamp((t-fk.ts)/450),x=lerp(fk.from[0],fk.to[0],k),y=fk.from[1]+(fk.to[1]-fk.from[1])*k*k;
     fk.el.setAttribute('transform',`translate(${f(x)} ${f(y)}) rotate(${f(fk.r+k*120)})`);fk.el.style.opacity=1}
-  // half smile on the right side once the pizza is done
-  smile(ease(seg(p,.80,.85))-ease(seg(p,.95,1)))}
-// Reduced motion: one still frame. Step through the shake first so each flake
-// drops from where the shaker passed; posing .9 alone piles them all at the
-// shaker's resting spot on the left edge.
-if(still){for(let p=.5;p<.9;p+=.004)pose(p,0);pose(.9,0);return}
+  // half smile on the right side once the pizza is finished
+  smile(ease(seg(t,...T.smile))-ease(seg(t,...T.unsmile)))}
+// Reduced motion: one still frame of the finished pizza, shaker back in hand.
+// Step through the cycle first so each flake drops from where the shaker
+// passed; posing the end alone piles them all at the shaker's resting spot.
+if(still){for(let t=6000;t<16000;t+=25)pose(t,0);pose(16000,0);return}
 pose(0,0);const start=performance.now();
-(function tick(now){const t=(now-start-T0)/LOOP;
-  if(t>=0)pose(t%1,Math.floor(t));
+(function tick(now){const ms=now-start-T0;
+  if(ms>=0)pose(ms%CYCLE,Math.floor(ms/CYCLE));
   eyes(now);requestAnimationFrame(tick)})(start);
 })();
 </script>
