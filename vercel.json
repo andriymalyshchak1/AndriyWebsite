@@ -37,6 +37,24 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/saujashrides/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/saujashrides",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ]
 }
